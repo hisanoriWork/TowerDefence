@@ -13,6 +13,6 @@ public class negiTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //check conflict by negi
     }
 }
