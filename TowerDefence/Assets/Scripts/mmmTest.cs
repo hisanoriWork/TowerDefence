@@ -8,7 +8,7 @@ public class negiTest : MonoBehaviour
     void Start()
     {
         //oyooyo
-        //oyoyyoyoo
+        //oyoyyoyoooooo
     }
 
     // Update is called once per frame
