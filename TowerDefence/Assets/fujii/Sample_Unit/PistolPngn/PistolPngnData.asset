@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: PistolPngnData
   m_EditorClassIdentifier: 
   Name: PistrolPngnData
-  ID: 11
+  ID: 12
   Power: 1
   HP: 100
   CT: 5
   Cost: 10
   Prefab: {fileID: 673259802859265337, guid: 2874bee1f520e7c4c9eac892845d86c1, type: 3}
-  Pngn_Can_Geton: 0
-  Base_Can_Geton: 0
+  IsPngn: 1
+  PngnCanGetOn: 0
+  BaseCanGetOn: 0
   Indestructible: 0
   Form: 
