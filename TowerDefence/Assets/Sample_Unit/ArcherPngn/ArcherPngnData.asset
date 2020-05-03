@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98b403c1afce91a4287803f7fab651aa, type: 3}
   m_Name: ArcherPngnData
   m_EditorClassIdentifier: 
-  Name: ArchePngn
+  Name: ArcherPngn
   ID: 10
   Power: 90
   HP: 81

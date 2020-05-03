@@ -12,7 +12,7 @@ public class ArcherPngnScript : MonoBehaviour
     void Start()
     {
         //Bese.InitをStartに入れてください
-        //第１引数：攻撃するときにしてほしい関数名(引数void)
+        //第１引数：攻撃するときにしてほしい関数名(引数int Power)
         //第２引数：攻撃を受けるするときにしてほしい関数名(引数はint damage)
         //第３引数：死ぬときにしてほしい関数名(引数void)
         Base.Init(Attack,Hurt,Dead);
