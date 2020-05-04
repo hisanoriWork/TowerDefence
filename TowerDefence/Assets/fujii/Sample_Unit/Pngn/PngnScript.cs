@@ -16,7 +16,6 @@ public class PngnScript : MonoBehaviour
         //第２引数：攻撃を受けるするときにしてほしい関数名(引数はint damage)
         //第３引数：死ぬときにしてほしい関数名(引数void)
         Base.Init(Attack, Hurt, Dead);
-        Debug.Log("ペンギンはデバッグのため１キーで，1から10のダメージを食らうようにしてます");
     }
 
     /*****Monobehaviour method*****/
@@ -32,17 +31,13 @@ public class PngnScript : MonoBehaviour
     /*****protected method*****/
     protected void Attack(int damage)
     {
-        Debug.Log("ペンギンは攻撃をしました");
     }
 
     protected void Hurt(int damage)
     {
-        Debug.Log("ペンギンは" + damage + "攻撃を受けました");
     }
 
     protected void Dead()
     {
-        //下に死んだときの処理を描く
-        Debug.Log("ペンギンはやられてしまいました");
     }
 }

@@ -5,10 +5,9 @@ using UnityEngine;
 public class MasterDataScript : MonoBehaviour
 {
     public List<UnitData> UnitDataList;
-    public GameObject archerPngn;
-
     public UnitData FindUnitData(int unitID)
     {
+
         foreach (UnitData data in UnitDataList)
         {
             if (data.ID == unitID) return data;

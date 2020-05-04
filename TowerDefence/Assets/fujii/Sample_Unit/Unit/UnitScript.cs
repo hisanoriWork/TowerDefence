@@ -88,24 +88,22 @@ public class UnitScript : MonoBehaviour
     //スプライトを左右反対にする
     public void Invert(bool b = true)
     {
+        Vector3 size = transform.localScale;
+        size.x *= (b ^ Invension) ? -1 : 1;
+        transform.localScale = size;
         Invension = b;
-        Vector3 temp = transform.localScale;
-        temp.x *= (b) ? -1 : 1;
-        transform.localScale = temp;
     }
 
     //攻撃をして，Attackアニメーションに移行する
     public void Attack(int power)
     {
-        if (m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")
+        if (m_Animator != null
+            &&m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")
             && !m_Animator.IsInTransition(0))
         {
             m_CT = m_MaxCT;
-            if (m_Animator != null)
-            {
-                m_Animator.SetTrigger(m_HashAttackParam);
-                m_Animator.SetTrigger(m_HashIdleParam);
-            }
+            m_Animator.SetTrigger(m_HashAttackParam);
+            m_Animator.SetTrigger(m_HashIdleParam);
             if (AttackEvent != null)
             {
                 AttackEvent(power);
@@ -116,14 +114,12 @@ public class UnitScript : MonoBehaviour
     //死んで，Deadアニメーションに移行する
     public void Dead()
     {
-        if (!m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Dead")
+        if (m_Animator != null
+            &&!m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Dead")
             && !m_Animator.IsInTransition(0))
         {
             IsDead = true;
-            if (m_Animator != null)
-            {
-                m_Animator.SetTrigger(m_HashDeadParam);
-            }
+            m_Animator.SetTrigger(m_HashDeadParam);
             if (DeadEvent != null)
             {
                 DeadEvent();
@@ -134,7 +130,8 @@ public class UnitScript : MonoBehaviour
     //ダメージを負い，Hurtアニメーションに移行する
     public void Hurt(int damage)
     {
-        if (!m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Hurt")
+        if ( m_Animator != null
+            && !m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Hurt")
             && !m_Animator.IsInTransition(0))
         {
             m_HP -= damage;
@@ -161,5 +158,6 @@ public class UnitScript : MonoBehaviour
     {
         m_MovePos += vec;
     }
+
 }
 

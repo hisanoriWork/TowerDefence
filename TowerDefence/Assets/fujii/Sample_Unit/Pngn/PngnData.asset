@@ -18,9 +18,9 @@ MonoBehaviour:
   HP: 100
   CT: 5
   Cost: 10
-  Prefab: {fileID: 0}
+  Prefab: {fileID: 2706958961471863537, guid: b38e3d62b2ed1cc4e966418e11eda93b, type: 3}
   IsPngn: 1
   PngnCanGetOn: 0
-  BaseCanGetOn: 0
+  BlockCanGetOn: 0
   Indestructible: 0
   Form: 
