@@ -11,7 +11,7 @@ using UnityEngine.SceneManagement;
 public class Formation
 {
     public bool formationDataExists;
-    public int[] gridinfo = new int[120];
+    public int[] gridinfo = new int[100];
     public int shiptype;
 }
 
@@ -21,12 +21,12 @@ public class PrefsManager
     Formation formation = new Formation();
 
 
-    public Formation getFormation()
+    public Formation GetFormation()
     {
 
-        string json = PlayerPrefs.GetString("formation","NODATA");
+        string json = PlayerPrefs.GetString("formation","NoData");
 
-        if(json == "NODATA")
+        if(json == "NoData")
         {
             formation.formationDataExists = false;
             return formation;
@@ -40,7 +40,7 @@ public class PrefsManager
     }
 
 
-    public bool setFormation(int[] gridinfo,int shiptype)
+    public bool SetFormation(int[] gridinfo,int shiptype)
     {
         formation.gridinfo = gridinfo;
         formation.shiptype = shiptype;
@@ -55,7 +55,7 @@ public class PrefsManager
     }
 
 
-    public void delete()
+    public void Delete()
     {
         PlayerPrefs.DeleteAll();
 
