@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 98b403c1afce91a4287803f7fab651aa, type: 3}
-  m_Name: ArcherPngnData
+  m_Name: UnitDataInstance
   m_EditorClassIdentifier: 
-  Name: ArcherPngn
-  ID: 11
-  Power: 90
-  HP: 81
-  CT: 2
-  Cost: 806
-  Prefab: {fileID: 8891226551128961079, guid: 9c93b9c056e512949b450f63a10ef3d4, type: 3}
+  Name: Unit
+  ID: 1
+  Power: 10
+  HP: 100
+  CT: 5
+  Cost: 30
+  Prefab: {fileID: 6061645891025098690, guid: 23110c9c5b0d3fc47b3d55ef1fa2f821, type: 3}
   IsPngn: 1
   PngnCanGetOn: 0
-  BaseCanGetOn: 0
+  BlockCanGetOn: 0
   Indestructible: 0
   Form: 
