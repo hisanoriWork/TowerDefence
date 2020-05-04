@@ -12,14 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98b403c1afce91a4287803f7fab651aa, type: 3}
   m_Name: UnitDataInstance
   m_EditorClassIdentifier: 
-  Name: ProtoType
-  ID: 0
+  Name: Unit
+  ID: 1
   Power: 10
   HP: 100
   CT: 5
   Cost: 30
   Prefab: {fileID: 6061645891025098690, guid: 23110c9c5b0d3fc47b3d55ef1fa2f821, type: 3}
-  Pngn_Can_Geton: 0
-  Base_Can_Geton: 0
+  IsPngn: 1
+  PngnCanGetOn: 0
+  BaseCanGetOn: 0
   Indestructible: 0
   Form: 

@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: ArcherPngnData
   m_EditorClassIdentifier: 
   Name: ArcherPngn
-  ID: 10
+  ID: 11
   Power: 90
   HP: 81
   CT: 2
   Cost: 806
   Prefab: {fileID: 8891226551128961079, guid: 9c93b9c056e512949b450f63a10ef3d4, type: 3}
-  Pngn_Can_Geton: 0
-  Base_Can_Geton: 0
+  IsPngn: 1
+  PngnCanGetOn: 0
+  BaseCanGetOn: 0
   Indestructible: 0
   Form: 

@@ -5,10 +5,9 @@ using UnityEngine;
 public class MasterDataScript : MonoBehaviour
 {
     public List<UnitData> UnitDataList;
-    public GameObject archerPngn;
-
     public UnitData FindUnitData(int unitID)
     {
+
         foreach (UnitData data in UnitDataList)
         {
             if (data.ID == unitID) return data;
@@ -17,7 +16,7 @@ public class MasterDataScript : MonoBehaviour
         return null;
     }
 
-    public UnitData FindUnit(string unitName)
+    public UnitData FindUnitData(string unitName)
     {
         foreach (UnitData data in UnitDataList)
         {
@@ -26,6 +25,5 @@ public class MasterDataScript : MonoBehaviour
         Debug.Log("名前が" + unitName + "であるUnitは存在しません");
         return null;
     }
-
 
 }
