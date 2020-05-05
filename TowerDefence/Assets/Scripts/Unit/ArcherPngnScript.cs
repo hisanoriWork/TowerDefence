@@ -15,7 +15,7 @@ public class ArcherPngnScript : MonoBehaviour
         //第１引数：攻撃するときにしてほしい関数名(引数int Power)
         //第２引数：攻撃を受けるするときにしてほしい関数名(引数はint damage)
         //第３引数：死ぬときにしてほしい関数名(引数void)
-        Base.Init(Attack,Hurt,Dead);
+        //Base.Init(Attack,Hurt,Dead);
         Debug.Log("アーチャーペンギンはデバッグのため１キーで，1から10のダメージを食らうようにしてます");
     }
 

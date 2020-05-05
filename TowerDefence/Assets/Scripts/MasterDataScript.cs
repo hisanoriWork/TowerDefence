@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class MasterDataScript : MonoBehaviour
 {
-    public List<UnitData> UnitDataList;
+    public List<UnitData> unitDataList;
+    public List<ShipData> shipDataList;
     public UnitData FindUnitData(int unitID)
     {
 
-        foreach (UnitData data in UnitDataList)
+        foreach (UnitData data in unitDataList)
         {
             if (data.ID == unitID) return data;
         }
@@ -18,7 +19,7 @@ public class MasterDataScript : MonoBehaviour
 
     public UnitData FindUnitData(string unitName)
     {
-        foreach (UnitData data in UnitDataList)
+        foreach (UnitData data in unitDataList)
         {
             if (data.Name == unitName) return data;
         }
@@ -26,4 +27,14 @@ public class MasterDataScript : MonoBehaviour
         return null;
     }
 
+    public ShipData FindShipData(int unitID)
+    {
+
+        foreach (ShipData shipData in shipDataList)
+        {
+            if (shipData.unitData.ID == unitID) return shipData;
+        }
+        Debug.Log("IDが" + unitID + "であるShipは存在しません");
+        return null;
+    }
 }
