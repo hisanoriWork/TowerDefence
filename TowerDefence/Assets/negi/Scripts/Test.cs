@@ -15,9 +15,12 @@ public class Test : MonoBehaviour
     public void debugship()
     {
         //編成データ書き込み例
-        for (int i = 0; i < 100; i++)
-        { 
-            formation.gridinfo[i] = Random.Range(100, 200);
+        for (int i = 0; i < 10; i++)
+        {
+            for (int j = 0; j < 10; j++)
+            {
+                formation.gridinfo[i,j] = Random.Range(100, 200);
+            }
         }
         formation.shiptype = 114514;
         prefs.SetFormation(formation.gridinfo, formation.shiptype);
@@ -25,9 +28,12 @@ public class Test : MonoBehaviour
 
         //編成データ読み込み、使用例
         formation = prefs.GetFormation();
-        for (int i = 0; i < 100; i++)
+        for (int i = 0; i < 10; i++)
         {
-            Debug.Log(formation.gridinfo[i]);
+            for (int j = 0; j < 10; j++)
+            {
+                Debug.Log(formation.gridinfo[i, j]);
+            }
         }
         Debug.Log(formation.shiptype);
 
@@ -35,9 +41,12 @@ public class Test : MonoBehaviour
     }
     public void setship()
     {
-        for (int i = 0; i < 100; i++)
+        for (int i = 0; i < 10; i++)
         {
-            formation.gridinfo[i] = Random.Range(100, 200);
+            for (int j = 0; j < 10; j++)
+            {
+                formation.gridinfo[i, j] = Random.Range(100, 200);
+            }
         }
         formation.shiptype = 114514;
         Debug.Log(prefs.SetFormation(formation.gridinfo, formation.shiptype));
@@ -46,9 +55,12 @@ public class Test : MonoBehaviour
     public void getship()
     {
         formation = prefs.GetFormation();
-        for (int i = 0; i < 100; i++)
+        for (int i = 0; i < 10; i++)
         {
-            Debug.Log(formation.gridinfo[i]);
+            for (int j = 0; j < 10; j++)
+            {
+                Debug.Log(formation.gridinfo[i,j]);
+            }
         }
         Debug.Log(formation.shiptype);
     }

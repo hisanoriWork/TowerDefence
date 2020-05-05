@@ -19,11 +19,14 @@ public class FormationGridManager : MonoBehaviour
     {
         formation = prefs.GetFormation();
 
-
-        for (int i = 0; i < 100; i++)
+        for (int i = 0; i < 10; i++)
         {
-            var obj = Instantiate(image, contentRectTransform);
-            obj.GetComponentInChildren<Text>().text = formation.gridinfo[i].ToString();
+            for (int j = 0; j < 10; j++)
+            {
+                var obj = Instantiate(image, contentRectTransform);
+                //obj.GetComponentInChildren<Text>().text = formation.gridinfo[i,j].ToString();
+                obj.GetComponentInChildren<Text>().text = i.ToString() + j.ToString();
+            }
         }
     }
 

@@ -11,8 +11,26 @@ using UnityEngine.SceneManagement;
 public class Formation
 {
     public bool formationDataExists;
-    public int[] gridinfo = new int[100];
+    //1がデータあり、0がなし
+
+    public int[,] gridinfo = new int[10,10];
+    //座標の指定の仕方は
+    //90 91 92 93 94 95 ... 99
+    //...
+    //...
+    //...
+    //...
+    //...
+    //...
+    //...
+    //10 11 12 13 14 15 ... 19
+    //00 01 02 03 04 05 ... 09
+
+    //0は「存在しない」
+
+
     public int shiptype;
+    //0は「存在しない」
 }
 
 
@@ -40,7 +58,7 @@ public class PrefsManager
     }
 
 
-    public bool SetFormation(int[] gridinfo,int shiptype)
+    public bool SetFormation(int[,] gridinfo,int shiptype)
     {
         formation.gridinfo = gridinfo;
         formation.shiptype = shiptype;
