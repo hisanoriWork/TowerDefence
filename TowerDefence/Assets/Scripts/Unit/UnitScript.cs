@@ -6,157 +6,157 @@ using UnityEngine.Events;
 
 public class UnitScript : MonoBehaviour
 {
-
-    /*****public field*****/
-    
     public enum Attack_Strategy
     {
         ConcentratedAttack, //集中攻撃
         ClosestEnemy, //一番近い敵をターゲット
 
     }
-    public UnitData Data;
-    public Collider2D Collider;
-    public bool Invension = false;
-    public Attack_Strategy Strategy;
-    [System.NonSerialized] public bool IsDead = false;
-    public delegate void IntFanc(int i); // delegate 型の宣言
-    public IntFanc AttackEvent = null; // delegate 型の変数を宣言
-    public IntFanc HurtEvent = null;
-    public delegate void VoidFanc();
-    public VoidFanc DeadEvent = null;
+    [Serializable] protected class IntEvent : UnityEvent<int> { }
+
+    /*****public field*****/
+    public UnitData data;
+    public int power { get { return m_power; } }
+    public int maxHP { get { return m_maxHP; } }
+    public int HP { get { return m_HP; } }
+    public float maxCT { get { return m_maxCT; } }
+    public float CT { get { return m_CT; } }
+
+    public bool isPlaying { get; set; } = true;
     /*****protected field*****/
-    protected Animator m_Animator;
-    protected int m_Power;
-    protected int m_MaxHP;
+    protected Animator m_animator;
+    protected int m_power;
+    protected int m_maxHP;
     protected int m_HP;
-    protected float m_MaxCT;
+    protected float m_maxCT;
     protected float m_CT;
-    protected Vector3 m_MovePos = Vector3.zero;
+    protected Vector3 m_movePos = Vector3.zero;
+    protected bool m_invension = false;
+    protected bool m_isDead = false;
+    
+
     protected readonly int m_HashIdleParam = Animator.StringToHash("IdleParam");
     protected readonly int m_HashAttackParam = Animator.StringToHash("AttackParam");
     protected readonly int m_HashHurtParam = Animator.StringToHash("HurtParam");
     protected readonly int m_HashDeadParam = Animator.StringToHash("DeadParam");
 
+    [SerializeField] protected IntEvent attackEvent = null;
+    [SerializeField] protected IntEvent hurtEvent = null;
+    [SerializeField] protected UnityEvent deadEvent = null;
+
+    protected Attack_Strategy m_strategy;
+
     /*****Monobehavour method*****/
-    //void Awake()
-    //{
-    //    Init();
-    //}
+    void Awake()
+    {
+        Init();
+    }
 
     void Update()
     {
-        transform.position += m_MovePos;
-        m_MovePos = Vector3.zero;
-
-        if (m_CT < 0) Attack(m_Power);
-        
-        if (m_HP < 0 & !IsDead) Dead();
-
-        if (IsDead)
+        if (isPlaying)
         {
-            gameObject.SetActive(false);
+            transform.position += m_movePos;
+            m_movePos = Vector3.zero;
+
+            if (m_CT < 0) Attack(m_power);
+
+            if (m_HP < 0 & !m_isDead) Dead();
+
+            if (m_isDead)
+            {
+                gameObject.SetActive(false);
+            }
         }
     }
 
     void FixedUpdate()
     {
-        if (m_CT > 0) m_CT -= Time.fixedDeltaTime;
+        if (isPlaying)
+        {
+            if (m_CT > 0) m_CT -= Time.fixedDeltaTime;
+        }
     }
 
     /*****public method*****/
-    //初期化ですStart()にいれてください
-    public void Init(IntFanc attack,IntFanc hurt, VoidFanc dead)
-    {
-        AttackEvent = attack;
-        HurtEvent = hurt;
-        DeadEvent = dead;
-        Init();
-    }
-
+    //初期化
     public void Init()
     {
-        m_Power = Data.Power;
-        m_MaxHP = Data.HP;
-        m_HP = Data.HP;
-        m_MaxCT = Data.CT;
-        m_CT = Data.CT;
-        Invert(Invension);
-        m_Animator = GetComponent<Animator>();
+        m_power = data.Power;
+        m_maxHP = data.HP;
+        m_HP = data.HP;
+        m_maxCT = data.CT;
+        m_CT = data.CT;
+        Invert(m_invension);
+        m_animator = GetComponent<Animator>();
     }
 
     //スプライトを左右反対にする
     public void Invert(bool b = true)
     {
         Vector3 size = transform.localScale;
-        size.x *= (b ^ Invension) ? -1 : 1;
+        size.x *= (b ^ m_invension) ? -1 : 1;
         transform.localScale = size;
-        Invension = b;
+        m_invension = b;
     }
 
     //攻撃をして，Attackアニメーションに移行する
     public void Attack(int power)
     {
-        if (m_Animator != null
-            &&m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")
-            && !m_Animator.IsInTransition(0))
+        if (m_animator != null
+            &&m_animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")
+            && !m_animator.IsInTransition(0))
         {
-            m_CT = m_MaxCT;
-            m_Animator.SetTrigger(m_HashAttackParam);
-            m_Animator.SetTrigger(m_HashIdleParam);
-            if (AttackEvent != null)
-            {
-                AttackEvent(power);
-            }
+            m_CT = m_maxCT;
+            m_animator.SetTrigger(m_HashAttackParam);
+            m_animator.SetTrigger(m_HashIdleParam);
+            
+            attackEvent.Invoke(power);
         }
     }
 
     //死んで，Deadアニメーションに移行する
     public void Dead()
     {
-        if (m_Animator != null
-            &&!m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Dead")
-            && !m_Animator.IsInTransition(0))
+        if (m_animator != null
+            &&!m_animator.GetCurrentAnimatorStateInfo(0).IsName("Dead")
+            && !m_animator.IsInTransition(0))
         {
-            IsDead = true;
-            m_Animator.SetTrigger(m_HashDeadParam);
-            if (DeadEvent != null)
-            {
-                DeadEvent();
-            }
+            m_isDead = true;
+            m_animator.SetTrigger(m_HashDeadParam);
+            
+            deadEvent.Invoke();
         }
     }
 
     //ダメージを負い，Hurtアニメーションに移行する
     public void Hurt(int damage)
     {
-        if ( m_Animator != null
-            && !m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Hurt")
-            && !m_Animator.IsInTransition(0))
+
+        if ( m_animator != null
+            && !m_animator.GetCurrentAnimatorStateInfo(0).IsName("Hurt")
+            && !m_animator.IsInTransition(0))
         {
             m_HP -= damage;
-            if (m_Animator != null)
+            if (m_animator != null)
             {
-                m_Animator.SetTrigger(m_HashHurtParam);
-                m_Animator.SetTrigger(m_HashIdleParam);
+                m_animator.SetTrigger(m_HashHurtParam);
+                m_animator.SetTrigger(m_HashIdleParam);
             }
-            if (HurtEvent != null)
-            {
-                HurtEvent(damage);
-            }
+            hurtEvent.Invoke(damage);
         }
     }
 
     //回復する
     public void Recover(int point)
     {
-        m_HP = (m_HP + point > m_MaxHP) ? m_MaxHP : m_MaxHP + point;
+        m_HP = (m_HP + point > m_maxHP) ? m_maxHP : m_maxHP + point;
     }
 
     //移動する
     public void Move(Vector3 vec)
     {
-        m_MovePos += vec;
+        m_movePos += vec;
     }
 
 }

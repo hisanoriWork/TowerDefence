@@ -86,10 +86,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ca24c74ef8561a4c9ccc8f1a1037adf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Data: {fileID: 11400000, guid: 1bd49e5ac4f0acd479c2dbeff1aa7e68, type: 2}
-  Collider: {fileID: 0}
-  Invension: 0
-  Strategy: 1
+  data: {fileID: 11400000, guid: 1bd49e5ac4f0acd479c2dbeff1aa7e68, type: 2}
+  attackEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  hurtEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  deadEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &7373498541733220393
 GameObject:
   m_ObjectHideFlags: 0
