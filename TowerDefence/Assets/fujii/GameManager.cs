@@ -232,22 +232,22 @@ public class GameManager : MonoBehaviour
         //Formation formation = prefs.getFormation();
         //Formation formation = prefs.getFormation();
         //上の項目ができたと仮定する
-        Formation formation = new Formation();
-        for (int i = 0; i < 120; i++)
-        {
-            formation.gridinfo[i] = UnityEngine.Random.Range(10, 11);
-        }
-        formation.shiptype = 114514;
-        List<int> temp = new List<int>();
-        for (int i = 0; i < formation.gridinfo.Length; i++)
-        {
-            temp.Add(formation.gridinfo[i]);
-        }
+        //Formation formation = new Formation();
+        //for (int i = 0; i < 120; i++)
+        //{
+        //    formation.gridinfo[i] = UnityEngine.Random.Range(10, 11);
+        //}
+        //formation.shiptype = 114514;
+        //List<int> temp = new List<int>();
+        //for (int i = 0; i < formation.gridinfo.Length; i++)
+        //{
+        //    temp.Add(formation.gridinfo[i]);
+        //}
         //ここまで
 
-        m_player1UnitMgr.SetFormation(temp, formation.shiptype);
-        m_player2UnitMgr.SetFormation(temp, formation.shiptype);
-        m_player2UnitMgr.Invert(true);
+        //m_player1UnitMgr.SetFormation(temp, formation.shiptype);
+        //m_player2UnitMgr.SetFormation(temp, formation.shiptype);
+        //m_player2UnitMgr.Invert(true);
     }
     void Start()
     {
