@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98b403c1afce91a4287803f7fab651aa, type: 3}
   m_Name: PngnData
   m_EditorClassIdentifier: 
-  Name: Pngn
+  name: Pngn
   ID: 10
-  Power: 10
+  power: 10
   HP: 100
   CT: 5
-  Cost: 10
-  Prefab: {fileID: 2706958961471863537, guid: b38e3d62b2ed1cc4e966418e11eda93b, type: 3}
-  IsPngn: 1
-  PngnCanGetOn: 0
-  BlockCanGetOn: 0
-  Indestructible: 0
-  Form: 
+  cost: 10
+  prefab: {fileID: 2706958961471863537, guid: b38e3d62b2ed1cc4e966418e11eda93b, type: 3}
+  isPngn: 1
+  pngnCanGetOn: 0
+  blockCanGetOn: 0
+  indestructible: 0
+  form: 

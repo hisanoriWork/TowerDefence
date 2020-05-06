@@ -8,7 +8,39 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     /*****public class*****/
-    public class UnitManager
+    
+    public class TextManager<TInfo>
+    {
+        public TextManager(Text text)
+        {
+            m_text = text;
+        }
+        virtual public TInfo info {
+            get { return m_info; }
+            set
+            {
+                m_info = value;
+                if (m_text != null) m_text.text = info.ToString();
+            }
+        }
+
+        protected Text m_text;
+        protected TInfo m_info;
+    }
+    public class TextManager<TInfo, TCast> :TextManager<TInfo>
+    {
+        public TextManager(Text text)
+            : base(text) { }
+        override public TInfo info {
+            get { return m_info; }
+            set
+            {
+                m_info = value;
+                if(m_text != null) m_text.text = Convert.ChangeType(info, typeof(TCast)).ToString();
+            }
+        }
+    }
+    [SerializeField]public class Player
     {
         /*****public class*****/
         public class UnitInst
@@ -23,15 +55,17 @@ public class GameManager : MonoBehaviour
             public ShipScript shipScript;
         }
         /*****public field*****/
+        public GameObject parentObj;
         public MasterDataScript masterData;
         public List<UnitInst> unitInstList;
         public List<UnitInst> pngnInstList;
         public ShipInst shipInst;
-        public GameObject parentObj;
-
-        public int shipHP {
-            get {
-                if (shipInst != null &shipInst.unitScript != null)
+        public int layerNum;
+        public int shipHP
+        {
+            get
+            {
+                if (shipInst != null & shipInst.unitScript != null)
                     return shipInst.unitScript.HP;
                 return 1000;
             }
@@ -51,18 +85,60 @@ public class GameManager : MonoBehaviour
 
         /*****private field*****/
         float m_dx = 0.75f, m_dy = 0.80f;
-        bool m_invension = false;
+        bool m_isInverted = false;
         /*****public method*****/
-        public void Init(MasterDataScript masterData, GameObject parentObj, bool invension)
+        public Player(MasterDataScript masterData, GameObject parentObj,Formation formation)
         {
             unitInstList = new List<UnitInst>();
             pngnInstList = new List<UnitInst>();
             shipInst = new ShipInst();
             this.masterData = masterData;
             this.parentObj = parentObj;
-            m_invension = invension;
+            CreateInst(formation);
         }
-        public void CreateInit(Formation formation)
+        public void Invert(bool b)
+        {
+            m_isInverted = b;
+            foreach (var i in unitInstList)
+            {
+                i.script.isInverted = true;
+            }
+            shipInst.unitScript.isInverted = true;
+            Vector3 size = parentObj.transform.localScale;
+            size.x *= (b ^ size.x<0f) ? -1 : 1;
+            parentObj.transform.localScale = size;
+        }
+        public void ChangeLayer(string pngnLayerName,string shipLayerName)
+        {
+            int pngnLayerNum = LayerMask.NameToLayer(pngnLayerName);
+            int shipLayerNum = LayerMask.NameToLayer(shipLayerName);
+            foreach (var unitInst in unitInstList)
+            {
+                if (unitInst.script.data.isPngn) SetLayerRecursively(unitInst.obj , pngnLayerNum);
+                else unitInst.obj.layer = shipLayerNum;
+            }
+            SetLayerRecursively(shipInst.obj, shipLayerNum);
+        }
+        public void Stop()
+        {
+            Time.timeScale = 0;
+            foreach (var i in unitInstList)
+            {
+                i.script.isPlaying = false;
+            }
+            shipInst.unitScript.isPlaying = false;
+        }
+        public void Play()
+        {
+            Time.timeScale = 1;
+            foreach (var i in unitInstList)
+            {
+                i.script.isPlaying = true;
+            }
+            shipInst.unitScript.isPlaying = true;
+        }
+        /*****private method*****/
+        private void CreateInst(Formation formation)
         {
             int gridX = formation.gridinfo.GetLength(1);
             int gridY = formation.gridinfo.GetLength(0);
@@ -86,42 +162,12 @@ public class GameManager : MonoBehaviour
             }
             shipInst = CreateShip(formation.shiptype, parentObj.transform.position);
         }
-        public void Invert(bool b)
-        {
-            m_invension = b;
-            foreach (var i in unitInstList)
-            {
-                i.script.Invert(b);
-            }
-            shipInst.unitScript.Invert(b);
-        }
-
-        public void Stop()
-        {
-            Time.timeScale = 0;
-            foreach (var i in unitInstList)
-            {
-                i.script.isPlaying = false;
-            }
-            shipInst.unitScript.isPlaying = false;
-        }
-
-        public void Play()
-        {
-            Time.timeScale = 1;
-            foreach (var i in unitInstList)
-            {
-                i.script.isPlaying = true;
-            }
-            shipInst.unitScript.isPlaying = true;
-        }
-
         private UnitInst CreateUnit(int unitID, Vector3 pos)
         {
             UnitData data = masterData.FindUnitData(unitID);
             if (data != null)
             {
-                GameObject obj = Instantiate(data.Prefab);
+                GameObject obj = Instantiate(data.prefab);
                 obj.transform.SetParent(parentObj.transform);
                 obj.transform.position = pos;
                 UnitInst inst = new UnitInst();
@@ -136,10 +182,10 @@ public class GameManager : MonoBehaviour
             ShipData data = masterData.FindShipData(shipID);
             if (data != null)
             {
-                GameObject obj = Instantiate(data.unitData.Prefab);
+                GameObject obj = Instantiate(data.unitData.prefab);
                 obj.transform.SetParent(parentObj.transform);
 
-                obj.transform.position = pos + ((m_invension) ? Vector3.Scale(data.offSet, new Vector3(-1, 1, 1)) : data.offSet);
+                obj.transform.position = pos + data.offSet;
                 ShipInst inst = new ShipInst();
                 inst.obj = obj;
                 inst.unitScript = obj.GetComponent<UnitScript>();
@@ -151,7 +197,7 @@ public class GameManager : MonoBehaviour
         private void UnitAdd(UnitInst Inst)
         {
             unitInstList.Add(Inst);
-            if (Inst.script.data.IsPngn == true)
+            if (Inst.script.data.isPngn == true)
             {
                 pngnInstList.Add(Inst);
             }
@@ -175,65 +221,35 @@ public class GameManager : MonoBehaviour
         {
             unitInstList.Clear();
         }
+        private void SetLayerRecursively(GameObject self,int layer)
+        {
+            self.layer = layer;
 
-
-    }
-    public class TextManager<TInfo>
-    {
-        public Text text { set { m_text = value; } }
-        virtual public TInfo info {
-            get { return m_info; }
-            set
+            foreach (Transform n in self.transform)
             {
-                m_info = value;
-                if (m_text != null) m_text.text = info.ToString();
+                SetLayerRecursively(n.gameObject, layer);
             }
         }
 
-        protected Text m_text;
-        protected TInfo m_info;
-    }
-    public class TextManager<TInfo, TCast> :TextManager<TInfo>
-    {
-        override public TInfo info {
-            get { return m_info; }
-            set
-            {
-                m_info = value;
-                if(m_text != null) m_text.text = Convert.ChangeType(info, typeof(TCast)).ToString();
-            }
-        }
     }
     /*****public field*****/
     public MasterDataScript masterData;
-    public GameObject player1;
-    public GameObject player2;
+    public GameObject player1Place;
+    public GameObject player2Place;
     public Text HP1Bar, HP2Bar,timeText;
     public GameObject winCanvas, loseCanvas, drawCanvas;
     
     /*****private field*****/
-    TextManager<int> m_player1HP , m_player2HP;
-    TextManager<float, int> m_timeLimit;
-    UnitManager m_player1UnitMgr;
-    UnitManager m_player2UnitMgr;
-    int m_pngnNum1, m_pngnNum2;
+    private TextManager<int> m_player1HP , m_player2HP;
+    private TextManager<float, int> m_timeLimit;
+    private Player m_player1;
+    private Player m_player2;
+    private int m_pngnNum1, m_pngnNum2;
     //bool isFinished = false;
 
     /*****Mobehabiour method*****/
     void Awake()
     {
-        m_player1UnitMgr = new UnitManager();
-        m_player1UnitMgr.Init(masterData, player1, false);
-        m_player2UnitMgr = new UnitManager();
-        m_player2UnitMgr.Init(masterData, player2, true);
-        m_player1HP = new TextManager<int>();
-        m_player1HP.text = HP1Bar;
-        m_player2HP = new TextManager<int>();
-        m_player2HP.text = HP2Bar;
-        m_timeLimit = new TextManager<float, int>();
-        m_timeLimit.text = timeText;
-
-
         ////PrefsManager prefs = new PrefsManager();
         ////Formation formation = prefs.getFormation();
         Formation formation = new Formation();
@@ -252,24 +268,29 @@ public class GameManager : MonoBehaviour
             {0,0,0,0,0,0,0,0,0,0},
         };
         formation.shiptype = 10010;
+        m_player1 = new Player(masterData,player1Place,formation);
+        m_player2 = new Player(masterData,player2Place,formation);
+        m_player1HP = new TextManager<int>(HP1Bar);
+        m_player2HP = new TextManager<int>(HP2Bar);
+        m_timeLimit = new TextManager<float, int>(timeText);
 
-        m_player1UnitMgr.CreateInit(formation);
-        //m_player2UnitMgr.CreateInit(formation);
+        RegardAsFriend(m_player1);
+        RegardAsOpponent(m_player2);
     }
     void Start()
     {
-        m_player1HP.info = m_player1UnitMgr.shipHP;
-        m_player2HP.info = m_player2UnitMgr.shipHP;
-        m_pngnNum1 = m_player1UnitMgr.pngnNum;
-        m_pngnNum2 = m_player2UnitMgr.pngnNum;
+        m_player1HP.info = m_player1.shipHP;
+        m_player2HP.info = m_player2.shipHP;
+        m_pngnNum1 = m_player1.pngnNum;
+        m_pngnNum2 = m_player2.pngnNum;
         m_timeLimit.info = 10;
     }
     void Update()
     {
-        m_player1HP.info = m_player1UnitMgr.shipHP;
-        m_player2HP.info = m_player2UnitMgr.shipHP;
-        m_pngnNum1 = m_player1UnitMgr.pngnNum;
-        m_pngnNum2 = m_player2UnitMgr.pngnNum;
+        m_player1HP.info = m_player1.shipHP;
+        m_player2HP.info = m_player2.shipHP;
+        m_pngnNum1 = m_player1.pngnNum;
+        m_pngnNum2 = m_player2.pngnNum;
         int victoryNum = CheckVictory();
         switch(victoryNum)
         {
@@ -298,14 +319,14 @@ public class GameManager : MonoBehaviour
     /*****public method*****/
     public void Play()
     {
-        m_player1UnitMgr.Play();
-        m_player2UnitMgr.Play();
+        m_player1.Play();
+        m_player2.Play();
     }
 
     public void Stop()
     {
-        m_player1UnitMgr.Stop();
-        m_player2UnitMgr.Stop();
+        m_player1.Stop();
+        m_player2.Stop();
     }
 
     public void TransitionScene(String sceneName)
@@ -313,7 +334,7 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(sceneName);
     }
     /*****private method*****/
-    int CheckVictory()
+    private int CheckVictory()
     {
         /*決まってない：0
          * プレイヤー1の勝利：1
@@ -336,6 +357,14 @@ public class GameManager : MonoBehaviour
         }
         return 0;
     }
+
+    private void RegardAsFriend(Player player)
+    {
+        player.ChangeLayer("Player1", "PlayerShip1");
+    }
+    private void RegardAsOpponent(Player player)
+    {
+        player.Invert(true);
+        player.ChangeLayer("Player2","PlayerShip2");
+    }
 }
-
-
