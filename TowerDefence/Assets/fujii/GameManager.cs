@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
         public ShipInst shipInst;
         public GameObject parentObj;
 
-        public int shipHP {get { return shipInst.unitScript.HP;} }
+        public int shipHP { get { return shipInst.unitScript.HP; } }
         public int pngnNum
         {
             get
@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour
             {
                 for (int j = 0; j < gridX; j++)
                 {
-                    inst = CreateUnit(formation.gridinfo[i,j], pos);
+                    inst = CreateUnit(formation.gridinfo[i, j], pos);
                     if (inst != null)
                     {
                         UnitAdd(inst);
@@ -169,33 +169,19 @@ public class GameManager : MonoBehaviour
             unitInstList.Clear();
         }
 
-        
+
     }
-    public class TextManager<InfoType>
+    public class TextManager<TInfo>
     {
-        protected Text text;
-        protected InfoType info;
+        public Text text{ set{ m_text = value; } }
+        virtual public TInfo info{ get{ return m_info; } set { info = value; m_text.text = info.ToString(); } }
 
-        virtual public void SetInfo(InfoType info)
-        {
-            this.info = info;
-            text.text = info.ToString();
-        }
-
-        public InfoType GetInfo() { return info; }
-
-        public void SetText(Text text)
-        {
-            this.text = text;
-        }
+        protected Text m_text;
+        protected TInfo m_info;
     }
-    public class TextManager<InfoType, CastType> :TextManager<InfoType>
+    public class TextManager<TInfo, TCast> :TextManager<TInfo>
     {
-        override public void SetInfo(InfoType info)
-        {
-            this.info = info;
-            text.text = Convert.ChangeType(info, typeof(CastType)).ToString();
-        }
+        override public TInfo info { get { return m_info; } set { info = value; m_text.text = Convert.ChangeType(info, typeof(TCast)).ToString(); } }
     }
     /*****public field*****/
     public MasterDataScript masterData;
@@ -220,11 +206,11 @@ public class GameManager : MonoBehaviour
         m_player2UnitMgr = new UnitManager();
         m_player2UnitMgr.Init(masterData, player2, true);
         m_player1HP = new TextManager<int>();
-        m_player1HP.SetText(HP1Bar);
+        m_player1HP.text = HP1Bar;
         m_player2HP = new TextManager<int>();
-        m_player2HP.SetText(HP2Bar);
+        m_player2HP.text = HP2Bar;
         m_timeLimit = new TextManager<float, int>();
-        m_timeLimit.SetText(timeText);
+        m_timeLimit.text = timeText;
 
 
         //PrefsManager prefs = new PrefsManager();
@@ -251,16 +237,16 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-        m_player1HP.SetInfo(m_player1UnitMgr.shipHP);
-        m_player2HP.SetInfo(m_player2UnitMgr.shipHP);
+        m_player1HP.info = m_player1UnitMgr.shipHP;
+        m_player2HP.info = m_player2UnitMgr.shipHP;
         m_pngnNum1 = m_player1UnitMgr.pngnNum;
         m_pngnNum2 = m_player2UnitMgr.pngnNum;
-        m_timeLimit.SetInfo(100);
+        m_timeLimit.info = 10;
     }
     void Update()
     {
-        m_player1HP.SetInfo(m_player1UnitMgr.shipHP);
-        m_player2HP.SetInfo(m_player2UnitMgr.shipHP);
+        m_player1HP.info = m_player1UnitMgr.shipHP;
+        m_player2HP.info = m_player2UnitMgr.shipHP;
         m_pngnNum1 = m_player1UnitMgr.pngnNum;
         m_pngnNum2 = m_player2UnitMgr.pngnNum;
         int victoryNum = CheckVictory();
@@ -282,9 +268,9 @@ public class GameManager : MonoBehaviour
     }
     void FixedUpdate()
     {
-        if (m_timeLimit.GetInfo() > 0)
+        if (m_timeLimit.info > 0)
         {
-            m_timeLimit.SetInfo(m_timeLimit.GetInfo() - Time.fixedDeltaTime);
+            m_timeLimit.info += - Time.fixedDeltaTime;
         }
     }
 
@@ -317,14 +303,14 @@ public class GameManager : MonoBehaviour
         else if (m_pngnNum1 == 0) return 2;
         else if (m_pngnNum1 == 0) return 1;
 
-        if (m_player1HP.GetInfo() == 0 && m_player2HP.GetInfo() == 0) return 3;
-        else if (m_player1HP.GetInfo() == 0) return 2;
-        else if (m_player2HP.GetInfo() == 0) return 1;
+        if (m_player1HP.info == 0 && m_player2HP.info == 0) return 3;
+        else if (m_player1HP.info == 0) return 2;
+        else if (m_player2HP.info == 0) return 1;
 
-        if (m_timeLimit.GetInfo() < 0)
+        if (m_timeLimit.info < 0)
         {
-            if (m_player1HP.GetInfo() == m_player2HP.GetInfo()) return 3;
-            else if (m_player1HP.GetInfo() < m_player2HP.GetInfo()) return 2;
+            if (m_player1HP.info == m_player2HP.info) return 3;
+            else if (m_player1HP.info < m_player2HP.info) return 2;
             else return 1;
         }
         return 0;
