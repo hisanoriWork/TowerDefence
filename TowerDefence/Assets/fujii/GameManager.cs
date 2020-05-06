@@ -29,7 +29,13 @@ public class GameManager : MonoBehaviour
         public ShipInst shipInst;
         public GameObject parentObj;
 
-        public int shipHP { get { return shipInst.unitScript.HP; } }
+        public int shipHP {
+            get {
+                if (shipInst != null &shipInst.unitScript != null)
+                    return shipInst.unitScript.HP;
+                return 1000;
+            }
+        }
         public int pngnNum
         {
             get
@@ -51,6 +57,7 @@ public class GameManager : MonoBehaviour
         {
             unitInstList = new List<UnitInst>();
             pngnInstList = new List<UnitInst>();
+            shipInst = new ShipInst();
             this.masterData = masterData;
             this.parentObj = parentObj;
             m_invension = invension;
@@ -173,15 +180,29 @@ public class GameManager : MonoBehaviour
     }
     public class TextManager<TInfo>
     {
-        public Text text{ set{ m_text = value; } }
-        virtual public TInfo info{ get{ return m_info; } set { info = value; m_text.text = info.ToString(); } }
+        public Text text { set { m_text = value; } }
+        virtual public TInfo info {
+            get { return m_info; }
+            set
+            {
+                m_info = value;
+                if (m_text != null) m_text.text = info.ToString();
+            }
+        }
 
         protected Text m_text;
         protected TInfo m_info;
     }
     public class TextManager<TInfo, TCast> :TextManager<TInfo>
     {
-        override public TInfo info { get { return m_info; } set { info = value; m_text.text = Convert.ChangeType(info, typeof(TCast)).ToString(); } }
+        override public TInfo info {
+            get { return m_info; }
+            set
+            {
+                m_info = value;
+                if(m_text != null) m_text.text = Convert.ChangeType(info, typeof(TCast)).ToString();
+            }
+        }
     }
     /*****public field*****/
     public MasterDataScript masterData;
@@ -213,16 +234,16 @@ public class GameManager : MonoBehaviour
         m_timeLimit.text = timeText;
 
 
-        //PrefsManager prefs = new PrefsManager();
-        //Formation formation = prefs.getFormation();
+        ////PrefsManager prefs = new PrefsManager();
+        ////Formation formation = prefs.getFormation();
         Formation formation = new Formation();
         formation.formationDataExists = true;
         formation.gridinfo = new int[10, 10]
         {
-            {0,0,0,0,0,0,10,10,10,10},
+            {0,0,0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,10,10,10,10,10},
             {0,0,0,10,10,0,0,0,0,0},
             {10,10,10,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0},
@@ -233,7 +254,7 @@ public class GameManager : MonoBehaviour
         formation.shiptype = 10010;
 
         m_player1UnitMgr.CreateInit(formation);
-        m_player2UnitMgr.CreateInit(formation);
+        //m_player2UnitMgr.CreateInit(formation);
     }
     void Start()
     {

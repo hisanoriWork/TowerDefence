@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98b403c1afce91a4287803f7fab651aa, type: 3}
   m_Name: ShipDataAlpha
   m_EditorClassIdentifier: 
-  Name: ShipData
+  Name: Ship
   ID: 10000
   Power: 0
   HP: 1000
