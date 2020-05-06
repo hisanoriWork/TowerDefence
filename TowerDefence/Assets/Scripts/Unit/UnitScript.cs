@@ -91,15 +91,6 @@ public class UnitScript : MonoBehaviour
         m_animator = GetComponent<Animator>();
     }
 
-    //スプライトを左右反対にする
-    public void Invert(bool b = true)
-    {
-        //Vector3 size = transform.localScale;
-        //size.x *= (b ^ isInvetated) ? -1 : 1;
-        //transform.localScale = size;
-        isInverted = b;
-    }
-
     //攻撃をして，Attackアニメーションに移行する
     public void Attack(int power)
     {

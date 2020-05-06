@@ -10,6 +10,9 @@ public class GameManager : MonoBehaviour
     /*****public class*****/
     public class TextManager<TInfo>
     {
+        protected Text m_text;
+        protected TInfo m_info;
+
         public TextManager(Text text)
         {
             m_text = text;
@@ -23,8 +26,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        protected Text m_text;
-        protected TInfo m_info;
+        
     }
     public class TextManager<TInfo, TCast> :TextManager<TInfo>
     {
@@ -39,7 +41,19 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    [SerializeField]public class Player
+    //public class GaugeManager<Tinfo>
+    //{
+    //    protected Image m_image;
+    //    protected Tinfo m_maxInfo;
+    //    protected Tinfo m_Info;
+    //    public GaugeManager(Image fillImage)
+    //    {
+    //        m_fillImage = fillImage;
+    //        m_emptyImage = emptyImage;
+    //    }
+
+    //}
+    public class Player
     {
         /*****public class*****/
         public class UnitInst
@@ -105,7 +119,7 @@ public class GameManager : MonoBehaviour
             int shipLayerNum = LayerMask.NameToLayer(shipLayerName);
             foreach (var unitInst in unitInstList)
             {
-                if (unitInst.script.data.isPngn) SetLayerRecursively(unitInst.obj , pngnLayerNum);
+                if (unitInst.script.data.unitType ==UnitType.Pngn) SetLayerRecursively(unitInst.obj , pngnLayerNum);
                 else unitInst.obj.layer = shipLayerNum;
             }
             SetLayerRecursively(shipInst.obj, shipLayerNum);
@@ -188,7 +202,7 @@ public class GameManager : MonoBehaviour
         private void UnitAdd(UnitInst Inst)
         {
             unitInstList.Add(Inst);
-            if (Inst.script.data.isPngn == true)
+            if (Inst.script.data.unitType == UnitType.Pngn)
             {
                 pngnInstList.Add(Inst);
             }
@@ -234,6 +248,7 @@ public class GameManager : MonoBehaviour
     private Player m_player1;
     private Player m_player2;
     private int[,] gird;
+    public bool isPlaying { get; set; } = true;
     //bool isFinished = false;
     /*****Mobehabiour method*****/
     void Awake()
@@ -241,6 +256,7 @@ public class GameManager : MonoBehaviour
         //PrefsManager prefs = new PrefsManager();
         //Formation formation = prefs.getFormation();
         //gird = formation.girdinfo;
+        //下はデバッグ用
         Formation formation = new Formation();
         formation.formationDataExists = true;
         formation.gridinfo = new int[10, 10]
@@ -257,6 +273,7 @@ public class GameManager : MonoBehaviour
             {0,0,0,0,0,0,0,0,0,0},
         };
         formation.shiptype = 10010;
+
         m_player1 = new Player(masterData,player1Place,formation);
         m_player2 = new Player(masterData,player2Place,formation);
         m_player1HP = new TextManager<int>(HP1Bar);
@@ -274,22 +291,25 @@ public class GameManager : MonoBehaviour
     }
     void Update()
     {
-        m_player1HP.info = m_player1.shipHP;
-        m_player2HP.info = m_player2.shipHP;
-        int victoryNum = CheckVictory(m_player1.shipHP, m_player2.shipHP,m_player1.pngnNum, m_player2.pngnNum);
-        switch(victoryNum)
+        if (isPlaying)
         {
-            case 3:
-                drawCanvas.SetActive(true);
-                break;
-            case 2:
-                loseCanvas.SetActive(true);
-                break;
-            case 1:
-                winCanvas.SetActive(true);
-                break;
-            default:
-                break;
+            m_player1HP.info = m_player1.shipHP;
+            m_player2HP.info = m_player2.shipHP;
+            int victoryNum = CheckVictory(m_player1.shipHP, m_player2.shipHP, m_player1.pngnNum, m_player2.pngnNum);
+            switch (victoryNum)
+            {
+                case 3:
+                    drawCanvas.SetActive(true);
+                    break;
+                case 2:
+                    loseCanvas.SetActive(true);
+                    break;
+                case 1:
+                    winCanvas.SetActive(true);
+                    break;
+                default:
+                    break;
+            }
         }
     }
     void FixedUpdate()
@@ -302,11 +322,13 @@ public class GameManager : MonoBehaviour
     /*****public method*****/
     public void Play()
     {
+        isPlaying = true;
         m_player1.Play();
         m_player2.Play();
     }
     public void Stop()
     {
+        isPlaying = false;
         m_player1.Stop();
         m_player2.Stop();
     }
