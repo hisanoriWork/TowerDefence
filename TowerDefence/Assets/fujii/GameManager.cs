@@ -8,7 +8,6 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     /*****public class*****/
-    
     public class TextManager<TInfo>
     {
         public TextManager(Text text)
@@ -61,15 +60,7 @@ public class GameManager : MonoBehaviour
         public List<UnitInst> pngnInstList;
         public ShipInst shipInst;
         public int layerNum;
-        public int shipHP
-        {
-            get
-            {
-                if (shipInst != null & shipInst.unitScript != null)
-                    return shipInst.unitScript.HP;
-                return 1000;
-            }
-        }
+        public int shipHP{get{return shipInst.unitScript.HP;}}
         public int pngnNum
         {
             get
@@ -82,10 +73,10 @@ public class GameManager : MonoBehaviour
                 return num;
             }
         }
-
         /*****private field*****/
         float m_dx = 0.75f, m_dy = 0.80f;
         bool m_isInverted = false;
+        
         /*****public method*****/
         public Player(MasterDataScript masterData, GameObject parentObj,Formation formation)
         {
@@ -230,7 +221,6 @@ public class GameManager : MonoBehaviour
                 SetLayerRecursively(n.gameObject, layer);
             }
         }
-
     }
     /*****public field*****/
     public MasterDataScript masterData;
@@ -238,20 +228,19 @@ public class GameManager : MonoBehaviour
     public GameObject player2Place;
     public Text HP1Bar, HP2Bar,timeText;
     public GameObject winCanvas, loseCanvas, drawCanvas;
-    
     /*****private field*****/
     private TextManager<int> m_player1HP , m_player2HP;
     private TextManager<float, int> m_timeLimit;
     private Player m_player1;
     private Player m_player2;
-    private int m_pngnNum1, m_pngnNum2;
+    private int[,] gird;
     //bool isFinished = false;
-
     /*****Mobehabiour method*****/
     void Awake()
     {
-        ////PrefsManager prefs = new PrefsManager();
-        ////Formation formation = prefs.getFormation();
+        //PrefsManager prefs = new PrefsManager();
+        //Formation formation = prefs.getFormation();
+        //gird = formation.girdinfo;
         Formation formation = new Formation();
         formation.formationDataExists = true;
         formation.gridinfo = new int[10, 10]
@@ -281,17 +270,13 @@ public class GameManager : MonoBehaviour
     {
         m_player1HP.info = m_player1.shipHP;
         m_player2HP.info = m_player2.shipHP;
-        m_pngnNum1 = m_player1.pngnNum;
-        m_pngnNum2 = m_player2.pngnNum;
         m_timeLimit.info = 10;
     }
     void Update()
     {
         m_player1HP.info = m_player1.shipHP;
         m_player2HP.info = m_player2.shipHP;
-        m_pngnNum1 = m_player1.pngnNum;
-        m_pngnNum2 = m_player2.pngnNum;
-        int victoryNum = CheckVictory();
+        int victoryNum = CheckVictory(m_player1.shipHP, m_player2.shipHP,m_player1.pngnNum, m_player2.pngnNum);
         switch(victoryNum)
         {
             case 3:
@@ -306,7 +291,6 @@ public class GameManager : MonoBehaviour
             default:
                 break;
         }
-
     }
     void FixedUpdate()
     {
@@ -315,49 +299,45 @@ public class GameManager : MonoBehaviour
             m_timeLimit.info += - Time.fixedDeltaTime;
         }
     }
-
     /*****public method*****/
     public void Play()
     {
         m_player1.Play();
         m_player2.Play();
     }
-
     public void Stop()
     {
         m_player1.Stop();
         m_player2.Stop();
     }
-
     public void TransitionScene(String sceneName)
     {
         SceneManager.LoadScene(sceneName);
     }
     /*****private method*****/
-    private int CheckVictory()
+    private int CheckVictory(int shipHP1 ,int shipHP2,int pngnNum1,int pngnNum2)
     {
         /*決まってない：0
          * プレイヤー1の勝利：1
          * プレイヤー2の勝利：2
          * ドロー：3
          */
-        if (m_pngnNum1 == 0 && m_pngnNum2 == 0) return 3;
-        else if (m_pngnNum1 == 0) return 2;
-        else if (m_pngnNum1 == 0) return 1;
+        if (pngnNum1 == 0 && pngnNum2 == 0) return 3;
+        else if (pngnNum1 == 0) return 2;
+        else if (pngnNum1 == 0) return 1;
 
-        if (m_player1HP.info == 0 && m_player2HP.info == 0) return 3;
-        else if (m_player1HP.info == 0) return 2;
-        else if (m_player2HP.info == 0) return 1;
+        if (shipHP1 == 0 && shipHP2 == 0) return 3;
+        else if (shipHP1 == 0) return 2;
+        else if (shipHP2 == 0) return 1;
 
         if (m_timeLimit.info < 0)
         {
-            if (m_player1HP.info == m_player2HP.info) return 3;
-            else if (m_player1HP.info < m_player2HP.info) return 2;
+            if (shipHP1 == shipHP2) return 3;
+            else if (shipHP1 < shipHP2) return 2;
             else return 1;
         }
         return 0;
     }
-
     private void RegardAsFriend(Player player)
     {
         player.ChangeLayer("Player1", "PlayerShip1");
