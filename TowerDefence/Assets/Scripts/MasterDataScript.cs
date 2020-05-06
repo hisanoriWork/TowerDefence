@@ -21,7 +21,7 @@ public class MasterDataScript : MonoBehaviour
     {
         foreach (UnitData data in unitDataList)
         {
-            if (data.Name == unitName) return data;
+            if (data.name == unitName) return data;
         }
         Debug.Log("名前が" + unitName + "であるUnitは存在しません");
         return null;

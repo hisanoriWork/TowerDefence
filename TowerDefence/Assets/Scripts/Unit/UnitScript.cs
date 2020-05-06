@@ -23,6 +23,7 @@ public class UnitScript : MonoBehaviour
     public float CT { get { return m_CT; } }
 
     public bool isPlaying { get; set; } = true;
+    public bool isInverted { get; set; } = false;
     /*****protected field*****/
     protected Animator m_animator;
     protected int m_power;
@@ -31,7 +32,7 @@ public class UnitScript : MonoBehaviour
     protected float m_maxCT;
     protected float m_CT;
     protected Vector3 m_movePos = Vector3.zero;
-    protected bool m_invension = false;
+    
     protected bool m_isDead = false;
     
 
@@ -82,22 +83,12 @@ public class UnitScript : MonoBehaviour
     //初期化
     public void Init()
     {
-        m_power = data.Power;
+        m_power = data.power;
         m_maxHP = data.HP;
         m_HP = data.HP;
         m_maxCT = data.CT;
         m_CT = data.CT;
-        Invert(m_invension);
         m_animator = GetComponent<Animator>();
-    }
-
-    //スプライトを左右反対にする
-    public void Invert(bool b = true)
-    {
-        Vector3 size = transform.localScale;
-        size.x *= (b ^ m_invension) ? -1 : 1;
-        transform.localScale = size;
-        m_invension = b;
     }
 
     //攻撃をして，Attackアニメーションに移行する

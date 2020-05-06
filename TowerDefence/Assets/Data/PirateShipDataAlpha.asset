@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98b403c1afce91a4287803f7fab651aa, type: 3}
   m_Name: PirateShipDataAlpha
   m_EditorClassIdentifier: 
-  Name: Ship1
-  ID: 114514
-  Power: 0
+  name: PirateShip
+  ID: 10010
+  power: 10
   HP: 922
   CT: 101
-  Cost: 500
-  Prefab: {fileID: 7151728711608997689, guid: c8b0f23dbe91bee418e3626d18e7d57e, type: 3}
-  IsPngn: 0
-  PngnCanGetOn: 1
-  BlockCanGetOn: 1
-  Indestructible: 0
-  Form: 
+  cost: 10
+  prefab: {fileID: 7151728711608997689, guid: c8b0f23dbe91bee418e3626d18e7d57e, type: 3}
+  isPngn: 0
+  pngnCanGetOn: 0
+  blockCanGetOn: 0
+  indestructible: 0
+  form: 
