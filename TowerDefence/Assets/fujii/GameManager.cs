@@ -7,9 +7,10 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
+    /*****public class*****/
     public class UnitManager
     {
-        /*****public field*****/
+        /*****public class*****/
         public class UnitInst
         {
             public GameObject obj;
@@ -21,13 +22,12 @@ public class GameManager : MonoBehaviour
             public UnitScript unitScript;
             public ShipScript shipScript;
         }
-
+        /*****public field*****/
         public MasterDataScript masterData;
         public List<UnitInst> unitInstList;
         public List<UnitInst> pngnInstList;
         public ShipInst shipInst;
         public GameObject parentObj;
-        public bool invension = true;
 
         public int shipHP {get { return shipInst.unitScript.HP;} }
         public int pngnNum
@@ -45,8 +45,7 @@ public class GameManager : MonoBehaviour
 
         /*****private field*****/
         float m_dx = 0.75f, m_dy = 0.80f;
-        int m_gridX = 10, m_gridY = 10;
-
+        bool m_invension = false;
         /*****public method*****/
         public void Init(MasterDataScript masterData, GameObject parentObj, bool invension)
         {
@@ -54,33 +53,35 @@ public class GameManager : MonoBehaviour
             pngnInstList = new List<UnitInst>();
             this.masterData = masterData;
             this.parentObj = parentObj;
-            this.invension = invension;
+            m_invension = invension;
         }
-        public void SetFormation(List<int> IDlist, int shipID)
+        public void CreateInit(Formation formation)
         {
-            Vector3 pos = parentObj.transform.position;
-            pos.x += -(m_gridX / 2 - 0.5f) * m_dx;
-            pos.y += -(m_gridY / 2 - 0.5f) * m_dy;
+            int gridX = formation.gridinfo.GetLength(1);
+            int gridY = formation.gridinfo.GetLength(0);
+            Vector3 pos = Vector3.zero;
+            pos.x = parentObj.transform.position.x - (gridX / 2 - 0.5f) * m_dx;
+            pos.y = parentObj.transform.position.y - (gridY / 2 - 0.5f) * m_dy;
             UnitInst inst = new UnitInst();
-            for (int i = 0; i < m_gridY; i++)
+            for (int i = 0; i < gridY; i++)
             {
-                for (int j = 0; j < m_gridX; j++)
+                for (int j = 0; j < gridX; j++)
                 {
-                    inst = CreateUnit(IDlist[i], pos);
+                    inst = CreateUnit(formation.gridinfo[i,j], pos);
                     if (inst != null)
                     {
                         UnitAdd(inst);
                     }
                     pos.x += m_dx;
                 }
-                pos.x = parentObj.transform.position.x - (m_gridX / 2 - 0.5f) * m_dx;
+                pos.x = parentObj.transform.position.x - (gridX / 2 - 0.5f) * m_dx;
                 pos.y += m_dy;
             }
-            shipInst = CreateShip(shipID, parentObj.transform.position);
+            shipInst = CreateShip(formation.shiptype, parentObj.transform.position);
         }
         public void Invert(bool b)
         {
-            invension = b;
+            m_invension = b;
             foreach (var i in unitInstList)
             {
                 i.script.Invert(b);
@@ -131,7 +132,7 @@ public class GameManager : MonoBehaviour
                 GameObject obj = Instantiate(data.unitData.Prefab);
                 obj.transform.SetParent(parentObj.transform);
 
-                obj.transform.position = pos + ((invension) ? Vector3.Scale(data.offSet, new Vector3(-1, 1, 1)) : data.offSet);
+                obj.transform.position = pos + ((m_invension) ? Vector3.Scale(data.offSet, new Vector3(-1, 1, 1)) : data.offSet);
                 ShipInst inst = new ShipInst();
                 inst.obj = obj;
                 inst.unitScript = obj.GetComponent<UnitScript>();
@@ -170,32 +171,30 @@ public class GameManager : MonoBehaviour
 
         
     }
-
-    
-    public class TextManager<Info>
+    public class TextManager<InfoType>
     {
         protected Text text;
-        protected Info info;
+        protected InfoType info;
 
-        virtual public void SetInfo(Info info)
+        virtual public void SetInfo(InfoType info)
         {
             this.info = info;
             text.text = info.ToString();
         }
 
-        public Info GetInfo() { return info; }
+        public InfoType GetInfo() { return info; }
 
         public void SetText(Text text)
         {
             this.text = text;
         }
     }
-    public class TextManager<Info, CastInfo> :TextManager<Info>
+    public class TextManager<InfoType, CastType> :TextManager<InfoType>
     {
-        override public void SetInfo(Info info)
+        override public void SetInfo(InfoType info)
         {
             this.info = info;
-            text.text = Convert.ChangeType(info, typeof(CastInfo)).ToString();
+            text.text = Convert.ChangeType(info, typeof(CastType)).ToString();
         }
     }
     /*****public field*****/
@@ -230,24 +229,25 @@ public class GameManager : MonoBehaviour
 
         //PrefsManager prefs = new PrefsManager();
         //Formation formation = prefs.getFormation();
-        //Formation formation = prefs.getFormation();
-        //上の項目ができたと仮定する
-        //Formation formation = new Formation();
-        //for (int i = 0; i < 120; i++)
-        //{
-        //    formation.gridinfo[i] = UnityEngine.Random.Range(10, 11);
-        //}
-        //formation.shiptype = 114514;
-        //List<int> temp = new List<int>();
-        //for (int i = 0; i < formation.gridinfo.Length; i++)
-        //{
-        //    temp.Add(formation.gridinfo[i]);
-        //}
-        //ここまで
+        Formation formation = new Formation();
+        formation.formationDataExists = true;
+        formation.gridinfo = new int[10, 10]
+        {
+            {0,0,0,0,0,0,10,10,10,10},
+            {0,0,0,10,10,0,0,0,0,0},
+            {10,10,10,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0,0,0},
+        };
+        formation.shiptype = 10010;
 
-        //m_player1UnitMgr.SetFormation(temp, formation.shiptype);
-        //m_player2UnitMgr.SetFormation(temp, formation.shiptype);
-        //m_player2UnitMgr.Invert(true);
+        m_player1UnitMgr.CreateInit(formation);
+        m_player2UnitMgr.CreateInit(formation);
     }
     void Start()
     {
