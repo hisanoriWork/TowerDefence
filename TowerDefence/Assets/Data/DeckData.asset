@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98b403c1afce91a4287803f7fab651aa, type: 3}
   m_Name: DeckData
   m_EditorClassIdentifier: 
-  Name: Deck
+  name: Deck
   ID: -1
-  Power: 0
+  power: 10
   HP: 1000
   CT: 101
-  Cost: 0
-  Prefab: {fileID: 1854955134177114285, guid: 5eba9a63feda3314d8347a5a18a65977, type: 3}
-  IsPngn: 0
-  PngnCanGetOn: 1
-  BlockCanGetOn: 1
-  Indestructible: 1
-  Form: 
+  cost: 10
+  prefab: {fileID: 1854955134177114285, guid: 5eba9a63feda3314d8347a5a18a65977, type: 3}
+  unitType: 3
+  pngnCanGetOn: 1
+  blockCanGetOn: 1
+  indestructible: 1
+  form: []

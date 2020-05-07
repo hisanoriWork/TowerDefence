@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98b403c1afce91a4287803f7fab651aa, type: 3}
   m_Name: BlockData
   m_EditorClassIdentifier: 
-  Name: Block
+  name: Block
   ID: 100
-  Power: 0
+  power: 10
   HP: 100
   CT: 101
-  Cost: 10
-  Prefab: {fileID: 5476036888444427127, guid: 1717022658035414f80042bf0663739c, type: 3}
-  IsPngn: 0
-  PngnCanGetOn: 1
-  BlockCanGetOn: 1
-  Indestructible: 0
-  Form: 
+  cost: 10
+  prefab: {fileID: 1563580943213496827, guid: 2ccf1ee791eb4eb45b133d9aa5e8143c, type: 3}
+  unitType: 0
+  pngnCanGetOn: 0
+  blockCanGetOn: 0
+  indestructible: 0
+  form: []

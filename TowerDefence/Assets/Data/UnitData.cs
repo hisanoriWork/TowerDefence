@@ -26,5 +26,14 @@ public class UnitData : ScriptableObject
     public bool pngnCanGetOn = false; //上にペンギンは乗れるかどうか
     public bool blockCanGetOn = false; //上に土台系は乗れるかどうか
     public bool indestructible = false; //破壊不能オブジェクトかどうか
-    public List<bool> form; //Unitが編成画面で構成されるときのグリッド単位の形
+    //public List<bool> form; //Unitが編成画面で構成されるときのグリッド単位の形
+    [System.SerializableAttribute]
+    public class GridForm
+    {
+        public int y, x;
+    }
+
+    //Inspectorに表示される
+    [SerializeField]
+    private GridForm[] form;
 }
