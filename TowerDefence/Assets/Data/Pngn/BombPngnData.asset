@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 98b403c1afce91a4287803f7fab651aa, type: 3}
-  m_Name: PngnData
+  m_Name: BombPngnData
   m_EditorClassIdentifier: 
-  name: Pngn
-  ID: 10
+  name: BombPngn
+  ID: 14
   power: 10
   HP: 100
   CT: 5
   cost: 10
-  prefab: {fileID: 2706958961471863537, guid: b38e3d62b2ed1cc4e966418e11eda93b, type: 3}
-  isPngn: 1
+  prefab: {fileID: 1563580943213496827, guid: 2ccf1ee791eb4eb45b133d9aa5e8143c, type: 3}
+  unitType: 0
   pngnCanGetOn: 0
   blockCanGetOn: 0
   indestructible: 0
-  form: 
+  form: []

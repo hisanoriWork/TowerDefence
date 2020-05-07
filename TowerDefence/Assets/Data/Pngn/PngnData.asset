@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 98b403c1afce91a4287803f7fab651aa, type: 3}
-  m_Name: ShipDataAlpha
+  m_Name: PngnData
   m_EditorClassIdentifier: 
-  Name: Ship
-  ID: 10000
-  Power: 0
-  HP: 1000
-  CT: 101
-  Cost: 500
-  Prefab: {fileID: 2175080275073575139, guid: 4754a8b44f67c33449df4e6d10e8c446, type: 3}
-  IsPngn: 0
-  PngnCanGetOn: 1
-  BlockCanGetOn: 1
-  Indestructible: 0
-  Form: 
+  name: Pngn
+  ID: 10
+  power: 10
+  HP: 100
+  CT: 5
+  cost: 10
+  prefab: {fileID: 2706958961471863537, guid: b38e3d62b2ed1cc4e966418e11eda93b, type: 3}
+  unitType: 0
+  pngnCanGetOn: 0
+  blockCanGetOn: 0
+  indestructible: 0
+  form: []

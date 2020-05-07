@@ -48,10 +48,20 @@ PrefabInstance:
       propertyPath: m_Size.x
       value: 1.398
       objectReference: {fileID: 0}
+    - target: {fileID: 5571316767179286978, guid: 23110c9c5b0d3fc47b3d55ef1fa2f821,
+        type: 3}
+      propertyPath: data
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6061645891025098690, guid: 23110c9c5b0d3fc47b3d55ef1fa2f821,
         type: 3}
       propertyPath: m_Name
       value: Deck
+      objectReference: {fileID: 0}
+    - target: {fileID: 6061645891025098690, guid: 23110c9c5b0d3fc47b3d55ef1fa2f821,
+        type: 3}
+      propertyPath: m_TagString
+      value: Block
       objectReference: {fileID: 0}
     - target: {fileID: 6061645891025098692, guid: 23110c9c5b0d3fc47b3d55ef1fa2f821,
         type: 3}

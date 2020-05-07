@@ -10,17 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 98b403c1afce91a4287803f7fab651aa, type: 3}
-  m_Name: BlockData
+  m_Name: CannnonPngnData
   m_EditorClassIdentifier: 
-  name: Block
-  ID: 100
+  name: CannonPngn
+  ID: 12
   power: 10
   HP: 100
-  CT: 101
+  CT: 5
   cost: 10
-  prefab: {fileID: 1563580943213496827, guid: 2ccf1ee791eb4eb45b133d9aa5e8143c, type: 3}
+  prefab: {fileID: 1143180996646596874, guid: 581e6c9f6f9935b4caa4fbf29630a1fa, type: 3}
   unitType: 0
   pngnCanGetOn: 0
   blockCanGetOn: 0
   indestructible: 0
-  form: []
+  form:
+  - y: 0
+    x: 1

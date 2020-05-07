@@ -39,9 +39,19 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 7244c31f58aeedd44a751aa6891461e9,
         type: 3}
+    - target: {fileID: 1642800226225156914, guid: 23110c9c5b0d3fc47b3d55ef1fa2f821,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6061645891025098690, guid: 23110c9c5b0d3fc47b3d55ef1fa2f821,
         type: 3}
       propertyPath: m_Name
+      value: Block
+      objectReference: {fileID: 0}
+    - target: {fileID: 6061645891025098690, guid: 23110c9c5b0d3fc47b3d55ef1fa2f821,
+        type: 3}
+      propertyPath: m_TagString
       value: Block
       objectReference: {fileID: 0}
     - target: {fileID: 6061645891025098692, guid: 23110c9c5b0d3fc47b3d55ef1fa2f821,

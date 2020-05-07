@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &7939235995641230357
+--- !u!1001 &3752585971650983271
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 2706958961471863537, guid: b38e3d62b2ed1cc4e966418e11eda93b,
         type: 3}
       propertyPath: m_Name
-      value: Pngn
+      value: ArtilleryGunPngn
       objectReference: {fileID: 0}
     - target: {fileID: 2706958961471863543, guid: b38e3d62b2ed1cc4e966418e11eda93b,
         type: 3}
@@ -67,5 +67,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4386238940931212529, guid: b38e3d62b2ed1cc4e966418e11eda93b,
+        type: 3}
+      propertyPath: data
+      value: 
+      objectReference: {fileID: 11400000, guid: 8301f0363df6ae741902515765b2d48f,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b38e3d62b2ed1cc4e966418e11eda93b, type: 3}

@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 98b403c1afce91a4287803f7fab651aa, type: 3}
-  m_Name: CannnonPngnData
+  m_Name: ArtilleryGunPngn
   m_EditorClassIdentifier: 
-  name: CannonPngn
-  ID: 17
+  name: ArtilleryGunPngn
+  ID: 15
   power: 10
   HP: 100
   CT: 5
   cost: 10
-  prefab: {fileID: 1143180996646596874, guid: 581e6c9f6f9935b4caa4fbf29630a1fa, type: 3}
+  prefab: {fileID: 1261801581952225174, guid: 25bd3f8531338404db4ad41614023737, type: 3}
   unitType: 0
   pngnCanGetOn: 0
   blockCanGetOn: 0

@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 2706958961471863537, guid: b38e3d62b2ed1cc4e966418e11eda93b,
         type: 3}
       propertyPath: m_Name
-      value: Pngn
+      value: ArcherPngn
       objectReference: {fileID: 0}
     - target: {fileID: 2706958961471863543, guid: b38e3d62b2ed1cc4e966418e11eda93b,
         type: 3}
@@ -67,5 +67,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4386238940931212529, guid: b38e3d62b2ed1cc4e966418e11eda93b,
+        type: 3}
+      propertyPath: data
+      value: 
+      objectReference: {fileID: 11400000, guid: 639416c51d8fe474f8970526ac64f474,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b38e3d62b2ed1cc4e966418e11eda93b, type: 3}
