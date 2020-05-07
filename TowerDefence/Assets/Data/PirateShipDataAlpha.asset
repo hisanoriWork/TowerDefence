@@ -19,8 +19,42 @@ MonoBehaviour:
   CT: 101
   cost: 10
   prefab: {fileID: 7151728711608997689, guid: c8b0f23dbe91bee418e3626d18e7d57e, type: 3}
-  isPngn: 0
-  pngnCanGetOn: 0
-  blockCanGetOn: 0
+  unitType: 0
+  pngnCanGetOn: 1
+  blockCanGetOn: 1
   indestructible: 0
-  form: 
+  form:
+  - y: 0
+    x: 1
+  - y: 0
+    x: 2
+  - y: 0
+    x: 3
+  - y: 0
+    x: 4
+  - y: 0
+    x: 5
+  - y: 0
+    x: 6
+  - y: 0
+    x: 7
+  - y: 0
+    x: 8
+  - y: 0
+    x: 9
+  - y: 0
+    x: 0
+  - y: 1
+    x: 0
+  - y: 1
+    x: 1
+  - y: 1
+    x: 2
+  - y: 1
+    x: 3
+  - y: 1
+    x: 4
+  - y: 2
+    x: 1
+  - y: 2
+    x: 2

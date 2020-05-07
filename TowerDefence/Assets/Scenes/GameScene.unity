@@ -465,7 +465,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1448,7 +1448,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1814785212, guid: 0ab38f78f9f3f7c44814842b34d6ccdf, type: 3}
       propertyPath: m_Type
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1814785212, guid: 0ab38f78f9f3f7c44814842b34d6ccdf, type: 3}
       propertyPath: m_FillMethod
@@ -1657,7 +1657,7 @@ PrefabInstance:
     - target: {fileID: 5083751137022293981, guid: 0ab38f78f9f3f7c44814842b34d6ccdf,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ab38f78f9f3f7c44814842b34d6ccdf, type: 3}
@@ -1777,6 +1777,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: OptionCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 1204844859026074087, guid: 999faedb6ac5519459568fd81399d37e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1204844860013560712, guid: 999faedb6ac5519459568fd81399d37e,
         type: 3}

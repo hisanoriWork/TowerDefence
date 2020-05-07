@@ -12,15 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98b403c1afce91a4287803f7fab651aa, type: 3}
   m_Name: CannnonPngnData
   m_EditorClassIdentifier: 
-  Name: CannonPngn
-  ID: 11
-  Power: 1
+  name: CannonPngn
+  ID: 17
+  power: 10
   HP: 100
   CT: 5
-  Cost: 10
-  Prefab: {fileID: 3458729767723492552, guid: 490c7a4d163fb4c4e9e6a9f6f8823d8f, type: 3}
-  IsPngn: 1
-  PngnCanGetOn: 0
-  BlockCanGetOn: 0
-  Indestructible: 0
-  Form: 
+  cost: 10
+  prefab: {fileID: 1143180996646596874, guid: 581e6c9f6f9935b4caa4fbf29630a1fa, type: 3}
+  unitType: 0
+  pngnCanGetOn: 0
+  blockCanGetOn: 0
+  indestructible: 0
+  form:
+  - y: 0
+    x: 1

@@ -64,10 +64,10 @@ public class UnitScript : MonoBehaviour
 
             if (m_HP < 0 & !m_isDead) Dead();
 
-            if (m_isDead)
-            {
-                gameObject.SetActive(false);
-            }
+            //if (m_isDead)
+            //{
+            //    gameObject.SetActive(false);
+            //}
         }
     }
 
@@ -150,5 +150,9 @@ public class UnitScript : MonoBehaviour
         m_movePos += vec;
     }
 
+    public void ToInactive()
+    {
+        gameObject.SetActive(false);
+    }
 }
 

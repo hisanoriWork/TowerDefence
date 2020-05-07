@@ -27,16 +27,10 @@ public class PngnScript : MonoBehaviour
             }
         }
     }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        
+    }
     /*****protected method*****/
-    public void Attack(int damage)
-    {
-    }
-
-    public void Hurt(int damage)
-    {
-    }
-
-    public void Dead()
-    {
-    }
 }
