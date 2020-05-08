@@ -18,8 +18,8 @@ MonoBehaviour:
   HP: 100
   CT: 101
   cost: 10
-  prefab: {fileID: 1563580943213496827, guid: 2ccf1ee791eb4eb45b133d9aa5e8143c, type: 3}
-  unitType: 0
+  prefab: {fileID: 5476036888444427127, guid: 1717022658035414f80042bf0663739c, type: 3}
+  unitType: 2
   pngnCanGetOn: 1
   blockCanGetOn: 1
   indestructible: 0
