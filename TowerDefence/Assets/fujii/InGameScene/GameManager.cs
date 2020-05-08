@@ -306,7 +306,7 @@ public class GameManager : MonoBehaviour
     {
         m_player1HP.maxInfo = m_player1HP.info = m_player1.shipHP;
         m_player2HP.maxInfo = m_player2HP.info = m_player1.shipHP;
-        m_timeLimit.info = 10;
+        m_timeLimit.info = 100;
     }
     void Update()
     {

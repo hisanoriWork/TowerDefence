@@ -5,32 +5,40 @@ using UnityEngine;
 public class PngnScript : MonoBehaviour
 {
     /*****public field*****/
-    public UnitScript Base;
-    protected Rigidbody2D Rigidbody;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        Rigidbody = GetComponent<Rigidbody2D>();
-    }
-
+    public UnitScript baseUnit;
+    public Collision2D groundCollision = null;
     /*****Monobehaviour method*****/
     void Update()
     {
-        if (Base.isPlaying)
+        if (baseUnit.isPlaying)
         {
             //攻撃，ダメージを負う，死ぬ以外の処理を書く
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
                 int damage = Random.Range(1, 11);
-                Base.Hurt(damage);
+                baseUnit.Hurt(damage);
             }
         }
+        
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        
+        if ((collision.transform.tag == "Ship" || collision.transform.tag == "Block") 
+            & this.transform.position.y >= collision.contacts[0].point.y)
+        {
+            groundCollision = collision;
+        }
     }
+
+    void OnCollisionExit2D(Collision2D collision)
+    {
+        if (groundCollision == collision)
+        {
+            baseUnit.Hurt(10000);
+        }
+    }
+
+    
     /*****protected method*****/
 }
