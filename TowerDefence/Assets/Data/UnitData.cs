@@ -23,17 +23,18 @@ public class UnitData : ScriptableObject
     [Range(0, 1000)] public int cost = 10; //Unitを設置するためのコスト
     public GameObject prefab; //Unitと対応したプレハブ
     public UnitType unitType;
+    public Sprite sprite;
     public bool pngnCanGetOn = false; //上にペンギンは乗れるかどうか
     public bool blockCanGetOn = false; //上に土台系は乗れるかどうか
     public bool indestructible = false; //破壊不能オブジェクトかどうか
     //public List<bool> form; //Unitが編成画面で構成されるときのグリッド単位の形
-    [System.SerializableAttribute]
-    public class GridForm
-    {
-        public int y, x;
-    }
-
-    //Inspectorに表示される
+    
     [SerializeField]
     private GridForm[] form;
+}
+
+[System.SerializableAttribute]
+public class GridForm
+{
+    public int y, x;
 }
