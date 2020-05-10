@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
         public TextManager(Text text)
         {
             m_text = text;
+            
         }
         virtual public TInfo info {
             get { return m_info; }
@@ -41,18 +42,35 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    //public class GaugeManager<Tinfo>
-    //{
-    //    protected Image m_image;
-    //    protected Tinfo m_maxInfo;
-    //    protected Tinfo m_Info;
-    //    public GaugeManager(Image fillImage)
-    //    {
-    //        m_fillImage = fillImage;
-    //        m_emptyImage = emptyImage;
-    //    }
-
-    //}
+    public class GaugeManager
+    {
+        protected Image m_image;
+        protected int m_maxInfo;
+        protected int m_info;
+        public GaugeManager(Image image)
+        {
+            m_image = image;
+            m_maxInfo = m_info = System.Int32.MaxValue;
+        }
+        public int maxInfo
+        {
+            get { return m_maxInfo; }
+            set
+            {
+                m_maxInfo = value;
+                m_image.fillAmount = (float)m_info / (float)m_maxInfo;
+            }
+        }
+        public int info
+        {
+            get { return m_info; }
+            set
+            {
+                m_info = value;
+                m_image.fillAmount = (float)m_info / (float)m_maxInfo;
+            }
+        }
+    }
     public class Player
     {
         /*****public class*****/
@@ -88,7 +106,7 @@ public class GameManager : MonoBehaviour
             }
         }
         /*****private field*****/
-        float m_dx = 0.75f, m_dy = 0.80f;
+        float m_dx = 0.8f, m_dy = 0.8f;
         bool m_isInverted = false;
         
         /*****public method*****/
@@ -240,10 +258,11 @@ public class GameManager : MonoBehaviour
     public MasterDataScript masterData;
     public GameObject player1Place;
     public GameObject player2Place;
-    public Text HP1Bar, HP2Bar,timeText;
-    public GameObject winCanvas, loseCanvas, drawCanvas;
+    public Image HP1Bar, HP2Bar;
+    public Text timeText;
+    public GameObject winCanvas, loseCanvas, drawCanvas ,optionCanvas;
     /*****private field*****/
-    private TextManager<int> m_player1HP , m_player2HP;
+    private GaugeManager m_player1HP , m_player2HP;
     private TextManager<float, int> m_timeLimit;
     private Player m_player1;
     private Player m_player2;
@@ -261,23 +280,23 @@ public class GameManager : MonoBehaviour
         formation.formationDataExists = true;
         formation.gridinfo = new int[10, 10]
         {
-            {0,0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,14,13,12,11,10},
-            {0,0,0,15,10,0,0,0,0,0},
-            {15,15,10,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0},
+            {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+            {  0,  0,  0,  0,  0, 14,100,100, 11, 10},
+            {  0,  0,  0,100, 10,  0,100,100,  0,  0},
+            { 15, 15,100,100,  0,  0,100,  0,  0,  0},
+            {  0,  0,  0, 11,  0,  0,  0,  0,  0,  0},
+            {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+            {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+            {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+            {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+            {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
         };
         formation.shiptype = 10010;
 
         m_player1 = new Player(masterData,player1Place,formation);
         m_player2 = new Player(masterData,player2Place,formation);
-        m_player1HP = new TextManager<int>(HP1Bar);
-        m_player2HP = new TextManager<int>(HP2Bar);
+        m_player1HP = new GaugeManager(HP1Bar);
+        m_player2HP = new GaugeManager(HP2Bar);
         m_timeLimit = new TextManager<float, int>(timeText);
 
         RegardAsFriend(m_player1);
@@ -285,16 +304,19 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-        m_player1HP.info = m_player1.shipHP;
-        m_player2HP.info = m_player2.shipHP;
-        m_timeLimit.info = 10;
+        m_player1HP.maxInfo = m_player1HP.info = m_player1.shipHP;
+        m_player2HP.maxInfo = m_player2HP.info = m_player1.shipHP;
+        m_timeLimit.info = 100;
     }
     void Update()
     {
         if (isPlaying)
         {
-            m_player1HP.info = m_player1.shipHP;
-            m_player2HP.info = m_player2.shipHP;
+            if (m_player1HP.info != m_player1.shipHP)
+                m_player1HP.info = m_player1.shipHP;
+            if (m_player2HP.info != m_player2.shipHP)
+                m_player2HP.info = m_player2.shipHP;
+           
             int victoryNum = CheckVictory(m_player1.shipHP, m_player2.shipHP, m_player1.pngnNum, m_player2.pngnNum);
             switch (victoryNum)
             {
@@ -331,6 +353,22 @@ public class GameManager : MonoBehaviour
         isPlaying = false;
         m_player1.Stop();
         m_player2.Stop();
+    }
+
+    public void OpenOption()
+    {
+        m_player1.Stop();
+        m_player2.Stop();
+        optionCanvas.SetActive(true);
+    }
+
+    public void CloseOption()
+    {
+        if (isPlaying)
+            Play();
+        if (!isPlaying)
+            Stop();
+        optionCanvas.SetActive(false);
     }
     public void TransitionScene(String sceneName)
     {
