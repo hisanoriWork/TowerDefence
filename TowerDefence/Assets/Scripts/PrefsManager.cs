@@ -33,10 +33,25 @@ public class Formation
     //0は「存在しない」
 }
 
+public class FormationForJson
+{
+    public bool formationDataExists;
+    //1がデータあり、0がなし
+
+    public int[] gridinfoForJson = new int[100];
+
+    //0は「存在しない」
+
+
+    public int shiptype;
+    //0は「存在しない」
+}
+
 
 public class PrefsManager
 { 
     Formation formation = new Formation();
+    FormationForJson formationForJson = new FormationForJson();
 
 
     public Formation GetFormation()
@@ -51,8 +66,17 @@ public class PrefsManager
         }
         else
         {
+            formationForJson = JsonUtility.FromJson<FormationForJson>(json);
             formation.formationDataExists = true;
-            formation = JsonUtility.FromJson<Formation>(json);
+            formation.shiptype = formationForJson.shiptype;
+            for (int i = 0; i < 10; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    formation.gridinfo[i, j] = formationForJson.gridinfoForJson[i * 10 + j];
+                }
+            }
+
             return formation;
         }
     }
@@ -60,12 +84,25 @@ public class PrefsManager
 
     public bool SetFormation(int[,] gridinfo,int shiptype)
     {
+        formation.formationDataExists = true;
         formation.gridinfo = gridinfo;
         formation.shiptype = shiptype;
 
-        string json = JsonUtility.ToJson(formation);
 
-        Debug.Log("json:"+json);
+        formationForJson.formationDataExists = formation.formationDataExists;
+        formationForJson.shiptype = formation.shiptype;
+
+        for (int i = 0; i < 10; i++)
+        {
+            for (int j = 0; j < 10; j++)
+            {
+                formationForJson.gridinfoForJson[i * 10 + j] = formation.gridinfo[i, j];
+            }
+        }
+
+        string json = JsonUtility.ToJson(formationForJson);
+
+        //Debug.Log("json:"+json);
 
         PlayerPrefs.SetString("formation",json);
 
