@@ -86,7 +86,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ca24c74ef8561a4c9ccc8f1a1037adf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: 1bd49e5ac4f0acd479c2dbeff1aa7e68, type: 2}
+  data: {fileID: 0}
   attackEvent:
     m_PersistentCalls:
       m_Calls: []
