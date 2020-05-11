@@ -301,6 +301,7 @@ public class GameManager : MonoBehaviour
 
         RegardAsFriend(m_player1);
         RegardAsOpponent(m_player2);
+        
     }
     void Start()
     {
@@ -347,12 +348,15 @@ public class GameManager : MonoBehaviour
         isPlaying = true;
         m_player1.Play();
         m_player2.Play();
+        Pauser.Resume();
     }
     public void Stop()
     {
         isPlaying = false;
         m_player1.Stop();
         m_player2.Stop();
+        
+
     }
 
     public void OpenOption()
