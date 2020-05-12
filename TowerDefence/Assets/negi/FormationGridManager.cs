@@ -92,8 +92,8 @@ public class FormationChanger
 
 
 
-        Debug.Log(contentRectTransform.rect);
-        Debug.Log(movingUnitCoordinateRect);
+        //Debug.Log(contentRectTransform.rect);
+        //Debug.Log(movingUnitCoordinateRect);
 
 
         if (contentRectTransform.rect.Contains(movingUnitCoordinateRect))
@@ -149,10 +149,6 @@ public class FormationGridManager : MonoBehaviour
 
     /*****private field*****/
     private UnitData m_unitData;
-
-
-
-
 
 
     private void Start()
@@ -247,7 +243,7 @@ public class FormationGridManager : MonoBehaviour
         return;
     }
 
-    public void Attach(int movingUnitID)
+    public void Attach(int movingUnitID, UnitType movinUnitType)
     {
 
         int[] attachingUnitPosition = fc.SearchNearSquare();
@@ -256,6 +252,7 @@ public class FormationGridManager : MonoBehaviour
 
         if (attachingUnitPosition != null)
         {
+            //Debug.Log("attach"+movingUnitID);
             fc.formation.gridinfo[attachingUnitPosition[0], attachingUnitPosition[1]] = movingUnitID;
             if (m_unitData != null) fc.eachGrids[attachingUnitPosition[0], attachingUnitPosition[1]].UpdateEachGrid(m_unitData.sprite, movingUnitID.ToString());
         }
