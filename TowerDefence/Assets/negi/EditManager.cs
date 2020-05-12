@@ -74,6 +74,8 @@ public class EditManager : MonoBehaviour
 
     private void createSelectableUnits(UnitType unitType, List<UnitData> unitDataList)
     {
+        SelectableUnit sel;
+
         //Pngn Block用
         selectableUnits.Add(unitType, new List<GameObject>());
         foreach (UnitData data in unitDataList)
@@ -82,7 +84,13 @@ public class EditManager : MonoBehaviour
             obj.name = data.ID.ToString();
             obj.transform.Find("Image").GetComponent<Image>().sprite = data.sprite;
             obj.transform.Find("UnitName").GetComponent<Text>().text = data.name;
-            obj.transform.Find("UnitDetails").GetComponent<Text>().text = "Power:" + data.power + "   HP:" + data.HP + "\nCT:" + data.CT + "   cost:" + data.cost;
+            obj.transform.Find("UnitDetails").GetComponent<Text>().text 
+                = "Power:" + data.power + "   HP:" + data.HP + "\nCT:" + data.CT + "   cost:" + data.cost;
+
+            sel = obj.GetComponent<SelectableUnit>();
+            sel.selectableUnitID = data.ID;
+            sel.selectableUnitType = data.unitType;
+
             selectableUnits[unitType].Add(obj);
         }
 
@@ -92,6 +100,8 @@ public class EditManager : MonoBehaviour
 
     private void createSelectableUnits(UnitType unitType, List<ShipData> unitDataList)
     {
+        SelectableUnit sel;
+
         //Ship用
         selectableUnits.Add(unitType, new List<GameObject>());
         foreach (ShipData data in unitDataList)
@@ -102,6 +112,11 @@ public class EditManager : MonoBehaviour
             obj.transform.Find("UnitName").GetComponent<Text>().text = data.name;
             obj.transform.Find("UnitDetails").GetComponent<Text>().text 
                 = "Power:" + data.unitData.power + "   HP:" + data.unitData.HP + "\nCT:" + data.unitData.CT + "   cost:" + data.unitData.cost;
+
+            sel = obj.GetComponent<SelectableUnit>();
+            sel.selectableUnitID = data.unitData.ID;
+            sel.selectableUnitType = data.unitData.unitType;
+
             selectableUnits[unitType].Add(obj);
         }
 
@@ -151,12 +166,27 @@ public class EditManager : MonoBehaviour
         return;
     }
 
-    public void CreateInstance(GameObject gameObject)
+    public void ClickEachSelectableUnit(GameObject selectableUnit)
     {
-        movingUnitObject.SetActive(true);
-        movingUnit.movingUnitID = int.Parse(gameObject.name);
-        movingUnitObject.GetComponent<Image>().sprite = gameObject.transform.Find("Image").GetComponent<Image>().sprite;
-        movingUnitObject.transform.position = Input.mousePosition;
+
+        SelectableUnit sel = selectableUnit.GetComponent<SelectableUnit>();
+
+        //Debug.Log(sel.selectableUnitType);
+        //Debug.Log(UnitType.Pngn);
+
+        //PngnBlockの場合
+        if (sel.selectableUnitType == UnitType.Pngn||sel.selectableUnitType == UnitType.Block)
+        {
+            movingUnitObject.SetActive(true);
+
+            movingUnit.movingUnitID = sel.selectableUnitID;
+            movingUnit.movingUnitType = sel.selectableUnitType;
+
+            movingUnitObject.GetComponent<Image>().sprite = selectableUnit.transform.Find("Image").GetComponent<Image>().sprite;
+            movingUnitObject.transform.position = Input.mousePosition;
+        }
+
+        //Shipの場合
 
         return;
     }
