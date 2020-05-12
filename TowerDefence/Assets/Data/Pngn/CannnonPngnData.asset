@@ -20,9 +20,11 @@ MonoBehaviour:
   cost: 10
   prefab: {fileID: 1143180996646596874, guid: 581e6c9f6f9935b4caa4fbf29630a1fa, type: 3}
   unitType: 0
+  sprite: {fileID: 21300000, guid: 37ef701cf295e8e499fd987ff114a092, type: 3}
   pngnCanGetOn: 0
   blockCanGetOn: 0
   indestructible: 0
   form:
   - y: 0
     x: 1
+  offset: {x: 0.4, y: 0, z: 0}
