@@ -27,7 +27,7 @@ public class MovingUnit : MonoBehaviour
 
     public void setUnit()
     {
-        formationGridManager.Attach(movingUnitID,this.transform.position);
+        formationGridManager.Attach(movingUnitID);
         this.gameObject.SetActive(false);
         return;
     }
