@@ -137,10 +137,10 @@ public class GameManager : MonoBehaviour
             int shipLayerNum = LayerMask.NameToLayer(shipLayerName);
             foreach (var unitInst in unitInstList)
             {
-                if (unitInst.script.data.unitType ==UnitType.Pngn) SetLayerRecursively(unitInst.obj , pngnLayerNum);
+                if (unitInst.script.data.unitType ==UnitType.Pngn) Utility.SetLayerRecursively(unitInst.obj , pngnLayerNum);
                 else unitInst.obj.layer = shipLayerNum;
             }
-            SetLayerRecursively(shipInst.obj, shipLayerNum);
+            Utility.SetLayerRecursively(shipInst.obj, shipLayerNum);
         }
         public void Stop()
         {
@@ -192,7 +192,7 @@ public class GameManager : MonoBehaviour
             {
                 GameObject obj = Instantiate(data.prefab);
                 obj.transform.SetParent(parentObj.transform);
-                obj.transform.position = pos;
+                obj.transform.position = pos + data.offset;
                 UnitInst inst = new UnitInst();
                 inst.obj = obj;
                 inst.script = obj.GetComponent<UnitScript>();
@@ -244,15 +244,6 @@ public class GameManager : MonoBehaviour
         {
             unitInstList.Clear();
         }
-        private void SetLayerRecursively(GameObject self,int layer)
-        {
-            self.layer = layer;
-
-            foreach (Transform n in self.transform)
-            {
-                SetLayerRecursively(n.gameObject, layer);
-            }
-        }
     }
     /*****public field*****/
     public MasterDataScript masterData;
@@ -283,7 +274,7 @@ public class GameManager : MonoBehaviour
             {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
             {  0,  0,  0,  0,  0, 14,100,100, 11, 10},
             {  0,  0,  0,100, 10,  0,100,100,  0,  0},
-            { 15, 15,100,100,  0,  0,100,  0,  0,  0},
+            { 12,  0, 10,100,  0,  0,100,  0,  0,  0},
             {  0,  0,  0, 11,  0,  0,  0,  0,  0,  0},
             {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
             {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
@@ -410,5 +401,37 @@ public class GameManager : MonoBehaviour
     {
         player.Invert(true);
         player.ChangeLayer("Player2","PlayerShip2");
+    }
+}
+
+public class InfoToWeapon
+{
+    public Vector3 pos;
+    public string layer;
+    public int power;
+    public InfoToWeapon(Vector3 pos,string layer,int power)
+    {
+        this.pos = pos;
+        this.layer = layer;
+        this.power = power;
+    }
+
+}
+public class Utility
+{
+    public static void SetLayerRecursively(GameObject self, string layerName)
+    {
+        int layer = LayerMask.NameToLayer(layerName);
+        SetLayerRecursively(self, layer);
+    }
+
+    public static void SetLayerRecursively(GameObject self, int layer)
+    {
+        self.layer = layer;
+
+        foreach (Transform n in self.transform)
+        {
+            SetLayerRecursively(n.gameObject, layer);
+        }
     }
 }

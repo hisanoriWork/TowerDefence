@@ -6,7 +6,7 @@ public class PngnScript : MonoBehaviour
 {
     /*****public field*****/
     public UnitScript baseUnit;
-    public Collision2D groundCollision = null;
+    public GameObject ground = null;
     /*****Monobehaviour method*****/
     void Update()
     {
@@ -27,13 +27,13 @@ public class PngnScript : MonoBehaviour
         if ((collision.transform.tag == "Ship" || collision.transform.tag == "Block") 
             & this.transform.position.y >= collision.contacts[0].point.y)
         {
-            groundCollision = collision;
+            ground = collision.gameObject;
         }
     }
 
     void OnCollisionExit2D(Collision2D collision)
     {
-        if (groundCollision == collision)
+        if (ground.GetInstanceID() == collision.gameObject.GetInstanceID())
         {
             baseUnit.Hurt(10000);
         }
