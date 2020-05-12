@@ -9,6 +9,7 @@ public class MovingUnit : MonoBehaviour
 
     public FormationGridManager formationGridManager;
     public int movingUnitID;
+    public UnitType movingUnitType;
 
 
     // Start is called before the first frame update
@@ -27,7 +28,7 @@ public class MovingUnit : MonoBehaviour
 
     public void setUnit()
     {
-        formationGridManager.Attach(movingUnitID,this.transform.position);
+        formationGridManager.Attach(movingUnitID,movingUnitType);
         this.gameObject.SetActive(false);
         return;
     }
