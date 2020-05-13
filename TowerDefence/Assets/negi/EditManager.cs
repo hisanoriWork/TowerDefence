@@ -24,6 +24,8 @@ public class EditManager : MonoBehaviour
     public GameObject movingUnitObject;
     public MovingUnit movingUnit;
 
+    public Sprite nullSprite;
+
     /*****private field*****/
     private Dictionary<UnitType, string> type = new Dictionary<UnitType, string>()
     {
@@ -36,19 +38,24 @@ public class EditManager : MonoBehaviour
     private List<ShipData> shipDataList;
     private List<UnitData> blockDataList;
 
+    [SerializeField] private float selectableUnitImgSize = 0.6f;
+    [SerializeField] private float selesctableShipImgSize = 0.07f;
+
+    [SerializeField] private float movingUnitImgSize = 0.5f;
+    [SerializeField] private Vector2 movingUnitOffset = new Vector2(0.5f,0.2f);
 
     void Awake()
     {
 
         //SelectableContentsの取得]
         pngnDataList = masterData.pngnDataList;
-        createSelectableUnits(UnitType.Pngn, masterData.pngnDataList);
+        CreateSelectableUnits(UnitType.Pngn, masterData.pngnDataList);
 
         blockDataList = masterData.blockDataList;
-        createSelectableUnits(UnitType.Block, blockDataList);
+        CreateSelectableUnits(UnitType.Block, blockDataList);
 
         shipDataList = masterData.shipDataList;
-        createSelectableUnits(UnitType.Ship, shipDataList);
+        CreateSelectableUnits(UnitType.Ship, shipDataList);
 
 
         //SelectableContentsの実体化(船)
@@ -72,7 +79,25 @@ public class EditManager : MonoBehaviour
     {
     }
 
-    private void createSelectableUnits(UnitType unitType, List<UnitData> unitDataList)
+
+    private void SetSpriteAndResizeImgSize(Transform transform,float imgSize,Sprite sprite)
+    {
+        
+        var img = transform.GetComponent<Image>();
+        var t = transform.GetComponent<RectTransform>();
+
+        img.sprite = sprite;
+        img.SetNativeSize();
+
+        var width = t.sizeDelta.x * imgSize;
+        var height = t.sizeDelta.y * imgSize;
+
+        t.sizeDelta = new Vector2(width, height);
+
+        return;
+    }
+
+    private void CreateSelectableUnits(UnitType unitType, List<UnitData> unitDataList)
     {
         SelectableUnit sel;
 
@@ -82,7 +107,10 @@ public class EditManager : MonoBehaviour
         {
             var obj = Instantiate(selectableUnitOrigin, GetUnitType(unitType).transform) as GameObject;
             obj.name = data.ID.ToString();
-            obj.transform.Find("Image").GetComponent<Image>().sprite = data.sprite;
+
+            var transform = obj.transform.Find("Image");
+            SetSpriteAndResizeImgSize(transform, selectableUnitImgSize, data.sprite);
+
             obj.transform.Find("UnitName").GetComponent<Text>().text = data.name;
             obj.transform.Find("UnitDetails").GetComponent<Text>().text 
                 = "Power:" + data.power + "   HP:" + data.HP + "\nCT:" + data.CT + "   cost:" + data.cost;
@@ -98,7 +126,7 @@ public class EditManager : MonoBehaviour
         return;
     }
 
-    private void createSelectableUnits(UnitType unitType, List<ShipData> unitDataList)
+    private void CreateSelectableUnits(UnitType unitType, List<ShipData> unitDataList)
     {
         SelectableUnit sel;
 
@@ -106,9 +134,12 @@ public class EditManager : MonoBehaviour
         selectableUnits.Add(unitType, new List<GameObject>());
         foreach (ShipData data in unitDataList)
         {
-            var obj = Instantiate(selectableUnitOrigin, GetUnitType(unitType).transform) as GameObject;
+            GameObject obj = Instantiate(selectableUnitOrigin, GetUnitType(unitType).transform) as GameObject;
             obj.name = data.unitData.ID.ToString();
-            obj.transform.Find("Image").GetComponent<Image>().sprite = data.unitData.sprite;
+
+            var transform = obj.transform.Find("Image");
+            SetSpriteAndResizeImgSize(transform, selesctableShipImgSize, data.unitData.sprite);
+
             obj.transform.Find("UnitName").GetComponent<Text>().text = data.name;
             obj.transform.Find("UnitDetails").GetComponent<Text>().text 
                 = "Power:" + data.unitData.power + "   HP:" + data.unitData.HP + "\nCT:" + data.unitData.CT + "   cost:" + data.unitData.cost;
@@ -182,11 +213,60 @@ public class EditManager : MonoBehaviour
             movingUnit.movingUnitID = sel.selectableUnitID;
             movingUnit.movingUnitType = sel.selectableUnitType;
 
-            movingUnitObject.GetComponent<Image>().sprite = selectableUnit.transform.Find("Image").GetComponent<Image>().sprite;
+            var transform = movingUnitObject.transform;
+            SetSpriteAndResizeImgSize(transform, movingUnitImgSize, selectableUnit.transform.Find("Image").GetComponent<Image>().sprite);
+
+            //Vector2 pos = Input.mousePosition;
+
             movingUnitObject.transform.position = Input.mousePosition;
+        }else if(sel.selectableUnitType == UnitType.Ship)
+        {
+            
         }
 
         //Shipの場合
+
+        return;
+    }
+
+    public void ClickEachAttachingUnit(GameObject attatchingUnit)
+    {
+        SelectableUnit sel = attatchingUnit.GetComponent<SelectableUnit>();
+
+        //Debug.Log(sel.selectableUnitID);
+
+        if (sel.selectableUnitID != 0)
+        {
+            //Debug.Log(sel.selectableUnitType);
+            //Debug.Log(UnitType.Pngn);
+
+            //PngnBlockの場合
+            if (sel.selectableUnitType == UnitType.Pngn || sel.selectableUnitType == UnitType.Block)
+            {
+                Image attachingUnitImage = attatchingUnit.GetComponent<Image>();
+
+                movingUnitObject.SetActive(true);
+
+                movingUnit.movingUnitID = sel.selectableUnitID;
+                movingUnit.movingUnitType = sel.selectableUnitType;
+
+                var transform = movingUnitObject.transform;
+                SetSpriteAndResizeImgSize(transform, movingUnitImgSize, attachingUnitImage.sprite);
+
+                //movingUnitObject.GetComponent<Image>().sprite = attachingUnitImage.sprite;
+
+                sel.selectableUnitID  = 0;
+                attachingUnitImage.sprite = nullSprite;
+
+                attatchingUnit.transform.Find("Text").GetComponent<Text>().text = "0";
+
+                movingUnitObject.transform.position = Input.mousePosition;
+            }
+
+            //Shipの場合
+        }
+
+
 
         return;
     }

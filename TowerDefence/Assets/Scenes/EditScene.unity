@@ -941,7 +941,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 125.00001}
+  m_AnchoredPosition: {x: 0, y: 125}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &407978450
@@ -1131,7 +1131,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1309973801}
   m_HandleRect: {fileID: 1309973800}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -1215,6 +1215,8 @@ GameObject:
   - component: {fileID: 547149298}
   - component: {fileID: 547149300}
   - component: {fileID: 547149299}
+  - component: {fileID: 547149301}
+  - component: {fileID: 547149302}
   m_Layer: 5
   m_Name: Unit
   m_TagString: Untagged
@@ -1261,8 +1263,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1279,6 +1281,48 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 547149297}
   m_CullTransparentMesh: 0
+--- !u!114 &547149301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 547149297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 764470244}
+          m_MethodName: ClickEachAttachingUnit
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 547149297}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &547149302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 547149297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02f65dd88640d0542845dc5ac4212dd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectableUnitID: 0
+  selectableUnitType: 0
 --- !u!1001 &555145814
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1774,6 +1818,11 @@ MonoBehaviour:
   testSprite: {fileID: 21300000, guid: b4a1fdd4fc63c7f44b1336c672a72654, type: 3}
   movingUnitObject: {fileID: 114330775}
   movingUnit: {fileID: 114330778}
+  nullSprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+  selectableUnitImgSize: 0.6
+  selesctableShipImgSize: 0.08
+  movingUnitImgSize: 0.4
+  movingUnitOffset: {x: 0.5, y: 0.2}
 --- !u!1 &770459341
 GameObject:
   m_ObjectHideFlags: 0
@@ -2682,6 +2731,10 @@ MonoBehaviour:
   contentRectTransform: {fileID: 1276391006}
   eachGridImage: {fileID: 547149299}
   movingUnit: {fileID: 114330775}
+  gridLayoutGroup: {fileID: 1276391008}
+  selectableUnitImgSize: 0.8
+  selesctableShipImgSize: 0.8
+  movingUnitImgSize: 0.8
 --- !u!114 &1276391008
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4276,7 +4329,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.36320752, g: 1, b: 0.97531915, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
