@@ -7,6 +7,8 @@ using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
+    /*****public field*****/
+    public bool isPlaying { get; set; } = true;
     /*****private field*****/
     [SerializeField] private UIManager m_option = default;
     [SerializeField] private TimeView m_timeView = default;
@@ -14,35 +16,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Gauge m_player1HP = default, m_player2HP = default;
     [SerializeField] private GameObject m_winCanvas = default, m_loseCanvas = default, m_drawCanvas = default;
     private int[,] gird;
-    public bool isPlaying { get; set; } = true;
     /*****Mobehabiour method*****/
     void Awake()
     {
-        //PrefsManager prefs = new PrefsManager();
-        //Formation formation = prefs.getFormation();
-        //gird = formation.girdinfo;
-        //下はデバッグ用
-        Formation formation = new Formation();
-        formation.formationDataExists = true;
-        formation.gridinfo = new int[10, 10]
-        {
-            {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
-            {  0,  0,  0,  0,  0, 14,100,100, 11, 10},
-            {  0,  0,  0,100, 10,  0,100,100,  0,  0},
-            { 12,  0, 10,100,  0,  0,100,  0,  0,  0},
-            {  0,  0,  0, 11,  0,  0,  0,  0,  0,  0},
-            {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
-            {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
-            {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
-            {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
-            {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
-        };
-        formation.shiptype = 10010;
-        m_player1.Init(formation);
-        m_player2.Init(formation);
-        
-        RegardAsFriend(m_player1);
-        RegardAsOpponent(m_player2);
         //オプションを開いたときゲームを停止
         m_option.whenDisplayed.Subscribe(_ => Stop(true));
         //オプションを閉じたとき，もともとゲームを再生していたら再生する
@@ -52,6 +28,7 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
+        m_player2.Invert(true);
         m_player1HP.maxValue = m_player1HP.value = m_player1.shipHP;
         m_player2HP.maxValue = m_player2HP.value = m_player1.shipHP;
     }
@@ -96,7 +73,6 @@ public class GameManager : MonoBehaviour
         m_player2.Stop();
         m_timeView.timer.Stop();
     }
-    
     public void TransitionScene(String sceneName)
     {
         SceneManager.LoadScene(sceneName);
@@ -125,15 +101,6 @@ public class GameManager : MonoBehaviour
         }
         return 0;
     }
-    private void RegardAsFriend(InstManager m_player)
-    {
-        m_player.ChangeLayer();
-    }
-    private void RegardAsOpponent(InstManager m_player)
-    {
-        m_player.Invert(true);
-        m_player.ChangeLayer();
-    }
 }
 /*****public class*****/
 public class InfoToWeapon
@@ -147,7 +114,6 @@ public class InfoToWeapon
         this.layer = layer;
         this.power = power;
     }
-
 }
 public class Utility
 {
@@ -166,7 +132,6 @@ public class Utility
             SetLayerRecursively(n.gameObject, layer);
         }
     }
-
     public static IEnumerator WaitForSecond(float time, UnityEvent voidEvent)
     {
         yield return new WaitForSeconds(time);

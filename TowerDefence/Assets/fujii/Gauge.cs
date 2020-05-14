@@ -15,12 +15,12 @@ public class Gauge : MonoBehaviour
         }
     }
     public int value
+    {
+        get { return m_value; }
+        set
         {
-            get { return m_value; }
-            set
-            {
-                m_value = value;
-                image.fillAmount = (float)m_value / (float)m_maxValue;
-            }
+            m_value = value;
+            image.fillAmount = (float)m_value / (float)m_maxValue;
         }
+    }
 }

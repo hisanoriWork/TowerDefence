@@ -1893,13 +1893,17 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1234079519, guid: a6f3f15d3bebca0479c9e68e91688e97, type: 3}
-      propertyPath: masterData
+      propertyPath: m_masterData
       value: 
       objectReference: {fileID: 1222621306}
-    - target: {fileID: 1234079519, guid: a6f3f15d3bebca0479c9e68e91688e97, type: 3}
+    - target: {fileID: 1234079521, guid: a6f3f15d3bebca0479c9e68e91688e97, type: 3}
       propertyPath: place
       value: 
       objectReference: {fileID: 1693998681}
+    - target: {fileID: 1234079521, guid: a6f3f15d3bebca0479c9e68e91688e97, type: 3}
+      propertyPath: missilePlace
+      value: 
+      objectReference: {fileID: 1661353256}
     - target: {fileID: 1273697099, guid: a6f3f15d3bebca0479c9e68e91688e97, type: 3}
       propertyPath: OptionCanvas
       value: 
@@ -1909,13 +1913,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1665736850}
     - target: {fileID: 1757432503, guid: a6f3f15d3bebca0479c9e68e91688e97, type: 3}
-      propertyPath: masterData
+      propertyPath: m_masterData
       value: 
       objectReference: {fileID: 1222621306}
-    - target: {fileID: 1757432503, guid: a6f3f15d3bebca0479c9e68e91688e97, type: 3}
+    - target: {fileID: 1757432504, guid: a6f3f15d3bebca0479c9e68e91688e97, type: 3}
       propertyPath: place
       value: 
       objectReference: {fileID: 1830668784}
+    - target: {fileID: 1757432504, guid: a6f3f15d3bebca0479c9e68e91688e97, type: 3}
+      propertyPath: missilePlace
+      value: 
+      objectReference: {fileID: 265636848}
     - target: {fileID: 140803167797734449, guid: a6f3f15d3bebca0479c9e68e91688e97,
         type: 3}
       propertyPath: image

@@ -5,17 +5,13 @@ using UnityEngine;
 public class InstManager : MonoBehaviour
 {
     /*****public field*****/
-    public MasterDataScript masterData;
-    public InstDataScript instData;
-    public Transform place;
-    
-    public int shipHP { get { return instData.ship.unitScript.HP; } }
+    public int shipHP { get { return m_instData.ship.unitScript.HP; } }
     public int pngnNum
     {
         get
         {
             int num = 0;
-            foreach (var i in instData.pngnList)
+            foreach (var i in m_instData.pngnList)
             {
                 if (i.obj.activeSelf) num++;
             }
@@ -23,64 +19,84 @@ public class InstManager : MonoBehaviour
         }
     }
     /*****private field*****/
+    [SerializeField] private MasterDataScript m_masterData = default;
+    [SerializeField] private InstDataScript m_instData = default;
     float m_dx = 0.8f, m_dy = 0.8f;
-
-    /*****public method*****/
-    public void Init(Formation formation)
+    /*****monoBehaviour method*****/
+    void Awake()
     {
-        instData.unitList = new List<UnitInst>();
-        instData.pngnList = new List<UnitInst>();
-        instData.ship = new ShipInst();
+        //PrefsManager prefs = new PrefsManager();
+        //Formation formation = prefs.getFormation();
+        //gird = formation.girdinfo;
+        //下はデバッグ用
+        Formation formation = new Formation();
+        formation.formationDataExists = true;
+        formation.gridinfo = new int[10, 10]
+        {
+            {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+            {  0,  0,  0,  0,  0, 14,100,100, 11, 10},
+            {  0,  0,  0,100, 10,  0,100,100,  0,  0},
+            { 12,  0, 10,100,  0,  0,100,  0,  0,  0},
+            {  0,  0,  0, 11,  0,  0,  0,  0,  0,  0},
+            {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+            {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+            {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+            {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+            {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+        };
+        formation.shiptype = 10010;
         CreateInst(formation);
+        ChangeLayer();
     }
+    /*****public method*****/
     public void Invert(bool b)
     {
-        foreach (var i in instData.unitList)
+        foreach (var i in m_instData.unitList)
         {
             i.script.isInverted = true;
         }
-        instData.ship.unitScript.isInverted = true;
-        Vector3 size = place.localScale;
+        m_instData.ship.unitScript.isInverted = true;
+        Vector3 size = m_instData.place.localScale;
         size.x *= (b ^ size.x < 0f) ? -1 : 1;
-        place.localScale = size;
-    }
-    public void ChangeLayer()
-    {
-        int pngnLayerNum = LayerMask.NameToLayer(instData.pngnLayer);
-        int shipLayerNum = LayerMask.NameToLayer(instData.shipLayer);
-        foreach (var unitInst in instData.unitList)
-        {
-            if (unitInst.script.data.unitType == UnitType.Pngn) Utility.SetLayerRecursively(unitInst.obj, pngnLayerNum);
-            else unitInst.obj.layer = shipLayerNum;
-        }
-        Utility.SetLayerRecursively(instData.ship.obj, shipLayerNum);
+        m_instData.place.localScale = size;
     }
     public void Stop()
     {
         Time.timeScale = 0;
-        foreach (var i in instData.unitList)
+        foreach (var i in m_instData.unitList)
         {
             i.script.isPlaying = false;
         }
-        instData.ship.unitScript.isPlaying = false;
+        m_instData.ship.unitScript.isPlaying = false;
     }
     public void Play()
     {
         Time.timeScale = 1;
-        foreach (var i in instData.unitList)
+        foreach (var i in m_instData.unitList)
         {
             i.script.isPlaying = true;
         }
-        instData.ship.unitScript.isPlaying = true;
+        m_instData.ship.unitScript.isPlaying = true;
     }
     /*****private method*****/
+    private void ChangeLayer()
+    {
+        int pngnLayerNum = LayerMask.NameToLayer(m_instData.pngnLayer);
+        int shipLayerNum = LayerMask.NameToLayer(m_instData.shipLayer);
+        foreach (var unitInst in m_instData.unitList)
+        {
+            if (unitInst.script.data.unitType == UnitType.Pngn) Utility.SetLayerRecursively(unitInst.obj, pngnLayerNum);
+            else unitInst.obj.layer = shipLayerNum;
+        }
+        Utility.SetLayerRecursively(m_instData.ship.obj, shipLayerNum);
+    }
     private void CreateInst(Formation formation)
     {
         int gridX = formation.gridinfo.GetLength(1);
         int gridY = formation.gridinfo.GetLength(0);
         Vector3 pos = Vector3.zero;
-        pos.x = place.position.x - (gridX / 2 - 0.5f) * m_dx;
-        pos.y = place.position.y - (gridY / 2 - 0.5f) * m_dy;
+        pos.x = m_instData.place.position.x - (gridX / 2 - 0.5f) * m_dx;
+        pos.y = m_instData.place.position.y - (gridY / 2 - 0.5f) * m_dy;
         UnitInst inst = new UnitInst();
         for (int i = 0; i < gridY; i++)
         {
@@ -93,17 +109,17 @@ public class InstManager : MonoBehaviour
                 }
                 pos.x += m_dx;
             }
-            pos.x = place.position.x - (gridX / 2 - 0.5f) * m_dx;
+            pos.x = m_instData.place.position.x - (gridX / 2 - 0.5f) * m_dx;
             pos.y += m_dy;
         }
-        instData.ship = CreateShip(formation.shiptype, place.position);
+        m_instData.ship = CreateShip(formation.shiptype, m_instData.place.position);
     }
     private UnitInst CreateUnit(int unitID, Vector3 pos)
     {
-        UnitData data = masterData.FindUnitData(unitID);
+        UnitData data = m_masterData.FindUnitData(unitID);
         if (data != null)
         {
-            GameObject obj = Instantiate(data.prefab, pos + data.offset, Quaternion.Euler(Vector3.zero), place.transform);
+            GameObject obj = Instantiate(data.prefab, pos + data.offset, Quaternion.Euler(Vector3.zero), m_instData.place.transform);
             UnitInst inst = new UnitInst();
             inst.obj = obj;
             inst.script = obj.GetComponent<UnitScript>();
@@ -113,11 +129,11 @@ public class InstManager : MonoBehaviour
     }
     private ShipInst CreateShip(int shipID, Vector3 pos)
     {
-        ShipData data = masterData.FindShipData(shipID);
+        ShipData data = m_masterData.FindShipData(shipID);
         if (data != null)
         {
             GameObject obj = Instantiate(data.unitData.prefab);
-            obj.transform.SetParent(place.transform);
+            obj.transform.SetParent(m_instData.place.transform);
 
             obj.transform.position = pos + data.offSet;
             ShipInst inst = new ShipInst();
@@ -130,21 +146,21 @@ public class InstManager : MonoBehaviour
     }
     private void UnitAdd(UnitInst Inst)
     {
-        instData.unitList.Add(Inst);
+        m_instData.unitList.Add(Inst);
         if (Inst.script.data.unitType == UnitType.Pngn)
         {
-            instData.pngnList.Add(Inst);
+            m_instData.pngnList.Add(Inst);
         }
     }
     private void Remove(GameObject obj)
     {
         if (obj == null) return;
 
-        for (int i = 0; i < instData.unitList.Count(); i++)
+        for (int i = 0; i < m_instData.unitList.Count(); i++)
         {
-            if (instData.unitList[i].obj.GetInstanceID() == obj.GetInstanceID())
+            if (m_instData.unitList[i].obj.GetInstanceID() == obj.GetInstanceID())
             {
-                instData.unitList.RemoveAt(i);
+                m_instData.unitList.RemoveAt(i);
                 return;
             }
         }
@@ -153,6 +169,6 @@ public class InstManager : MonoBehaviour
     }
     private void Clear()
     {
-        instData.unitList.Clear();
+        m_instData.unitList.Clear();
     }
 }

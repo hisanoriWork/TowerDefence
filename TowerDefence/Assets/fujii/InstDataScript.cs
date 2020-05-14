@@ -3,12 +3,14 @@ using UnityEngine;
 
 public class InstDataScript : MonoBehaviour
 {
-    public List<UnitInst> unitList;
-    public List<UnitInst> pngnList;
-    public ShipInst ship;
+    public List<UnitInst> unitList = new List<UnitInst>();
+    public List<UnitInst> pngnList = new List<UnitInst>();
+    public ShipInst ship = new ShipInst();
     public string pngnLayer;
     public string shipLayer;
     public string weaponLayer;
+    public Transform place;
+    public Transform missilePlace;
 }
 
 public class UnitInst

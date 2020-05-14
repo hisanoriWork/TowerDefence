@@ -44,9 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0f69547c030be349bd0b5a3cd2bd933, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  masterData: {fileID: 0}
-  instData: {fileID: 1234079521}
-  place: {fileID: 0}
+  m_masterData: {fileID: 0}
+  m_instData: {fileID: 1234079521}
 --- !u!114 &1234079521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,6 +61,8 @@ MonoBehaviour:
   pngnLayer: Player1
   shipLayer: PlayerShip1
   weaponLayer: PlayerWeapon1
+  place: {fileID: 0}
+  missilePlace: {fileID: 0}
 --- !u!1 &1273697097
 GameObject:
   m_ObjectHideFlags: 0
@@ -209,9 +210,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0f69547c030be349bd0b5a3cd2bd933, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  masterData: {fileID: 0}
-  instData: {fileID: 1757432504}
-  place: {fileID: 0}
+  m_masterData: {fileID: 0}
+  m_instData: {fileID: 1757432504}
 --- !u!114 &1757432504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -227,6 +227,8 @@ MonoBehaviour:
   pngnLayer: Player2
   shipLayer: PlayerShip2
   weaponLayer: PlayerWeapon2
+  place: {fileID: 0}
+  missilePlace: {fileID: 0}
 --- !u!1 &1326617613701237985
 GameObject:
   m_ObjectHideFlags: 0
