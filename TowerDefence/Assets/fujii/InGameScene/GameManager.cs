@@ -10,13 +10,13 @@ using UniRx;
 public class GameManager : MonoBehaviour
 {
     /*****public field*****/
-    public InstManager player1, player2;
-    public UIManager option;
-    public TimeView timeView;
-    public MasterDataScript masterData;
-    public GameObject winCanvas, loseCanvas, drawCanvas;
+
     /*****private field*****/
-    public Gauge m_player1HP , m_player2HP;
+    [SerializeField] private UIManager m_option;
+    [SerializeField] private TimeView m_timeView;
+    [SerializeField] private InstManager m_player1, m_player2;
+    [SerializeField] private Gauge m_player1HP, m_player2HP;
+    [SerializeField] private GameObject m_winCanvas, m_loseCanvas, m_drawCanvas;
     private int[,] gird;
     public bool isPlaying { get; set; } = true;
     /*****Mobehabiour method*****/
@@ -42,43 +42,43 @@ public class GameManager : MonoBehaviour
             {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
         };
         formation.shiptype = 10010;
-        player1.Init(formation);
-        player2.Init(formation);
+        m_player1.Init(formation);
+        m_player2.Init(formation);
         
-        RegardAsFriend(player1);
-        RegardAsOpponent(player2);
+        RegardAsFriend(m_player1);
+        RegardAsOpponent(m_player2);
         //オプションを開いたときゲームを停止
-        option.whenDisplayed.Subscribe(_ => Stop(true));
+        m_option.whenDisplayed.Subscribe(_ => Stop(true));
         //オプションを閉じたとき，もともとゲームを再生していたら再生する
-        option.whenHidden.Where(_ => isPlaying).Subscribe(_ => Play());
+        m_option.whenHidden.Where(_ => isPlaying).Subscribe(_ => Play());
         //オプションを閉じたとき，もともとゲームを停止していたら停止する
-        option.whenHidden.Where(_ => !isPlaying).Subscribe(_ => Stop());
+        m_option.whenHidden.Where(_ => !isPlaying).Subscribe(_ => Stop());
     }
     void Start()
     {
-        m_player1HP.maxValue = m_player1HP.value = player1.shipHP;
-        m_player2HP.maxValue = m_player2HP.value = player1.shipHP;
+        m_player1HP.maxValue = m_player1HP.value = m_player1.shipHP;
+        m_player2HP.maxValue = m_player2HP.value = m_player1.shipHP;
     }
     void Update()
     {
         if (isPlaying)
         {
-            if (m_player1HP.value != player1.shipHP)
-                m_player1HP.value = player1.shipHP;
-            if (m_player2HP.value != player2.shipHP)
-                m_player2HP.value = player2.shipHP;
+            if (m_player1HP.value != m_player1.shipHP)
+                m_player1HP.value = m_player1.shipHP;
+            if (m_player2HP.value != m_player2.shipHP)
+                m_player2HP.value = m_player2.shipHP;
            
-            int victoryNum = CheckVictory(player1.shipHP, player2.shipHP, player1.pngnNum, player2.pngnNum);
+            int victoryNum = CheckVictory(m_player1.shipHP, m_player2.shipHP, m_player1.pngnNum, m_player2.pngnNum);
             switch (victoryNum)
             {
                 case 3:
-                    drawCanvas.SetActive(true);
+                    m_drawCanvas.SetActive(true);
                     break;
                 case 2:
-                    loseCanvas.SetActive(true);
+                    m_loseCanvas.SetActive(true);
                     break;
                 case 1:
-                    winCanvas.SetActive(true);
+                    m_winCanvas.SetActive(true);
                     break;
                 default:
                     break;
@@ -89,16 +89,16 @@ public class GameManager : MonoBehaviour
     public void Play()
     {
         isPlaying = true;
-        player1.Play();
-        player2.Play();
-        timeView.timer.Play();
+        m_player1.Play();
+        m_player2.Play();
+        m_timeView.timer.Play();
     }
     public void Stop(bool isPlaing = false)
     {
         this.isPlaying = isPlaying;
-        player1.Stop();
-        player2.Stop();
-        timeView.timer.Stop();
+        m_player1.Stop();
+        m_player2.Stop();
+        m_timeView.timer.Stop();
     }
     
     public void TransitionScene(String sceneName)
@@ -121,7 +121,7 @@ public class GameManager : MonoBehaviour
         else if (shipHP1 == 0) return 2;
         else if (shipHP2 == 0) return 1;
 
-        if (timeView.isFinished)
+        if (m_timeView.isFinished)
         {
             if (shipHP1 == shipHP2) return 3;
             else if (shipHP1 < shipHP2) return 2;
@@ -129,14 +129,14 @@ public class GameManager : MonoBehaviour
         }
         return 0;
     }
-    private void RegardAsFriend(InstManager player)
+    private void RegardAsFriend(InstManager m_player)
     {
-        player.ChangeLayer();
+        m_player.ChangeLayer();
     }
-    private void RegardAsOpponent(InstManager player)
+    private void RegardAsOpponent(InstManager m_player)
     {
-        player.Invert(true);
-        player.ChangeLayer();
+        m_player.Invert(true);
+        m_player.ChangeLayer();
     }
 }
 /*****public class*****/
