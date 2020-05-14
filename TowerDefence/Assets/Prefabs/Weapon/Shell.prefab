@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8721326111256588788}
   - component: {fileID: 3127785084013132765}
   - component: {fileID: 3520475847109212779}
-  - component: {fileID: 9200237033155826719}
   m_Layer: 12
   m_Name: Body
   m_TagString: Other
@@ -99,27 +98,6 @@ CircleCollider2D:
   m_Offset: {x: 0.112709805, y: -0.034540176}
   serializedVersion: 2
   m_Radius: 0.060052887
---- !u!50 &9200237033155826719
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1555872046344205115}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 7
 --- !u!1 &8367861753450576244
 GameObject:
   m_ObjectHideFlags: 0
@@ -130,6 +108,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8367861753450576246}
   - component: {fileID: 1345124807014343859}
+  - component: {fileID: 7057192341974566164}
   m_Layer: 12
   m_Name: Shell
   m_TagString: Other
@@ -165,3 +144,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 06b30c1ae74aab5448152339e69f1904, type: 2}
+--- !u!50 &7057192341974566164
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8367861753450576244}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
