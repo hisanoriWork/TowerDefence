@@ -9,83 +9,10 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     /*****public class*****/
-    public class TextManager<TInfo>
-    {
-        protected Text m_text;
-        protected TInfo m_info;
-
-        public TextManager(Text text)
-        {
-            m_text = text;
-            
-        }
-        virtual public TInfo info {
-            get { return m_info; }
-            set
-            {
-                m_info = value;
-                if (m_text != null) m_text.text = info.ToString();
-            }
-        }
-
-        
-    }
-    public class TextManager<TInfo, TCast> :TextManager<TInfo>
-    {
-        public TextManager(Text text)
-            : base(text) { }
-        override public TInfo info {
-            get { return m_info; }
-            set
-            {
-                m_info = value;
-                if(m_text != null) m_text.text = Convert.ChangeType(info, typeof(TCast)).ToString();
-            }
-        }
-    }
-    public class GaugeManager
-    {
-        protected Image m_image;
-        protected int m_maxInfo;
-        protected int m_info;
-        public GaugeManager(Image image)
-        {
-            m_image = image;
-            m_maxInfo = m_info = System.Int32.MaxValue;
-        }
-        public int maxInfo
-        {
-            get { return m_maxInfo; }
-            set
-            {
-                m_maxInfo = value;
-                m_image.fillAmount = (float)m_info / (float)m_maxInfo;
-            }
-        }
-        public int info
-        {
-            get { return m_info; }
-            set
-            {
-                m_info = value;
-                m_image.fillAmount = (float)m_info / (float)m_maxInfo;
-            }
-        }
-    }
     public class Player
     {
         /*****public class*****/
-        public class UnitInst
-        {
-            public GameObject obj;
-            public UnitScript script;
-        }
-        public class ShipInst
-        {
-            public GameObject obj;
-            public UnitScript unitScript;
-            public ShipScript shipScript;
-        }
+        
         /*****public field*****/
         public GameObject parentObj;
         public MasterDataScript masterData;
@@ -93,7 +20,7 @@ public class GameManager : MonoBehaviour
         public List<UnitInst> pngnInstList;
         public ShipInst shipInst;
         public int layerNum;
-        public int shipHP{get{return shipInst.unitScript.HP;}}
+        public int shipHP { get { return shipInst.unitScript.HP; } }
         public int pngnNum
         {
             get
@@ -129,16 +56,16 @@ public class GameManager : MonoBehaviour
             }
             shipInst.unitScript.isInverted = true;
             Vector3 size = parentObj.transform.localScale;
-            size.x *= (b ^ size.x<0f) ? -1 : 1;
+            size.x *= (b ^ size.x < 0f) ? -1 : 1;
             parentObj.transform.localScale = size;
         }
-        public void ChangeLayer(string pngnLayerName,string shipLayerName)
+        public void ChangeLayer(string pngnLayerName, string shipLayerName)
         {
             int pngnLayerNum = LayerMask.NameToLayer(pngnLayerName);
             int shipLayerNum = LayerMask.NameToLayer(shipLayerName);
             foreach (var unitInst in unitInstList)
             {
-                if (unitInst.script.data.unitType ==UnitType.Pngn) Utility.SetLayerRecursively(unitInst.obj , pngnLayerNum);
+                if (unitInst.script.data.unitType == UnitType.Pngn) Utility.SetLayerRecursively(unitInst.obj, pngnLayerNum);
                 else unitInst.obj.layer = shipLayerNum;
             }
             Utility.SetLayerRecursively(shipInst.obj, shipLayerNum);
@@ -192,10 +119,7 @@ public class GameManager : MonoBehaviour
             UnitData data = masterData.FindUnitData(unitID);
             if (data != null)
             {
-                Debug.Log("pos前");
                 GameObject obj = Instantiate(data.prefab, pos + data.offset, Quaternion.Euler(Vector3.zero), parentObj.transform);
-                Debug.Log("pos後");
-                Debug.Log(obj.transform.position);
                 UnitInst inst = new UnitInst();
                 inst.obj = obj;
                 inst.script = obj.GetComponent<UnitScript>();
@@ -400,10 +324,85 @@ public class GameManager : MonoBehaviour
     {
         player.Invert(true);
         player.ChangeLayer("Player2","PlayerShip2");
-        Debug.Log("反転させました");
     }
 }
+/*****public class*****/
+public class UnitInst
+{
+    public GameObject obj;
+    public UnitScript script;
+}
+public class ShipInst
+{
+    public GameObject obj;
+    public UnitScript unitScript;
+    public ShipScript shipScript;
+}
+public class TextManager<TInfo>
+{
+    protected Text m_text;
+    protected TInfo m_info;
 
+    public TextManager(Text text)
+    {
+        m_text = text;
+
+    }
+    virtual public TInfo info
+    {
+        get { return m_info; }
+        set
+        {
+            m_info = value;
+            if (m_text != null) m_text.text = info.ToString();
+        }
+    }
+
+
+}
+public class TextManager<TInfo, TCast> : TextManager<TInfo>
+{
+    public TextManager(Text text)
+        : base(text) { }
+    override public TInfo info
+    {
+        get { return m_info; }
+        set
+        {
+            m_info = value;
+            if (m_text != null) m_text.text = Convert.ChangeType(info, typeof(TCast)).ToString();
+        }
+    }
+}
+public class GaugeManager
+{
+    protected Image m_image;
+    protected int m_maxInfo;
+    protected int m_info;
+    public GaugeManager(Image image)
+    {
+        m_image = image;
+        m_maxInfo = m_info = System.Int32.MaxValue;
+    }
+    public int maxInfo
+    {
+        get { return m_maxInfo; }
+        set
+        {
+            m_maxInfo = value;
+            m_image.fillAmount = (float)m_info / (float)m_maxInfo;
+        }
+    }
+    public int info
+    {
+        get { return m_info; }
+        set
+        {
+            m_info = value;
+            m_image.fillAmount = (float)m_info / (float)m_maxInfo;
+        }
+    }
+}
 public class InfoToWeapon
 {
     public Vector3 pos;

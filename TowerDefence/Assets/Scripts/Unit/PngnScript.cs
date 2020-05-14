@@ -21,7 +21,6 @@ public class PngnScript : MonoBehaviour
         }
         
     }
-
     void OnCollisionEnter2D(Collision2D collision)
     {
         if ((collision.transform.tag == "Ship" || collision.transform.tag == "Block") 
@@ -30,7 +29,6 @@ public class PngnScript : MonoBehaviour
             ground = collision.gameObject;
         }
     }
-
     void OnCollisionExit2D(Collision2D collision)
     {
         if (ground.GetInstanceID() == collision.gameObject.GetInstanceID())
@@ -38,5 +36,4 @@ public class PngnScript : MonoBehaviour
             baseUnit.Hurt(10000);
         }
     }
-    /*****protected method*****/
 }

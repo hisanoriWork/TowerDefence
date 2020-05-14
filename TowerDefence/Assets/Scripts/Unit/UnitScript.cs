@@ -13,7 +13,6 @@ public class UnitScript : MonoBehaviour
 
     }
     [Serializable] protected class IntEvent : UnityEvent<int> { }
-
     /*****public field*****/
     public UnitData data;
     public int power { get { return m_power; } }
@@ -148,11 +147,6 @@ public class UnitScript : MonoBehaviour
     public void Move(Vector3 vec)
     {
         m_movePos += vec;
-    }
-
-    public void ToInactive()
-    {
-        gameObject.SetActive(false);
     }
 }
 

@@ -9,11 +9,10 @@ public class CannonPngnScript : MonoBehaviour
     public ShellPool pool;
     public Transform attackTransform;
     /*****Menobehaviour method*****/
-    InfoToWeapon info;
+    private InfoToWeapon info;
     public void Awake()
     {
         info = new InfoToWeapon(attackTransform.position, "PlayerWeapon1", beseScript.power);
-        Debug.Log("pos選択");
     }
     /*****public method*****/
     public void Attack(int power)

@@ -7,7 +7,6 @@ public class ShellPool : ObjectPool<ShellPool,ShellObject,InfoToWeapon>
     public UnitScript unitScript;
     void Start()
     {
-        Debug.Log("ペアレントを外しました");
         transform.parent = null;
     }
 }
