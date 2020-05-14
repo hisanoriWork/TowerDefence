@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public InstManager player1, player2;
     public Image HP1Bar, HP2Bar;
     public GameObject winCanvas, loseCanvas, drawCanvas ,optionCanvas;
+    public UIManager option;
     public TimeView timeView;
     /*****private field*****/
     private GaugeManager m_player1HP , m_player2HP;
@@ -49,6 +50,12 @@ public class GameManager : MonoBehaviour
         
         RegardAsFriend(player1);
         RegardAsOpponent(player2);
+        //オプションを開いたときゲームを停止
+        option.whenDisplayed.Subscribe(_ => Stop(true));
+        //オプションを閉じたとき，もともとゲームを再生していたら再生する
+        option.whenHidden.Where(_ => isPlaying).Subscribe(_ => Play());
+        //オプションを閉じたとき，もともとゲームを停止していたら停止する
+        option.whenHidden.Where(_ => !isPlaying).Subscribe(_ => Stop());
     }
     void Start()
     {
@@ -88,28 +95,15 @@ public class GameManager : MonoBehaviour
         player1.Play();
         player2.Play();
         timeView.timer.Play();
-        Pauser.Resume();
     }
-    public void Stop()
+    public void Stop(bool isPlaing = false)
     {
-        isPlaying = false;
+        this.isPlaying = isPlaying;
         player1.Stop();
         player2.Stop();
         timeView.timer.Stop();
     }
-    public void OpenOption()
-    {
-        player1.Stop();
-        player2.Stop();
-        timeView.timer.Stop();
-        optionCanvas.SetActive(true);
-    }
-    public void CloseOption()
-    {
-        if (isPlaying) Play();
-        if (!isPlaying) Stop();
-        optionCanvas.SetActive(false);
-    }
+    
     public void TransitionScene(String sceneName)
     {
         SceneManager.LoadScene(sceneName);
