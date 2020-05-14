@@ -9,9 +9,9 @@ public class InstManager : MonoBehaviour
     public Transform place;
     public MasterDataScript masterData;
     public InstDataScript instData;
-    public string pngnLayer;
-    public string shipLayer;
-    public string weaponLayer;
+    public LayerMask pngnLayer;
+    public LayerMask shipLayer;
+    public LayerMask weaponLayer;
     public int shipHP { get { return instData.ship.unitScript.HP; } }
     public int pngnNum
     {
@@ -49,8 +49,8 @@ public class InstManager : MonoBehaviour
     }
     public void ChangeLayer()
     {
-        int pngnLayerNum = LayerMask.NameToLayer(pngnLayer);
-        int shipLayerNum = LayerMask.NameToLayer(shipLayer);
+        int pngnLayerNum = pngnLayer.value;
+        int shipLayerNum = shipLayer.value;
         foreach (var unitInst in instData.unitList)
         {
             if (unitInst.script.data.unitType == UnitType.Pngn) Utility.SetLayerRecursively(unitInst.obj, pngnLayerNum);
