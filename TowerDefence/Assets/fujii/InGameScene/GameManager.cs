@@ -6,187 +6,19 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UniRx;
 public class GameManager : MonoBehaviour
 {
-    /*****public class*****/
-    public class Player
-    {
-        /*****public class*****/
-        
-        /*****public field*****/
-        public GameObject parentObj;
-        public MasterDataScript masterData;
-        public List<UnitInst> unitInstList;
-        public List<UnitInst> pngnInstList;
-        public ShipInst shipInst;
-        public int layerNum;
-        public int shipHP { get { return shipInst.unitScript.HP; } }
-        public int pngnNum
-        {
-            get
-            {
-                int num = 0;
-                foreach (var i in pngnInstList)
-                {
-                    if (i.obj.activeSelf) num++;
-                }
-                return num;
-            }
-        }
-        /*****private field*****/
-        float m_dx = 0.8f, m_dy = 0.8f;
-        bool m_isInverted = false;
-
-        /*****public method*****/
-        public Player(MasterDataScript masterData, GameObject parentObj, Formation formation)
-        {
-            unitInstList = new List<UnitInst>();
-            pngnInstList = new List<UnitInst>();
-            shipInst = new ShipInst();
-            this.masterData = masterData;
-            this.parentObj = parentObj;
-            CreateInst(formation);
-        }
-        public void Invert(bool b)
-        {
-            m_isInverted = b;
-            foreach (var i in unitInstList)
-            {
-                i.script.isInverted = true;
-            }
-            shipInst.unitScript.isInverted = true;
-            Vector3 size = parentObj.transform.localScale;
-            size.x *= (b ^ size.x < 0f) ? -1 : 1;
-            parentObj.transform.localScale = size;
-        }
-        public void ChangeLayer(string pngnLayerName, string shipLayerName)
-        {
-            int pngnLayerNum = LayerMask.NameToLayer(pngnLayerName);
-            int shipLayerNum = LayerMask.NameToLayer(shipLayerName);
-            foreach (var unitInst in unitInstList)
-            {
-                if (unitInst.script.data.unitType == UnitType.Pngn) Utility.SetLayerRecursively(unitInst.obj, pngnLayerNum);
-                else unitInst.obj.layer = shipLayerNum;
-            }
-            Utility.SetLayerRecursively(shipInst.obj, shipLayerNum);
-        }
-        public void Stop()
-        {
-            Time.timeScale = 0;
-            foreach (var i in unitInstList)
-            {
-                i.script.isPlaying = false;
-            }
-            shipInst.unitScript.isPlaying = false;
-        }
-        public void Play()
-        {
-            Time.timeScale = 1;
-            foreach (var i in unitInstList)
-            {
-                i.script.isPlaying = true;
-            }
-            shipInst.unitScript.isPlaying = true;
-        }
-        /*****private method*****/
-        private void CreateInst(Formation formation)
-        {
-            int gridX = formation.gridinfo.GetLength(1);
-            int gridY = formation.gridinfo.GetLength(0);
-            Vector3 pos = Vector3.zero;
-            pos.x = parentObj.transform.position.x - (gridX / 2 - 0.5f) * m_dx;
-            pos.y = parentObj.transform.position.y - (gridY / 2 - 0.5f) * m_dy;
-            UnitInst inst = new UnitInst();
-            for (int i = 0; i < gridY; i++)
-            {
-                for (int j = 0; j < gridX; j++)
-                {
-                    inst = CreateUnit(formation.gridinfo[i, j], pos);
-                    if (inst != null)
-                    {
-                        UnitAdd(inst);
-                    }
-                    pos.x += m_dx;
-                }
-                pos.x = parentObj.transform.position.x - (gridX / 2 - 0.5f) * m_dx;
-                pos.y += m_dy;
-            }
-            shipInst = CreateShip(formation.shiptype, parentObj.transform.position);
-        }
-
-        private UnitInst CreateUnit(int unitID, Vector3 pos)
-        {
-            UnitData data = masterData.FindUnitData(unitID);
-            if (data != null)
-            {
-                GameObject obj = Instantiate(data.prefab, pos + data.offset, Quaternion.Euler(Vector3.zero), parentObj.transform);
-                UnitInst inst = new UnitInst();
-                inst.obj = obj;
-                inst.script = obj.GetComponent<UnitScript>();
-                return inst;
-            }
-            return null;
-        }
-        private ShipInst CreateShip(int shipID, Vector3 pos)
-        {
-            ShipData data = masterData.FindShipData(shipID);
-            if (data != null)
-            {
-                GameObject obj = Instantiate(data.unitData.prefab);
-                obj.transform.SetParent(parentObj.transform);
-
-                obj.transform.position = pos + data.offSet;
-                ShipInst inst = new ShipInst();
-                inst.obj = obj;
-                inst.unitScript = obj.GetComponent<UnitScript>();
-                inst.shipScript = obj.GetComponent<ShipScript>();
-                return inst;
-            }
-            return null;
-        }
-        private void UnitAdd(UnitInst Inst)
-        {
-            unitInstList.Add(Inst);
-            if (Inst.script.data.unitType == UnitType.Pngn)
-            {
-                pngnInstList.Add(Inst);
-            }
-        }
-        private void Remove(GameObject obj)
-        {
-            if (obj == null) return;
-
-            for (int i = 0; i < unitInstList.Count(); i++)
-            {
-                if (unitInstList[i].obj.GetInstanceID() == obj.GetInstanceID())
-                {
-                    unitInstList.RemoveAt(i);
-                    return;
-                }
-            }
-            Debug.Log(obj + "はlistに存在しません");
-            return;
-        }
-        private void Clear()
-        {
-            unitInstList.Clear();
-        }
-    }
     /*****public field*****/
     public MasterDataScript masterData;
-    public GameObject player1Place;
-    public GameObject player2Place;
+    public InstManager player1, player2;
     public Image HP1Bar, HP2Bar;
-    public Text timeText;
     public GameObject winCanvas, loseCanvas, drawCanvas ,optionCanvas;
+    public TimeView timeView;
     /*****private field*****/
     private GaugeManager m_player1HP , m_player2HP;
-    private TextManager<float, int> m_timeLimit;
-    private Player m_player1;
-    private Player m_player2;
     private int[,] gird;
     public bool isPlaying { get; set; } = true;
-    //bool isFinished = false;
     /*****Mobehabiour method*****/
     void Awake()
     {
@@ -210,31 +42,29 @@ public class GameManager : MonoBehaviour
             {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
         };
         formation.shiptype = 10010;
-        m_player1 = new Player(masterData,player1Place,formation);
-        m_player2 = new Player(masterData,player2Place,formation);
+        player1.Init(formation);
+        player2.Init(formation);
         m_player1HP = new GaugeManager(HP1Bar);
         m_player2HP = new GaugeManager(HP2Bar);
-        m_timeLimit = new TextManager<float, int>(timeText);
-
-        RegardAsFriend(m_player1);
-        RegardAsOpponent(m_player2);
+        
+        RegardAsFriend(player1);
+        RegardAsOpponent(player2);
     }
     void Start()
     {
-        m_player1HP.maxInfo = m_player1HP.info = m_player1.shipHP;
-        m_player2HP.maxInfo = m_player2HP.info = m_player1.shipHP;
-        m_timeLimit.info = 100;
+        m_player1HP.maxInfo = m_player1HP.info = player1.shipHP;
+        m_player2HP.maxInfo = m_player2HP.info = player1.shipHP;
     }
     void Update()
     {
         if (isPlaying)
         {
-            if (m_player1HP.info != m_player1.shipHP)
-                m_player1HP.info = m_player1.shipHP;
-            if (m_player2HP.info != m_player2.shipHP)
-                m_player2HP.info = m_player2.shipHP;
+            if (m_player1HP.info != player1.shipHP)
+                m_player1HP.info = player1.shipHP;
+            if (m_player2HP.info != player2.shipHP)
+                m_player2HP.info = player2.shipHP;
            
-            int victoryNum = CheckVictory(m_player1.shipHP, m_player2.shipHP, m_player1.pngnNum, m_player2.pngnNum);
+            int victoryNum = CheckVictory(player1.shipHP, player2.shipHP, player1.pngnNum, player2.pngnNum);
             switch (victoryNum)
             {
                 case 3:
@@ -251,41 +81,33 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    void FixedUpdate()
-    {
-        if (m_timeLimit.info > 0)
-        {
-            m_timeLimit.info += - Time.fixedDeltaTime;
-        }
-    }
     /*****public method*****/
     public void Play()
     {
         isPlaying = true;
-        m_player1.Play();
-        m_player2.Play();
+        player1.Play();
+        player2.Play();
+        timeView.timer.Play();
         Pauser.Resume();
     }
     public void Stop()
     {
         isPlaying = false;
-        m_player1.Stop();
-        m_player2.Stop();
-        
-
+        player1.Stop();
+        player2.Stop();
+        timeView.timer.Stop();
     }
     public void OpenOption()
     {
-        m_player1.Stop();
-        m_player2.Stop();
+        player1.Stop();
+        player2.Stop();
+        timeView.timer.Stop();
         optionCanvas.SetActive(true);
     }
     public void CloseOption()
     {
-        if (isPlaying)
-            Play();
-        if (!isPlaying)
-            Stop();
+        if (isPlaying) Play();
+        if (!isPlaying) Stop();
         optionCanvas.SetActive(false);
     }
     public void TransitionScene(String sceneName)
@@ -308,7 +130,7 @@ public class GameManager : MonoBehaviour
         else if (shipHP1 == 0) return 2;
         else if (shipHP2 == 0) return 1;
 
-        if (m_timeLimit.info < 0)
+        if (timeView.isFinished)
         {
             if (shipHP1 == shipHP2) return 3;
             else if (shipHP1 < shipHP2) return 2;
@@ -316,64 +138,17 @@ public class GameManager : MonoBehaviour
         }
         return 0;
     }
-    private void RegardAsFriend(Player player)
+    private void RegardAsFriend(InstManager player)
     {
-        player.ChangeLayer("Player1", "PlayerShip1");
+        player.ChangeLayer();
     }
-    private void RegardAsOpponent(Player player)
+    private void RegardAsOpponent(InstManager player)
     {
         player.Invert(true);
-        player.ChangeLayer("Player2","PlayerShip2");
+        player.ChangeLayer();
     }
 }
 /*****public class*****/
-public class UnitInst
-{
-    public GameObject obj;
-    public UnitScript script;
-}
-public class ShipInst
-{
-    public GameObject obj;
-    public UnitScript unitScript;
-    public ShipScript shipScript;
-}
-public class TextManager<TInfo>
-{
-    protected Text m_text;
-    protected TInfo m_info;
-
-    public TextManager(Text text)
-    {
-        m_text = text;
-
-    }
-    virtual public TInfo info
-    {
-        get { return m_info; }
-        set
-        {
-            m_info = value;
-            if (m_text != null) m_text.text = info.ToString();
-        }
-    }
-
-
-}
-public class TextManager<TInfo, TCast> : TextManager<TInfo>
-{
-    public TextManager(Text text)
-        : base(text) { }
-    override public TInfo info
-    {
-        get { return m_info; }
-        set
-        {
-            m_info = value;
-            if (m_text != null) m_text.text = Convert.ChangeType(info, typeof(TCast)).ToString();
-        }
-    }
-}
 public class GaugeManager
 {
     protected Image m_image;
