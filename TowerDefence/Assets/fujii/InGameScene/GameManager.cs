@@ -10,14 +10,13 @@ using UniRx;
 public class GameManager : MonoBehaviour
 {
     /*****public field*****/
-    public MasterDataScript masterData;
     public InstManager player1, player2;
-    public Image HP1Bar, HP2Bar;
-    public GameObject winCanvas, loseCanvas, drawCanvas ,optionCanvas;
     public UIManager option;
     public TimeView timeView;
+    public MasterDataScript masterData;
+    public GameObject winCanvas, loseCanvas, drawCanvas;
     /*****private field*****/
-    private GaugeManager m_player1HP , m_player2HP;
+    public Gauge m_player1HP , m_player2HP;
     private int[,] gird;
     public bool isPlaying { get; set; } = true;
     /*****Mobehabiour method*****/
@@ -45,8 +44,6 @@ public class GameManager : MonoBehaviour
         formation.shiptype = 10010;
         player1.Init(formation);
         player2.Init(formation);
-        m_player1HP = new GaugeManager(HP1Bar);
-        m_player2HP = new GaugeManager(HP2Bar);
         
         RegardAsFriend(player1);
         RegardAsOpponent(player2);
@@ -59,17 +56,17 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-        m_player1HP.maxInfo = m_player1HP.info = player1.shipHP;
-        m_player2HP.maxInfo = m_player2HP.info = player1.shipHP;
+        m_player1HP.maxValue = m_player1HP.value = player1.shipHP;
+        m_player2HP.maxValue = m_player2HP.value = player1.shipHP;
     }
     void Update()
     {
         if (isPlaying)
         {
-            if (m_player1HP.info != player1.shipHP)
-                m_player1HP.info = player1.shipHP;
-            if (m_player2HP.info != player2.shipHP)
-                m_player2HP.info = player2.shipHP;
+            if (m_player1HP.value != player1.shipHP)
+                m_player1HP.value = player1.shipHP;
+            if (m_player2HP.value != player2.shipHP)
+                m_player2HP.value = player2.shipHP;
            
             int victoryNum = CheckVictory(player1.shipHP, player2.shipHP, player1.pngnNum, player2.pngnNum);
             switch (victoryNum)
@@ -143,35 +140,6 @@ public class GameManager : MonoBehaviour
     }
 }
 /*****public class*****/
-public class GaugeManager
-{
-    protected Image m_image;
-    protected int m_maxInfo;
-    protected int m_info;
-    public GaugeManager(Image image)
-    {
-        m_image = image;
-        m_maxInfo = m_info = System.Int32.MaxValue;
-    }
-    public int maxInfo
-    {
-        get { return m_maxInfo; }
-        set
-        {
-            m_maxInfo = value;
-            m_image.fillAmount = (float)m_info / (float)m_maxInfo;
-        }
-    }
-    public int info
-    {
-        get { return m_info; }
-        set
-        {
-            m_info = value;
-            m_image.fillAmount = (float)m_info / (float)m_maxInfo;
-        }
-    }
-}
 public class InfoToWeapon
 {
     public Vector3 pos;

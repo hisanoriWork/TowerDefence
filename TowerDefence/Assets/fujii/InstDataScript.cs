@@ -7,6 +7,9 @@ public class InstDataScript : MonoBehaviour
     public List<UnitInst> unitList;
     public List<UnitInst> pngnList;
     public ShipInst ship;
+    public string pngnLayer;
+    public string shipLayer;
+    public string weaponLayer;
 }
 
 public class UnitInst

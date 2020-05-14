@@ -6,12 +6,10 @@ using System.Linq;
 public class InstManager : MonoBehaviour
 {
     /*****public field*****/
-    public Transform place;
     public MasterDataScript masterData;
     public InstDataScript instData;
-    public LayerMask pngnLayer;
-    public LayerMask shipLayer;
-    public LayerMask weaponLayer;
+    public Transform place;
+    
     public int shipHP { get { return instData.ship.unitScript.HP; } }
     public int pngnNum
     {
@@ -49,8 +47,8 @@ public class InstManager : MonoBehaviour
     }
     public void ChangeLayer()
     {
-        int pngnLayerNum = pngnLayer.value;
-        int shipLayerNum = shipLayer.value;
+        int pngnLayerNum = LayerMask.NameToLayer(instData.pngnLayer);
+        int shipLayerNum = LayerMask.NameToLayer(instData.shipLayer);
         foreach (var unitInst in instData.unitList)
         {
             if (unitInst.script.data.unitType == UnitType.Pngn) Utility.SetLayerRecursively(unitInst.obj, pngnLayerNum);
