@@ -9,12 +9,12 @@ public class EachGrid
     public Text txt;
     public SelectableUnit sel;
 
-    public void UpdateEachGrid(Sprite sprite, string text,int unitID,UnitType unitType,GridForm[]form,Vector2 offset)
+    public void UpdateEachGrid(Sprite sprite,int unitID,UnitType unitType,GridForm[]form,Vector2 offset)
     {
         this.sel = this.img.GetComponent<SelectableUnit>();
 
         this.img.sprite = sprite;
-        this.txt.text = text;
+        this.txt.text = unitID.ToString();
         this.sel.selectableUnitID = unitID;
         this.sel.selectableUnitType = unitType;
         this.sel.selectableUnitForm = form;
@@ -39,18 +39,52 @@ public class FormationChanger
 
     //左側グリッドのタイリング状況
     public int[,] eachGridsTiling;
-    public int[,] enableAttachingGrids;
+    public bool[,] enableToAttaching;
 
-    SelectableUnit[,] a;
-
-    public bool[,] isEnableToSetting;
+    //船
+    public EachGrid shipEachGrid;
 
     RectTransform contentRectTransform;
 
     //public List<>
 
+
+    /*****private method*****/
+
+    private void SetEachGridsTiling(int unitID,int unitX,int unitY,GridForm[] gridForms)
+    {
+        if (unitID != 0)
+        {
+            eachGridsTiling[unitX, unitY] = unitID;
+
+            if (gridForms != null)
+            {
+                foreach (GridForm form in gridForms)
+                {
+                    eachGridsTiling[unitX + form.y, unitY + form.x] = unitID;
+                }
+            }
+        }
+
+        return;
+    }
+
+    private void ResetEachGridsTiling()
+    {
+
+        for (int i = 0; i < 10; i++)
+        {
+            for (int j = 0; j < 10; j++)
+            {
+                eachGridsTiling[i,j] = 0;
+            }
+        }
+
+        return;
+    }
+
     /*****public method*****/
-    public FormationChanger(Formation formation, EachGrid[,] eachGrids, GameObject movingUnit,RectTransform contentRectTransform)
+    public FormationChanger(Formation formation, EachGrid[,] eachGrids, GameObject movingUnit,RectTransform contentRectTransform,EachGrid shipEachGrid)
     {
         this.formation = formation;
         this.movingUnit = movingUnit;
@@ -59,6 +93,15 @@ public class FormationChanger
 
         this.eachGrids = eachGrids;
         this.eachGridsCoordinate = new Vector2[10, 10];
+
+        this.eachGridsTiling = new int[10, 10];
+
+        this.shipEachGrid = shipEachGrid;
+
+
+        SetEachGridsTiling(shipEachGrid.sel.selectableUnitID,0,0, shipEachGrid.sel.selectableUnitForm);
+
+
         for (int i = 0; i < 10; i++)
         {
             for (int j = 0; j < 10; j++)
@@ -66,22 +109,40 @@ public class FormationChanger
                 this.eachGridsCoordinate[i, j] = eachGrids[i, j].img.transform.position;
                 //Debug.Log(this.eachGridsCoordinate[i, j]);
                 //Debug.Log(eachGrids[i, j].img.transform.position);
+                SetEachGridsTiling(eachGrids[i,j].sel.selectableUnitID, i, j, eachGrids[i,j].sel.selectableUnitForm);
+
             }
         }
-        this.isEnableToSetting = new bool[10, 10];
+
+
+        /*for (int i = 0; i < 10; i++)
+        {
+            for (int j = 0; j < 10; j++)
+            {
+                Debug.Log(eachGridsTiling[i, j]);
+            }
+        }*/
+
+        this.enableToAttaching = new bool[10, 10];
         this.contentRectTransform = contentRectTransform;
     }
 
     public void UpdateCoordinates(){
+
+        ResetEachGridsTiling();
+
         //movingUnitCoordinate = movingUnit.transform.position;
         this.movingUnitCoordinate = (Vector2)movingUnit.transform.position - movingUnit.GetComponent<MovingUnit>().movingUnitOffset;
+
+        SetEachGridsTiling(shipEachGrid.sel.selectableUnitID, 0, 0, shipEachGrid.sel.selectableUnitForm);
+
         for (int i = 0; i < 10; i++)
         {
             for (int j = 0; j < 10; j++)
             {
                 eachGridsCoordinate[i, j] = eachGrids[i, j].img.transform.position;
                 //Debug.Log("update:"+eachGridsCoordinate[i, j]);
-                
+                SetEachGridsTiling(eachGrids[i, j].sel.selectableUnitID, i, j, eachGrids[i, j].sel.selectableUnitForm);
             }
         }
 
@@ -149,6 +210,11 @@ public class FormationChanger
         return null;
     }
 
+    public void SetEnableToAttachingColor()
+    {
+        return;
+    }
+
 }
 
 public class FormationGridManager : MonoBehaviour
@@ -165,18 +231,22 @@ public class FormationGridManager : MonoBehaviour
 
     public EachGrid[,] eachGrids = new EachGrid[10, 10];
 
-    FormationChanger fc;
-
     public RectTransform contentRectTransform;
     public Image eachGridImage;
 
     public GameObject movingUnit;
-    public GameObject attachingShip;
+
+    public Image attachingShip;
+    public EachGrid shipEachGrid = new EachGrid();
 
     public GridLayoutGroup gridLayoutGroup;
 
+    public Sprite nullSprite;
+
     /*****private field*****/
     private UnitData m_unitData;
+
+    FormationChanger fc;
 
     private void Start()
     {
@@ -215,8 +285,7 @@ public class FormationGridManager : MonoBehaviour
         gridLayoutGroup.enabled = false;
 
         UpdateGridInfo();
-
-        fc = new FormationChanger(formation, eachGrids, movingUnit, contentRectTransform);
+        fc = new FormationChanger(formation, eachGrids, movingUnit, contentRectTransform, shipEachGrid);
 
         //masterData.FindUnitData(10).
 
@@ -283,11 +352,17 @@ public class FormationGridManager : MonoBehaviour
                 eachGrid.img = img.GetComponent<Image>();
                 eachGrid.txt = img.transform.Find("Text").GetComponent<Text>();
                 eachGrid.txt.text = "0";
+                eachGrid.sel = img.GetComponent<SelectableUnit>();
 
                 eachGrids[i, j] = eachGrid;
                 //Debug.Log("start:"+eachGrids[i, j].img.transform.position);
             }
         }
+
+        shipEachGrid.img = attachingShip.GetComponent<Image>();
+        shipEachGrid.txt = attachingShip.transform.Find("Text").GetComponent<Text>();
+        shipEachGrid.txt.text = "0";
+
         return;
     }
 
@@ -332,30 +407,20 @@ public class FormationGridManager : MonoBehaviour
         {
             for (int j = 0; j < 10; j++)
             {
-                //Image img = Instantiate(eachGridImage, contentRectTransform);
-                Image img = eachGrids[i, j].img;
-
                 m_unitData = masterData.FindUnitData(formation.gridinfo[i, j]);
 
-                EachGrid eachGrid = new EachGrid();
-                eachGrid.img = img.GetComponent<Image>();
-                eachGrid.txt = img.transform.Find("Text").GetComponent<Text>();
-
+                EachGrid eachGrid = eachGrids[i, j];
 
                 if (m_unitData != null)
                 {
-                    SelectableUnit sel = eachGrid.img.GetComponent<SelectableUnit>();
-                    eachGrid.img.sprite = m_unitData.sprite;
-                    sel.selectableUnitID = m_unitData.ID;
-                    sel.selectableUnitType = m_unitData.unitType;
-                    sel.selectableUnitForm = m_unitData.form;
-
-                    sel.selectableUnitOffset = ConvertOffsetValue(m_unitData.offset);
-
-                    SetUnitOffsetAndResizeImgSize(eachGrid.img, editParam.attachingUnitImgSize, sel.selectableUnitOffset);
+                    ResetUnitOffsetAndResizeImgSize(eachGrid.img, editParam.attachingUnitImgSize, eachGrid.sel.selectableUnitOffset);
+                    eachGrid.UpdateEachGrid(m_unitData.sprite, m_unitData.ID, m_unitData.unitType, m_unitData.form, ConvertOffsetValue(m_unitData.offset));
+                    SetUnitOffsetAndResizeImgSize(eachGrid.img, editParam.attachingUnitImgSize, eachGrid.sel.selectableUnitOffset);
                 }
                 else
                 {
+                    ResetUnitOffsetAndResizeImgSize(eachGrid.img, editParam.attachingUnitImgSize, eachGrid.sel.selectableUnitOffset);
+                    eachGrid.UpdateEachGrid(nullSprite, 0, UnitType.Pngn, null, Vector2.zero);
                     SetUnitOffsetAndResizeImgSize(eachGrid.img, editParam.attachingUnitImgSize, Vector2.zero);
                 }
                 
@@ -366,6 +431,24 @@ public class FormationGridManager : MonoBehaviour
                 //Debug.Log("start:"+eachGrids[i, j].img.transform.position);
             }
         }
+
+
+
+        m_unitData = masterData.FindUnitData(formation.shiptype);
+
+
+        if (m_unitData != null)
+        {
+            shipEachGrid.UpdateEachGrid(m_unitData.sprite, m_unitData.ID, m_unitData.unitType, m_unitData.form, ConvertOffsetValue(m_unitData.offset));
+
+            SetUnitOffsetAndResizeImgSize(shipEachGrid.img, editParam.attachingShipImgSize, ConvertOffsetValue(m_unitData.offset));
+        }
+        else
+        {
+            SetUnitOffsetAndResizeImgSize(shipEachGrid.img, editParam.attachingShipImgSize, Vector2.zero);
+        }
+
+
         return;
     }
 
@@ -400,6 +483,30 @@ public class FormationGridManager : MonoBehaviour
     }
 
 
+
+    public void SelectEachShip(int shipID)
+    {
+
+        ResetUnitOffsetAndResizeImgSize(shipEachGrid.img, editParam.attachingShipImgSize, shipEachGrid.sel.selectableUnitOffset);
+
+        formation.formationDataExists = true;
+        formation.gridinfo = new int[10, 10];
+        formation.shiptype = shipID;
+
+        UpdateGridInfo();
+        fc = new FormationChanger(formation, eachGrids, movingUnit, contentRectTransform, shipEachGrid);
+
+        return;
+    }
+
+
+
+    public void SetEnableToAttachingColor()
+    {
+        fc.SetEnableToAttachingColor();
+    }
+
+
     public void Attach(int movingUnitID, UnitType movinUnitType,GridForm[] movingUnitForm,Vector2 movingUnitOffset, int[] beforeAttachingUnitPosition)
     {
 
@@ -414,7 +521,7 @@ public class FormationGridManager : MonoBehaviour
             if (m_unitData != null)
             {
                 EachGrid eachGrid = fc.eachGrids[attachingUnitPosition[0], attachingUnitPosition[1]];
-                eachGrid.UpdateEachGrid(m_unitData.sprite, movingUnitID.ToString(), m_unitData.ID, m_unitData.unitType,m_unitData.form, ConvertOffsetValue(m_unitData.offset));
+                eachGrid.UpdateEachGrid(m_unitData.sprite, m_unitData.ID, m_unitData.unitType,m_unitData.form, ConvertOffsetValue(m_unitData.offset));
                 SetUnitOffsetAndResizeImgSize(eachGrid.img,editParam.attachingUnitImgSize,movingUnitOffset);
             }
 

@@ -10,7 +10,7 @@ public class EditManager : MonoBehaviour
 
     /*****public field*****/
     public MasterDataScript masterData;
-
+    public FormationGridManager formationGridManager;
     public EditParam editParam;
 
     public List<GameObject> switchableUnitTypes;
@@ -230,7 +230,7 @@ public class EditManager : MonoBehaviour
         }
         else if(sel.selectableUnitType == UnitType.Ship)
         {
-            
+            formationGridManager.SelectEachShip(sel.selectableUnitID);
         }
 
         //Shipの場合
