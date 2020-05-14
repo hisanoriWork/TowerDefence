@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
+using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     /*****public class*****/
@@ -109,9 +109,9 @@ public class GameManager : MonoBehaviour
         /*****private field*****/
         float m_dx = 0.8f, m_dy = 0.8f;
         bool m_isInverted = false;
-        
+
         /*****public method*****/
-        public Player(MasterDataScript masterData, GameObject parentObj,Formation formation)
+        public Player(MasterDataScript masterData, GameObject parentObj, Formation formation)
         {
             unitInstList = new List<UnitInst>();
             pngnInstList = new List<UnitInst>();
@@ -186,13 +186,16 @@ public class GameManager : MonoBehaviour
             }
             shipInst = CreateShip(formation.shiptype, parentObj.transform.position);
         }
+
         private UnitInst CreateUnit(int unitID, Vector3 pos)
         {
             UnitData data = masterData.FindUnitData(unitID);
             if (data != null)
             {
-                GameObject obj = Instantiate(data.prefab , parentObj.transform);
-                obj.transform.position = pos + data.offset;
+                Debug.Log("pos前");
+                GameObject obj = Instantiate(data.prefab, pos + data.offset, Quaternion.Euler(Vector3.zero), parentObj.transform);
+                Debug.Log("pos後");
+                Debug.Log(obj.transform.position);
                 UnitInst inst = new UnitInst();
                 inst.obj = obj;
                 inst.script = obj.GetComponent<UnitScript>();
@@ -347,14 +350,12 @@ public class GameManager : MonoBehaviour
         
 
     }
-
     public void OpenOption()
     {
         m_player1.Stop();
         m_player2.Stop();
         optionCanvas.SetActive(true);
     }
-
     public void CloseOption()
     {
         if (isPlaying)
@@ -399,6 +400,7 @@ public class GameManager : MonoBehaviour
     {
         player.Invert(true);
         player.ChangeLayer("Player2","PlayerShip2");
+        Debug.Log("反転させました");
     }
 }
 

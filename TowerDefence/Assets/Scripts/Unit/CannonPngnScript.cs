@@ -7,36 +7,22 @@ public class CannonPngnScript : MonoBehaviour
     /*****public field*****/
     public UnitScript beseScript;
     public ShellPool pool;
-    public Transform rightAttackTransform;
-    public Transform leftAttackTransform;
+    public Transform attackTransform;
     /*****Menobehaviour method*****/
-    InfoToWeapon info1,info2;
+    InfoToWeapon info;
     public void Awake()
     {
-        Init();
-    }
-
-    public void Start()
-    {
-        GameObject obj = new GameObject("ShellPool");
-        pool = obj.AddComponent(typeof(ShellPool)) as ShellPool;
-        info1 = new InfoToWeapon(rightAttackTransform.position, "PlayerWeapon1", beseScript.power);
-        info2 = new InfoToWeapon(rightAttackTransform.position, "PlayerWeapon2", beseScript.power);
+        info = new InfoToWeapon(attackTransform.position, "PlayerWeapon1", beseScript.power);
+        Debug.Log("pos選択");
     }
     /*****public method*****/
-    public void Init()
-    {
-    }
-
     public void Attack(int power)
     {
+        info.pos = attackTransform.position;
         if (!beseScript.isInverted)
-        {
-            ShellObject obj = pool.Pop(info1);
-        }
+            info.layer = "PlayerWeapon1";
         else
-        {
-            ShellObject obj = pool.Pop(info2);
-        }
+            info.layer = "PlayerWeapon2";
+        ShellObject obj = pool.Pop(info);
     }
 }

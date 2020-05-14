@@ -4,12 +4,16 @@ using UnityEngine;
 using UnityEngine.Events;
 public class ShellPool : ObjectPool<ShellPool,ShellObject,InfoToWeapon>
 {
-    
+    public UnitScript unitScript;
+    void Start()
+    {
+        Debug.Log("ペアレントを外しました");
+        transform.parent = null;
+    }
 }
 
 public class ShellObject :PoolObject<ShellPool,ShellObject,InfoToWeapon>
 {
-
     public Transform transform;
     public ShellScript script;
     public UnityEvent InPool;
@@ -24,7 +28,7 @@ public class ShellObject :PoolObject<ShellPool,ShellObject,InfoToWeapon>
     public override void WakeUp(InfoToWeapon info)
     {
         instance.SetActive(true);
-        script.Init(info.pos, info.layer, info.power,InPool);
+        script.Init(info.pos, info.layer,info.power,InPool,objectPool.unitScript);
     }
 
     public override void Sleep()

@@ -29,7 +29,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1143180996646596876}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4428536321054053348
 MonoBehaviour:
@@ -45,36 +45,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 8367861753450576244, guid: 8829fbf969d04ab4d83f9eb1d5bb0e0b, type: 3}
   initialPoolCount: 10
---- !u!1 &2197717485311139903
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6163473215867706929}
-  m_Layer: 8
-  m_Name: LeftShellPos
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6163473215867706929
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2197717485311139903}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.6, y: 0.09, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1143180996646596876}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  unitScript: {fileID: 1626754708305547018}
 --- !u!114 &940649996246917703
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89,8 +60,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   beseScript: {fileID: 1626754708305547018}
   pool: {fileID: 4428536321054053348}
-  rightAttackTransform: {fileID: 759281076414705152}
-  leftAttackTransform: {fileID: 6163473215867706929}
+  attackTransform: {fileID: 759281076414705152}
 --- !u!1 &7048052805395260860
 GameObject:
   m_ObjectHideFlags: 0
@@ -101,7 +71,7 @@ GameObject:
   m_Component:
   - component: {fileID: 759281076414705152}
   m_Layer: 8
-  m_Name: RightShellPos
+  m_Name: AttackPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
