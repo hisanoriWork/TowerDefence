@@ -11,6 +11,8 @@ public class EditManager : MonoBehaviour
     /*****public field*****/
     public MasterDataScript masterData;
 
+    public EditParam editParam;
+
     public List<GameObject> switchableUnitTypes;
 
     public GameObject selectableUnitOrigin;
@@ -37,12 +39,6 @@ public class EditManager : MonoBehaviour
     private List<UnitData> pngnDataList;
     private List<ShipData> shipDataList;
     private List<UnitData> blockDataList;
-
-    [SerializeField] private float selectableUnitImgSize = 0.6f;
-    [SerializeField] private float selesctableShipImgSize = 0.07f;
-
-    [SerializeField] private float movingUnitImgSize = 0.5f;
-    [SerializeField] private Vector2 movingUnitOffset = new Vector2(0.5f,0.2f);
 
     void Awake()
     {
@@ -97,6 +93,11 @@ public class EditManager : MonoBehaviour
         return;
     }
 
+    private Vector2 ConvertOffsetValue(Vector2 dataOffset)
+    {
+        return dataOffset * editParam.movingUnitOffset;
+    }
+
     private void CreateSelectableUnits(UnitType unitType, List<UnitData> unitDataList)
     {
         SelectableUnit sel;
@@ -109,7 +110,7 @@ public class EditManager : MonoBehaviour
             obj.name = data.ID.ToString();
 
             var transform = obj.transform.Find("Image");
-            SetSpriteAndResizeImgSize(transform, selectableUnitImgSize, data.sprite);
+            SetSpriteAndResizeImgSize(transform, editParam.selectableUnitImgSize, data.sprite);
 
             obj.transform.Find("UnitName").GetComponent<Text>().text = data.name;
             obj.transform.Find("UnitDetails").GetComponent<Text>().text 
@@ -118,6 +119,9 @@ public class EditManager : MonoBehaviour
             sel = obj.GetComponent<SelectableUnit>();
             sel.selectableUnitID = data.ID;
             sel.selectableUnitType = data.unitType;
+            sel.selectableUnitForm = data.form;
+
+            sel.selectableUnitOffset = ConvertOffsetValue(data.offset);
 
             selectableUnits[unitType].Add(obj);
         }
@@ -138,7 +142,7 @@ public class EditManager : MonoBehaviour
             obj.name = data.unitData.ID.ToString();
 
             var transform = obj.transform.Find("Image");
-            SetSpriteAndResizeImgSize(transform, selesctableShipImgSize, data.unitData.sprite);
+            SetSpriteAndResizeImgSize(transform, editParam.selesctableShipImgSize, data.unitData.sprite);
 
             obj.transform.Find("UnitName").GetComponent<Text>().text = data.name;
             obj.transform.Find("UnitDetails").GetComponent<Text>().text 
@@ -147,6 +151,9 @@ public class EditManager : MonoBehaviour
             sel = obj.GetComponent<SelectableUnit>();
             sel.selectableUnitID = data.unitData.ID;
             sel.selectableUnitType = data.unitData.unitType;
+            sel.selectableUnitForm = data.unitData.form;
+
+            sel.selectableUnitOffset = ConvertOffsetValue(data.unitData.offset);
 
             selectableUnits[unitType].Add(obj);
         }
@@ -212,14 +219,16 @@ public class EditManager : MonoBehaviour
 
             movingUnit.movingUnitID = sel.selectableUnitID;
             movingUnit.movingUnitType = sel.selectableUnitType;
+            movingUnit.movingUnitForm = sel.selectableUnitForm;
+            movingUnit.movingUnitOffset = sel.selectableUnitOffset;
 
             var transform = movingUnitObject.transform;
-            SetSpriteAndResizeImgSize(transform, movingUnitImgSize, selectableUnit.transform.Find("Image").GetComponent<Image>().sprite);
+            SetSpriteAndResizeImgSize(transform, editParam.movingUnitImgSize, selectableUnit.transform.Find("Image").GetComponent<Image>().sprite);
 
-            //Vector2 pos = Input.mousePosition;
+            movingUnitObject.transform.position = (Vector2)Input.mousePosition + sel.selectableUnitOffset;
 
-            movingUnitObject.transform.position = Input.mousePosition;
-        }else if(sel.selectableUnitType == UnitType.Ship)
+        }
+        else if(sel.selectableUnitType == UnitType.Ship)
         {
             
         }
@@ -229,38 +238,53 @@ public class EditManager : MonoBehaviour
         return;
     }
 
-    public void ClickEachAttachingUnit(GameObject attatchingUnit)
+    public void ClickEachAttachingUnit(GameObject attachingUnit)
     {
-        SelectableUnit sel = attatchingUnit.GetComponent<SelectableUnit>();
+        SelectableUnit att = attachingUnit.GetComponent<SelectableUnit>();
 
         //Debug.Log(sel.selectableUnitID);
 
-        if (sel.selectableUnitID != 0)
+        if (att.selectableUnitID != 0)
         {
             //Debug.Log(sel.selectableUnitType);
             //Debug.Log(UnitType.Pngn);
 
             //PngnBlockの場合
-            if (sel.selectableUnitType == UnitType.Pngn || sel.selectableUnitType == UnitType.Block)
+            if (att.selectableUnitType == UnitType.Pngn || att.selectableUnitType == UnitType.Block)
             {
-                Image attachingUnitImage = attatchingUnit.GetComponent<Image>();
+                Image attachingUnitImage = attachingUnit.GetComponent<Image>();
 
                 movingUnitObject.SetActive(true);
 
-                movingUnit.movingUnitID = sel.selectableUnitID;
-                movingUnit.movingUnitType = sel.selectableUnitType;
+                movingUnit.movingUnitID = att.selectableUnitID;
+                movingUnit.movingUnitType = att.selectableUnitType;
+                movingUnit.movingUnitForm = att.selectableUnitForm;
+                movingUnit.movingUnitOffset = att.selectableUnitOffset;
 
                 var transform = movingUnitObject.transform;
-                SetSpriteAndResizeImgSize(transform, movingUnitImgSize, attachingUnitImage.sprite);
+                SetSpriteAndResizeImgSize(transform, editParam.movingUnitImgSize, attachingUnitImage.sprite);
 
-                //movingUnitObject.GetComponent<Image>().sprite = attachingUnitImage.sprite;
-
-                sel.selectableUnitID  = 0;
+                att.selectableUnitID  = 0;
                 attachingUnitImage.sprite = nullSprite;
 
-                attatchingUnit.transform.Find("Text").GetComponent<Text>().text = "0";
+                attachingUnit.transform.Find("Text").GetComponent<Text>().text = "0";
 
-                movingUnitObject.transform.position = Input.mousePosition;
+
+                //var img = transform.GetComponent<Image>();
+                var t = attachingUnitImage.GetComponent<RectTransform>();
+
+                attachingUnitImage.SetNativeSize();
+
+                var width = t.sizeDelta.x * editParam.attachingUnitImgSize;
+                var height = t.sizeDelta.y * editParam.attachingUnitImgSize;
+
+                t.sizeDelta = new Vector2(width, height);
+
+                attachingUnitImage.transform.position = (Vector2)attachingUnitImage.transform.position - att.selectableUnitOffset;
+
+
+
+                movingUnitObject.transform.position = (Vector2)Input.mousePosition + att.selectableUnitOffset;
             }
 
             //Shipの場合

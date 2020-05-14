@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class MovingUnit : MonoBehaviour
 {
-    //*****************スプライトにアタッチしたまま！！！！！！！！！！************
-
 
     public FormationGridManager formationGridManager;
     public int movingUnitID;
     public UnitType movingUnitType;
+    public GridForm[] movingUnitForm;
+    public Vector2 movingUnitOffset;
 
     public int[] beforeAttachingUnitPosition;
 
@@ -23,14 +23,14 @@ public class MovingUnit : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.transform.position = Input.mousePosition;
+        this.transform.position = (Vector2)Input.mousePosition + movingUnitOffset;
         if (Input.GetMouseButtonUp(0)) SetUnit();
     }
 
 
     public void SetUnit()
     {
-        formationGridManager.Attach(movingUnitID, movingUnitType, beforeAttachingUnitPosition);
+        formationGridManager.Attach(movingUnitID, movingUnitType,movingUnitForm,movingUnitOffset, beforeAttachingUnitPosition);
         beforeAttachingUnitPosition = null;
         this.gameObject.SetActive(false);
         return;

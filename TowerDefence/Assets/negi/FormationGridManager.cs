@@ -7,15 +7,19 @@ public class EachGrid
 {
     public Image img;
     public Text txt;
+    public SelectableUnit sel;
 
-    public void UpdateEachGrid(Sprite sprite, string text,int unitID,UnitType unitType)
+    public void UpdateEachGrid(Sprite sprite, string text,int unitID,UnitType unitType,GridForm[]form,Vector2 offset)
     {
-        SelectableUnit sel = this.img.GetComponent<SelectableUnit>();
+        this.sel = this.img.GetComponent<SelectableUnit>();
 
         this.img.sprite = sprite;
         this.txt.text = text;
-        sel.selectableUnitID = unitID;
-        sel.selectableUnitType = unitType;
+        this.sel.selectableUnitID = unitID;
+        this.sel.selectableUnitType = unitType;
+        this.sel.selectableUnitForm = form;
+        this.sel.selectableUnitOffset = offset;
+        
     }
 }
 
@@ -27,10 +31,15 @@ public class FormationChanger
     //移動体
     public GameObject movingUnit;
     public Vector2 movingUnitCoordinate;
+    public GridForm[] movingUnitForm;
 
     //左側グリッド
     public EachGrid[,] eachGrids;
-    public Vector2[,] eachGridsCoordinate;
+    public Vector2[,] eachGridsCoordinate;  
+
+    //左側グリッドのタイリング状況
+    public int[,] eachGridsTiling;
+    public int[,] enableAttachingGrids;
 
     SelectableUnit[,] a;
 
@@ -45,7 +54,8 @@ public class FormationChanger
     {
         this.formation = formation;
         this.movingUnit = movingUnit;
-        this.movingUnitCoordinate = movingUnit.transform.position;
+        //this.movingUnitCoordinate = movingUnit.transform.position;
+        this.movingUnitCoordinate = (Vector2)movingUnit.transform.position - movingUnit.GetComponent<MovingUnit>().movingUnitOffset;
 
         this.eachGrids = eachGrids;
         this.eachGridsCoordinate = new Vector2[10, 10];
@@ -63,7 +73,8 @@ public class FormationChanger
     }
 
     public void UpdateCoordinates(){
-        movingUnitCoordinate = movingUnit.transform.position;
+        //movingUnitCoordinate = movingUnit.transform.position;
+        this.movingUnitCoordinate = (Vector2)movingUnit.transform.position - movingUnit.GetComponent<MovingUnit>().movingUnitOffset;
         for (int i = 0; i < 10; i++)
         {
             for (int j = 0; j < 10; j++)
@@ -144,6 +155,7 @@ public class FormationGridManager : MonoBehaviour
 {
     /*****public field*****/
     public MasterDataScript masterData;
+    public EditParam editParam;
 
 
     //編成データ読み書き用
@@ -159,17 +171,12 @@ public class FormationGridManager : MonoBehaviour
     public Image eachGridImage;
 
     public GameObject movingUnit;
+    public GameObject attachingShip;
 
     public GridLayoutGroup gridLayoutGroup;
 
     /*****private field*****/
     private UnitData m_unitData;
-
-    [SerializeField] private float selectableUnitImgSize = 0.8f;
-    [SerializeField] private float selesctableShipImgSize = 0.8f;
-
-    [SerializeField] private float movingUnitImgSize = 0.8f;
-
 
     private void Start()
     {
@@ -184,7 +191,7 @@ public class FormationGridManager : MonoBehaviour
             {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
             {  0,  0,  0,  0,  0, 10,100,100, 10, 10},
             {  0,  0,  0,100, 10,  0,100,100,  0,  0},
-            { 10, 10,100,100,  0,  0,100,  0,  0,  0},
+            { 12,  0,100,100,  0,  0,100,  0,  0,  0},
             {  0,  0,  0, 10,  0,  0,  0,  0,  0,  0},
             {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
             {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
@@ -197,15 +204,19 @@ public class FormationGridManager : MonoBehaviour
         prefs.SetFormation(formation.gridinfo, formation.shiptype);
 
         //グリッドを生成、初期化
-        GenerateGridInfo();
-        fc = new FormationChanger(formation, eachGrids, movingUnit, contentRectTransform);
-        
+        //GenerateGridInfo();
 
+        InstanceGridInfo();
+        
         gridLayoutGroup.CalculateLayoutInputHorizontal();
         gridLayoutGroup.CalculateLayoutInputVertical();
         gridLayoutGroup.SetLayoutHorizontal();
         gridLayoutGroup.SetLayoutVertical();
         gridLayoutGroup.enabled = false;
+
+        UpdateGridInfo();
+
+        fc = new FormationChanger(formation, eachGrids, movingUnit, contentRectTransform);
 
         //masterData.FindUnitData(10).
 
@@ -218,13 +229,12 @@ public class FormationGridManager : MonoBehaviour
     }
 
 
-    private void SetSpriteAndResizeImgSize(Transform transform, float imgSize, Sprite sprite)
-    {
+    private void SetUnitOffsetAndResizeImgSize(Image img, float imgSize, Vector2 selectableUnitOffset)
+    { 
 
-        var img = transform.GetComponent<Image>();
-        var t = transform.GetComponent<RectTransform>();
+        //var img = transform.GetComponent<Image>();
+        var t = img.GetComponent<RectTransform>();
 
-        img.sprite = sprite;
         img.SetNativeSize();
 
         var width = t.sizeDelta.x * imgSize;
@@ -232,11 +242,36 @@ public class FormationGridManager : MonoBehaviour
 
         t.sizeDelta = new Vector2(width, height);
 
+        img.transform.position = (Vector2)img.transform.position + selectableUnitOffset;
+
         return;
     }
 
+    private void ResetUnitOffsetAndResizeImgSize(Image img, float imgSize, Vector2 selectableUnitOffset)
+    {
 
-    public void instanceGridInfo()
+        //var img = transform.GetComponent<Image>();
+        var t = img.GetComponent<RectTransform>();
+
+        img.SetNativeSize();
+
+        var width = t.sizeDelta.x * imgSize;
+        var height = t.sizeDelta.y * imgSize;
+
+        t.sizeDelta = new Vector2(width, height);
+
+        img.transform.position = (Vector2)img.transform.position - selectableUnitOffset;
+
+        return;
+    }
+
+    private Vector2 ConvertOffsetValue(Vector2 dataOffset)
+    {
+        return dataOffset * editParam.movingUnitOffset;
+    }
+
+
+    public void InstanceGridInfo()
     {
         for (int i = 0; i < 10; i++)
         {
@@ -244,21 +279,10 @@ public class FormationGridManager : MonoBehaviour
             {
                 Image img = Instantiate(eachGridImage, contentRectTransform);
 
-                m_unitData = masterData.FindUnitData(formation.gridinfo[i, j]);
-
                 EachGrid eachGrid = new EachGrid();
                 eachGrid.img = img.GetComponent<Image>();
                 eachGrid.txt = img.transform.Find("Text").GetComponent<Text>();
-
-
-                if (m_unitData != null)
-                {
-                    SelectableUnit sel = eachGrid.img.GetComponent<SelectableUnit>();
-                    eachGrid.img.sprite = m_unitData.sprite;
-                    sel.selectableUnitID = m_unitData.ID;
-                    sel.selectableUnitType = m_unitData.unitType;
-                }
-                eachGrid.txt.text = formation.gridinfo[i, j].ToString();
+                eachGrid.txt.text = "0";
 
                 eachGrids[i, j] = eachGrid;
                 //Debug.Log("start:"+eachGrids[i, j].img.transform.position);
@@ -288,6 +312,10 @@ public class FormationGridManager : MonoBehaviour
                     eachGrid.img.sprite = m_unitData.sprite;
                     sel.selectableUnitID = m_unitData.ID;
                     sel.selectableUnitType = m_unitData.unitType;
+                    sel.selectableUnitForm = m_unitData.form;
+
+                    ConvertOffsetValue(m_unitData.offset);
+                    sel.selectableUnitOffset = m_unitData.offset;
                 }
                 eachGrid.txt.text = formation.gridinfo[i, j].ToString();
 
@@ -300,14 +328,44 @@ public class FormationGridManager : MonoBehaviour
 
     public void UpdateGridInfo()
     {
-        foreach (RectTransform child in contentRectTransform)
+        for (int i = 0; i < 10; i++)
         {
-            //削除する
-            Destroy(child.gameObject);
+            for (int j = 0; j < 10; j++)
+            {
+                //Image img = Instantiate(eachGridImage, contentRectTransform);
+                Image img = eachGrids[i, j].img;
+
+                m_unitData = masterData.FindUnitData(formation.gridinfo[i, j]);
+
+                EachGrid eachGrid = new EachGrid();
+                eachGrid.img = img.GetComponent<Image>();
+                eachGrid.txt = img.transform.Find("Text").GetComponent<Text>();
+
+
+                if (m_unitData != null)
+                {
+                    SelectableUnit sel = eachGrid.img.GetComponent<SelectableUnit>();
+                    eachGrid.img.sprite = m_unitData.sprite;
+                    sel.selectableUnitID = m_unitData.ID;
+                    sel.selectableUnitType = m_unitData.unitType;
+                    sel.selectableUnitForm = m_unitData.form;
+
+                    sel.selectableUnitOffset = ConvertOffsetValue(m_unitData.offset);
+
+                    SetUnitOffsetAndResizeImgSize(eachGrid.img, editParam.attachingUnitImgSize, sel.selectableUnitOffset);
+                }
+                else
+                {
+                    SetUnitOffsetAndResizeImgSize(eachGrid.img, editParam.attachingUnitImgSize, Vector2.zero);
+                }
+                
+
+                eachGrid.txt.text = formation.gridinfo[i, j].ToString();
+
+                eachGrids[i, j] = eachGrid;
+                //Debug.Log("start:"+eachGrids[i, j].img.transform.position);
+            }
         }
-
-        GenerateGridInfo();
-
         return;
     }
 
@@ -326,7 +384,7 @@ public class FormationGridManager : MonoBehaviour
             {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
             {  0,  0,  0,  0,  0, 10,100,100, 10, 10},
             {  0,  0,  0,100, 10,  0,100,100,  0,  0},
-            { 10, 10,100,100,  0,  0,100,  0,  0,  0},
+            { 12,  0,100,100,  0,  0,100,  0,  0,  0},
             {  0,  0,  0, 10,  0,  0,  0,  0,  0,  0},
             {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
             {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
@@ -342,7 +400,7 @@ public class FormationGridManager : MonoBehaviour
     }
 
 
-    public void Attach(int movingUnitID, UnitType movinUnitType, int[] beforeAttachingUnitPosition)
+    public void Attach(int movingUnitID, UnitType movinUnitType,GridForm[] movingUnitForm,Vector2 movingUnitOffset, int[] beforeAttachingUnitPosition)
     {
 
         int[] attachingUnitPosition = fc.SearchNearSquare(beforeAttachingUnitPosition);
@@ -355,7 +413,9 @@ public class FormationGridManager : MonoBehaviour
             fc.formation.gridinfo[attachingUnitPosition[0], attachingUnitPosition[1]] = movingUnitID;
             if (m_unitData != null)
             {
-                fc.eachGrids[attachingUnitPosition[0], attachingUnitPosition[1]].UpdateEachGrid(m_unitData.sprite, movingUnitID.ToString(), m_unitData.ID, m_unitData.unitType);
+                EachGrid eachGrid = fc.eachGrids[attachingUnitPosition[0], attachingUnitPosition[1]];
+                eachGrid.UpdateEachGrid(m_unitData.sprite, movingUnitID.ToString(), m_unitData.ID, m_unitData.unitType,m_unitData.form, ConvertOffsetValue(m_unitData.offset));
+                SetUnitOffsetAndResizeImgSize(eachGrid.img,editParam.attachingUnitImgSize,movingUnitOffset);
             }
 
         }
