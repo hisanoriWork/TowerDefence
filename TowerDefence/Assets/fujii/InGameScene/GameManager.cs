@@ -5,6 +5,7 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 public class GameManager : MonoBehaviour
 {
     /*****public class*****/
@@ -190,8 +191,7 @@ public class GameManager : MonoBehaviour
             UnitData data = masterData.FindUnitData(unitID);
             if (data != null)
             {
-                GameObject obj = Instantiate(data.prefab);
-                obj.transform.SetParent(parentObj.transform);
+                GameObject obj = Instantiate(data.prefab , parentObj.transform);
                 obj.transform.position = pos + data.offset;
                 UnitInst inst = new UnitInst();
                 inst.obj = obj;
@@ -283,7 +283,6 @@ public class GameManager : MonoBehaviour
             {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
         };
         formation.shiptype = 10010;
-
         m_player1 = new Player(masterData,player1Place,formation);
         m_player2 = new Player(masterData,player2Place,formation);
         m_player1HP = new GaugeManager(HP1Bar);
@@ -292,7 +291,6 @@ public class GameManager : MonoBehaviour
 
         RegardAsFriend(m_player1);
         RegardAsOpponent(m_player2);
-        
     }
     void Start()
     {
@@ -433,5 +431,11 @@ public class Utility
         {
             SetLayerRecursively(n.gameObject, layer);
         }
+    }
+
+    public static IEnumerator WaitForSecond(float time, UnityEvent voidEvent)
+    {
+        yield return new WaitForSeconds(time);
+        voidEvent.Invoke();
     }
 }

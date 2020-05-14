@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Events;
 public class ShellScript : MonoBehaviour
 {
     /*****public field*****/
     public MissileData data;
+    public UnityEvent InPool { get; set; }
     /*****private field*****/
     protected float m_angle;
     protected float m_speed;
@@ -14,10 +15,12 @@ public class ShellScript : MonoBehaviour
     protected float m_velocity;
     protected int m_power;
     /*****Monobehaviour*****/
+
     void Awake()
     {
-        //Init(Vector3.zero,"PlayerWeapon1",10);
+        Init(Vector3.zero,"PlayerWeapon1",10,new UnityEvent());
     }
+
 
     void FixedUpdate()
     {
@@ -29,16 +32,17 @@ public class ShellScript : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        Debug.Log(collider.gameObject.tag);
         if (collider.gameObject.tag == "Pngn" | collider.gameObject.tag == "Ship" | collider.gameObject.tag == "Block")
         {
-            collider.GetComponent<UnitScript>().Hurt(m_power);
+            collider.transform.parent.GetComponent<UnitScript>().Hurt(m_power);
+            InPool.Invoke();
         }
     }
     /*****public method*****/
-    public void Init(Vector3 pos, string layer,int power)
+    public void Init(Vector3 pos, string layer,int power,UnityEvent voidEvent)
     {
-        transform.localPosition = pos;
+        InPool = voidEvent;
+        transform.position = pos;
         Utility.SetLayerRecursively(gameObject, layer);
         m_power = power;
         m_angle = data.angle;

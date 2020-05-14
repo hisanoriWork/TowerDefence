@@ -38,7 +38,5 @@ public class PngnScript : MonoBehaviour
             baseUnit.Hurt(10000);
         }
     }
-
-    
     /*****protected method*****/
 }

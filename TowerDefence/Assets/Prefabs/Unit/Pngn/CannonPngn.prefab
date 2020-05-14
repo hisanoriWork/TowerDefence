@@ -43,23 +43,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   beseScript: {fileID: 1626754708305547018}
-  pool: {fileID: 1051464977862143485}
+  pool: {fileID: 0}
   rightAttackTransform: {fileID: 759281076414705152}
   leftAttackTransform: {fileID: 6163473215867706929}
---- !u!114 &1051464977862143485
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1143180996646596874}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9eaa20a585fdb42458ccdea8b6e1f63e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prefab: {fileID: 8367861753450576244, guid: 8829fbf969d04ab4d83f9eb1d5bb0e0b, type: 3}
-  initialPoolCount: 10
 --- !u!1 &7048052805395260860
 GameObject:
   m_ObjectHideFlags: 0
