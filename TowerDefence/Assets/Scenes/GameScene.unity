@@ -709,18 +709,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1119837878 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1757432503, guid: a6f3f15d3bebca0479c9e68e91688e97,
-    type: 3}
-  m_PrefabInstance: {fileID: 6483795094253624383}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0f69547c030be349bd0b5a3cd2bd933, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1222621305
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1027,18 +1015,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1746071781 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1647786413, guid: a6f3f15d3bebca0479c9e68e91688e97,
-    type: 3}
-  m_PrefabInstance: {fileID: 6483795094253624383}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a0abaa35f5488644a6c317514820c90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1753614243
 GameObject:
   m_ObjectHideFlags: 0
@@ -1263,18 +1239,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2021982524 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1234079519, guid: a6f3f15d3bebca0479c9e68e91688e97,
-    type: 3}
-  m_PrefabInstance: {fileID: 6483795094253624383}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0f69547c030be349bd0b5a3cd2bd933, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2084602453
 GameObject:
   m_ObjectHideFlags: 0
@@ -1959,69 +1923,19 @@ PrefabInstance:
       objectReference: {fileID: 1801592059}
     - target: {fileID: 352801787441289027, guid: a6f3f15d3bebca0479c9e68e91688e97,
         type: 3}
-      propertyPath: masterData
-      value: 
-      objectReference: {fileID: 1222621306}
-    - target: {fileID: 352801787441289027, guid: a6f3f15d3bebca0479c9e68e91688e97,
-        type: 3}
-      propertyPath: HP1Bar
-      value: 
-      objectReference: {fileID: 502057109}
-    - target: {fileID: 352801787441289027, guid: a6f3f15d3bebca0479c9e68e91688e97,
-        type: 3}
-      propertyPath: HP2Bar
-      value: 
-      objectReference: {fileID: 1801592059}
-    - target: {fileID: 352801787441289027, guid: a6f3f15d3bebca0479c9e68e91688e97,
-        type: 3}
-      propertyPath: winCanvas
-      value: 
-      objectReference: {fileID: 1097504290}
-    - target: {fileID: 352801787441289027, guid: a6f3f15d3bebca0479c9e68e91688e97,
-        type: 3}
-      propertyPath: loseCanvas
-      value: 
-      objectReference: {fileID: 1792003072}
-    - target: {fileID: 352801787441289027, guid: a6f3f15d3bebca0479c9e68e91688e97,
-        type: 3}
-      propertyPath: drawCanvas
-      value: 
-      objectReference: {fileID: 1447366016}
-    - target: {fileID: 352801787441289027, guid: a6f3f15d3bebca0479c9e68e91688e97,
-        type: 3}
-      propertyPath: m_option
-      value: 
-      objectReference: {fileID: 1273697099}
-    - target: {fileID: 352801787441289027, guid: a6f3f15d3bebca0479c9e68e91688e97,
-        type: 3}
-      propertyPath: m_timeView
-      value: 
-      objectReference: {fileID: 1746071781}
-    - target: {fileID: 352801787441289027, guid: a6f3f15d3bebca0479c9e68e91688e97,
-        type: 3}
-      propertyPath: m_player1
-      value: 
-      objectReference: {fileID: 2021982524}
-    - target: {fileID: 352801787441289027, guid: a6f3f15d3bebca0479c9e68e91688e97,
-        type: 3}
-      propertyPath: m_player2
-      value: 
-      objectReference: {fileID: 1119837878}
-    - target: {fileID: 352801787441289027, guid: a6f3f15d3bebca0479c9e68e91688e97,
-        type: 3}
       propertyPath: m_winCanvas
       value: 
       objectReference: {fileID: 1097504290}
     - target: {fileID: 352801787441289027, guid: a6f3f15d3bebca0479c9e68e91688e97,
         type: 3}
-      propertyPath: m_drawCanvas
-      value: 
-      objectReference: {fileID: 1447366016}
-    - target: {fileID: 352801787441289027, guid: a6f3f15d3bebca0479c9e68e91688e97,
-        type: 3}
       propertyPath: m_loseCanvas
       value: 
       objectReference: {fileID: 1792003072}
+    - target: {fileID: 352801787441289027, guid: a6f3f15d3bebca0479c9e68e91688e97,
+        type: 3}
+      propertyPath: m_drawCanvas
+      value: 
+      objectReference: {fileID: 1447366016}
     - target: {fileID: 1998759668299861672, guid: a6f3f15d3bebca0479c9e68e91688e97,
         type: 3}
       propertyPath: m_LocalPosition.x

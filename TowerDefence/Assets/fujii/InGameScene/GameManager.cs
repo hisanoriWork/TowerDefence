@@ -1,22 +1,18 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
+using UniRx;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using UniRx;
 public class GameManager : MonoBehaviour
 {
-    /*****public field*****/
-
     /*****private field*****/
-    [SerializeField] private UIManager m_option;
-    [SerializeField] private TimeView m_timeView;
-    [SerializeField] private InstManager m_player1, m_player2;
-    [SerializeField] private Gauge m_player1HP, m_player2HP;
-    [SerializeField] private GameObject m_winCanvas, m_loseCanvas, m_drawCanvas;
+    [SerializeField] private UIManager m_option = default;
+    [SerializeField] private TimeView m_timeView = default;
+    [SerializeField] private InstManager m_player1 = default, m_player2 = default;
+    [SerializeField] private Gauge m_player1HP = default, m_player2HP = default;
+    [SerializeField] private GameObject m_winCanvas = default, m_loseCanvas = default, m_drawCanvas = default;
     private int[,] gird;
     public bool isPlaying { get; set; } = true;
     /*****Mobehabiour method*****/

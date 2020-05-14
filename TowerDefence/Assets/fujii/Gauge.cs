@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 public class Gauge : MonoBehaviour
 {
-    [SerializeField]private Image image;
+    [SerializeField]private Image image = default;
     private int m_maxValue = 1;
     private int m_value = 1;
     public int maxValue
