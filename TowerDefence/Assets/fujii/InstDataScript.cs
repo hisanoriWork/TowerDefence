@@ -9,6 +9,7 @@ public class InstDataScript : MonoBehaviour
     public string pngnLayer;
     public string shipLayer;
     public string weaponLayer;
+    public PlayerNum playerNum;
     public Transform place;
     public Transform missilePlace;
 }
@@ -23,4 +24,10 @@ public class ShipInst
     public GameObject obj;
     public UnitScript unitScript;
     public ShipScript shipScript;
+}
+
+public enum PlayerNum
+{
+    Player1,
+    Player2,
 }

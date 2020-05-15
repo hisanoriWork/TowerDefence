@@ -28,7 +28,6 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-        m_player2.Invert(true);
         m_player1HP.maxValue = m_player1HP.value = m_player1.shipHP;
         m_player2HP.maxValue = m_player2HP.value = m_player1.shipHP;
     }

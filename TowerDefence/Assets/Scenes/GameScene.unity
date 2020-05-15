@@ -1924,6 +1924,10 @@ PrefabInstance:
       propertyPath: missilePlace
       value: 
       objectReference: {fileID: 265636848}
+    - target: {fileID: 1757432504, guid: a6f3f15d3bebca0479c9e68e91688e97, type: 3}
+      propertyPath: playerNum
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 140803167797734449, guid: a6f3f15d3bebca0479c9e68e91688e97,
         type: 3}
       propertyPath: image

@@ -47,6 +47,8 @@ public class InstManager : MonoBehaviour
         formation.shiptype = 10010;
         CreateInst(formation);
         ChangeLayer();
+        if (m_instData.playerNum == PlayerNum.Player2)
+            Invert(true);
     }
     /*****public method*****/
     public void Invert(bool b)
