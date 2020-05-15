@@ -21,7 +21,7 @@ public class UIManager : MonoBehaviour
 
     public void Hide()
     {
-        OptionCanvas.SetActive(true);
+        OptionCanvas.SetActive(false);
         hideSubject.OnNext(Unit.Default);
     }
 }
