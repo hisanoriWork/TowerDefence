@@ -60,16 +60,14 @@ public class GameManager : MonoBehaviour
     /*****public method*****/
     public void Play()
     {
+        Pauser.Resume();
         isPlaying = true;
-        m_player1.Play();
-        m_player2.Play();
         m_timeView.timer.Play();
     }
-    public void Stop(bool isPlaing = false)
+    public void Stop(bool flag = false)
     {
-        this.isPlaying = isPlaying;
-        m_player1.Stop();
-        m_player2.Stop();
+        Pauser.Pause();
+        if(flag) this.isPlaying = false;
         m_timeView.timer.Stop();
     }
     public void TransitionScene(String sceneName)
@@ -102,38 +100,4 @@ public class GameManager : MonoBehaviour
     }
 }
 /*****public class*****/
-public class InfoToWeapon
-{
-    public Vector3 pos;
-    public string layer;
-    public int power;
-    public InfoToWeapon(Vector3 pos,string layer,int power)
-    {
-        this.pos = pos;
-        this.layer = layer;
-        this.power = power;
-    }
-}
-public class Utility
-{
-    public static void SetLayerRecursively(GameObject self, string layerName)
-    {
-        int layer = LayerMask.NameToLayer(layerName);
-        SetLayerRecursively(self, layer);
-    }
 
-    public static void SetLayerRecursively(GameObject self, int layer)
-    {
-        self.layer = layer;
-
-        foreach (Transform n in self.transform)
-        {
-            SetLayerRecursively(n.gameObject, layer);
-        }
-    }
-    public static IEnumerator WaitForSecond(float time, UnityEvent voidEvent)
-    {
-        yield return new WaitForSeconds(time);
-        voidEvent.Invoke();
-    }
-}

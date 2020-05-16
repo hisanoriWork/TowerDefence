@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 8367861753450576244, guid: 8829fbf969d04ab4d83f9eb1d5bb0e0b, type: 3}
-  initialPoolCount: 10
+  initialPoolCount: 5
   unitScript: {fileID: 1626754708305547018}
 --- !u!114 &940649996246917703
 MonoBehaviour:

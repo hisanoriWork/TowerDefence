@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using MyLibrary;
 
 public class InstManager : MonoBehaviour
 {
@@ -62,35 +63,26 @@ public class InstManager : MonoBehaviour
         size.x *= (b ^ size.x < 0f) ? -1 : 1;
         m_instData.place.localScale = size;
     }
-    public void Stop()
-    {
-        Time.timeScale = 0;
-        foreach (var i in m_instData.unitList)
-        {
-            i.script.isPlaying = false;
-        }
-        m_instData.ship.unitScript.isPlaying = false;
-    }
-    public void Play()
-    {
-        Time.timeScale = 1;
-        foreach (var i in m_instData.unitList)
-        {
-            i.script.isPlaying = true;
-        }
-        m_instData.ship.unitScript.isPlaying = true;
-    }
     /*****private method*****/
     private void ChangeLayer()
     {
-        int pngnLayerNum = LayerMask.NameToLayer(m_instData.pngnLayer);
-        int shipLayerNum = LayerMask.NameToLayer(m_instData.shipLayer);
+        int pngnLayerNum, shipLayerNum;
+        if (m_instData.playerNum == PlayerNum.Player1)
+        {
+            pngnLayerNum = LayerMask.NameToLayer(Constant.PngnLayer1);
+            shipLayerNum = LayerMask.NameToLayer(Constant.ShipLayer1);
+        }
+        else
+        {
+            pngnLayerNum = LayerMask.NameToLayer(Constant.PngnLayer2);
+            shipLayerNum = LayerMask.NameToLayer(Constant.ShipLayer2);
+        }
         foreach (var unitInst in m_instData.unitList)
         {
             if (unitInst.script.data.unitType == UnitType.Pngn) Utility.SetLayerRecursively(unitInst.obj, pngnLayerNum);
             else unitInst.obj.layer = shipLayerNum;
         }
-        Utility.SetLayerRecursively(m_instData.ship.obj, shipLayerNum);
+        Utility.SetLayerRecursively(m_instData.ship.obj,shipLayerNum);
     }
     private void CreateInst(Formation formation)
     {
@@ -134,10 +126,7 @@ public class InstManager : MonoBehaviour
         ShipData data = m_masterData.FindShipData(shipID);
         if (data != null)
         {
-            GameObject obj = Instantiate(data.unitData.prefab);
-            obj.transform.SetParent(m_instData.place.transform);
-
-            obj.transform.position = pos + data.offSet;
+            GameObject obj = Instantiate(data.unitData.prefab, pos + data.unitData.offset, Quaternion.Euler(Vector3.zero), m_instData.place.transform);
             ShipInst inst = new ShipInst();
             inst.obj = obj;
             inst.unitScript = obj.GetComponent<UnitScript>();

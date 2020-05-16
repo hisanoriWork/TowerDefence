@@ -10,7 +10,7 @@ public class PngnScript : MonoBehaviour
     /*****Monobehaviour method*****/
     void Update()
     {
-        if (baseUnit.isPlaying)
+        if (!Pauser.isPaused)
         {
             //攻撃，ダメージを負う，死ぬ以外の処理を書く
             if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -23,17 +23,23 @@ public class PngnScript : MonoBehaviour
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if ((collision.transform.tag == "Ship" || collision.transform.tag == "Block") 
-            & this.transform.position.y >= collision.contacts[0].point.y)
+        if (!Pauser.isPaused)
         {
-            ground = collision.gameObject;
+            if ((collision.transform.tag == "Ship" || collision.transform.tag == "Block")
+                & this.transform.position.y >= collision.contacts[0].point.y)
+            {
+                ground = collision.gameObject;
+            }
         }
     }
     void OnCollisionExit2D(Collision2D collision)
     {
-        if (ground.GetInstanceID() == collision.gameObject.GetInstanceID())
+        if (!Pauser.isPaused)
         {
-            baseUnit.Hurt(10000);
+            if (ground.GetInstanceID() == collision.gameObject.GetInstanceID())
+            {
+                baseUnit.Hurt(10000);
+            }
         }
     }
 }

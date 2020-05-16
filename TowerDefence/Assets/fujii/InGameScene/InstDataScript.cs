@@ -6,9 +6,6 @@ public class InstDataScript : MonoBehaviour
     public List<UnitInst> unitList = new List<UnitInst>();
     public List<UnitInst> pngnList = new List<UnitInst>();
     public ShipInst ship = new ShipInst();
-    public string pngnLayer;
-    public string shipLayer;
-    public string weaponLayer;
     public PlayerNum playerNum;
     public Transform place;
     public Transform missilePlace;
