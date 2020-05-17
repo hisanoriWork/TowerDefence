@@ -9,6 +9,12 @@ public class ShellPool : ObjectPool<ShellPool,ShellObject,Vector3>
     void Start()
     {
         transform.parent = null;
+
+        for (int i = 0; i < initialPoolCount; i++)
+        {
+            ShellObject newPoolObject = CreateNewPoolObject();
+            pool.Add(newPoolObject);
+        }
     }
 }
 

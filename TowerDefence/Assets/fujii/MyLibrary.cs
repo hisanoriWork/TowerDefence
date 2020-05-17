@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -21,10 +22,10 @@ namespace MyLibrary
                 SetLayerRecursively(n.gameObject, layer);
             }
         }
-        public static IEnumerator WaitForSecond(float time, UnityEvent voidEvent)
+        public static IEnumerator WaitForSecond(float time, Action action)
         {
             yield return new WaitForSeconds(time);
-            voidEvent.Invoke();
+            action();
         }
     }
 

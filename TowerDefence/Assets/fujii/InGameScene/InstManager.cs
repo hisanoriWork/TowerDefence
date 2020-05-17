@@ -35,15 +35,15 @@ public class InstManager : MonoBehaviour
         formation.gridinfo = new int[10, 10]
         {
             {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
-            {  0,  0,  0,  0,  0, 14,100,100, 11, 10},
+            {  0,  0,  0,  0,  0, 10,100,100, 10, 10},
             {  0,  0,  0,100, 10,  0,100,100,  0,  0},
-            { 12,  0, 10,100,  0,  0,100,  0,  0,  0},
+            { 12,  0, 10,100,  0,  0,100, 10,  0,  0},
+            {  0,  0,  0,100,  0,  0, 10,  0,  0,  0},
             {  0,  0,  0,100,  0,  0,  0,  0,  0,  0},
             {  0,  0,  0,100,  0,  0,  0,  0,  0,  0},
             {  0,  0,  0,100,  0,  0,  0,  0,  0,  0},
             {  0,  0,  0,100,  0,  0,  0,  0,  0,  0},
-            {  0,  0,  0,100,  0,  0,  0,  0,  0,  0},
-            {  0,  0,  0, 11,  0,  0,  0,  0,  0,  0},
+            {  0,  0,  0, 16,  0,  0,  0,  0,  0,  0},
         };
         formation.shiptype = 10010;
         CreateInst(formation);
@@ -81,7 +81,7 @@ public class InstManager : MonoBehaviour
         {
             unitInst.script.playerNum = m_instData.playerNum;
             if (unitInst.script.data.unitType == UnitType.Pngn) Utility.SetLayerRecursively(unitInst.obj, pngnLayerNum);
-            else unitInst.obj.layer = shipLayerNum;
+            else Utility.SetLayerRecursively(unitInst.obj, shipLayerNum);
         }
         Utility.SetLayerRecursively(m_instData.ship.obj,shipLayerNum);
     }
