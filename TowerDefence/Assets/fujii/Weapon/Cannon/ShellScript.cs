@@ -8,7 +8,7 @@ using MyLibrary;
 public class ShellScript : MonoBehaviour
 {
     /*****public field*****/
-    public MissileData data;
+    public CannonData data;
     public IObservable<Unit> onDespawned
     { get { return m_despawnSubject; } }
     /*****private field*****/
@@ -47,8 +47,7 @@ public class ShellScript : MonoBehaviour
     public void Init(Vector3 pos,UnitScript unitScript)
     {
         transform.position = pos;
-        string layer = Constant.WeaponLayer1;
-        Utility.SetLayerRecursively(gameObject,layer);
+        onDespawned.Subscribe(_ => gameObject.SetActive(false));
         m_power = 0;
         m_angle = data.angle;
         m_speed = data.speed;
@@ -57,10 +56,13 @@ public class ShellScript : MonoBehaviour
         m_velocity = 0f;
         m_angle += UnityEngine.Random.Range(-data.deviation, data.deviation);
         m_unitScript = unitScript;
+        string layer = Constant.WeaponLayer1;
         if (unitScript != null)
         {
+            Debug.Log(unitScript.playerNum);
             if (unitScript.playerNum == PlayerNum.Player2) layer = Constant.WeaponLayer2;
             m_power = unitScript.power;
         }
+        Utility.SetLayerRecursively(gameObject, layer);
     }
 }

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Scriptable/MissileData")]
-public class MissileData : ScriptableObject//飛び道具データ
+[CreateAssetMenu(menuName = "Scriptable/WeaponData")]
+public class CannonData : ScriptableObject//飛び道具データ
 {
     [Range(0, 90)] public float angle;//角度
     [Range(0, 30)] public float deviation;//偏差

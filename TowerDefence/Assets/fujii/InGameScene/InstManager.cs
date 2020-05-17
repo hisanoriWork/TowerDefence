@@ -79,6 +79,7 @@ public class InstManager : MonoBehaviour
         }
         foreach (var unitInst in m_instData.unitList)
         {
+            unitInst.script.playerNum = m_instData.playerNum;
             if (unitInst.script.data.unitType == UnitType.Pngn) Utility.SetLayerRecursively(unitInst.obj, pngnLayerNum);
             else unitInst.obj.layer = shipLayerNum;
         }
