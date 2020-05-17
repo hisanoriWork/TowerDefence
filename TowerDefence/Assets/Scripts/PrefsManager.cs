@@ -7,6 +7,11 @@ using UnityEngine.SceneManagement;
 
 /*[Serializable]*/
 
+public class UserPrefs
+{
+    public double bgmVolume;
+    public double seVolume;
+}
 
 public class Formation
 {
@@ -52,6 +57,8 @@ public class PrefsManager
 { 
     Formation formation = new Formation();
     FormationForJson formationForJson = new FormationForJson();
+
+    UserPrefs m_userPrefs = new UserPrefs();
 
 
     public Formation GetFormation()
@@ -108,6 +115,91 @@ public class PrefsManager
 
         return true;
     }
+
+    public Formation GetFormation(int formationID)
+    {
+
+        string json = PlayerPrefs.GetString("formation" + formationID.ToString(), "NoData");
+
+        if (json == "NoData")
+        {
+            formation.formationDataExists = false;
+            return formation;
+        }
+        else
+        {
+            formationForJson = JsonUtility.FromJson<FormationForJson>(json);
+            formation.formationDataExists = true;
+            formation.shiptype = formationForJson.shiptype;
+            for (int i = 0; i < 10; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    formation.gridinfo[i, j] = formationForJson.gridinfoForJson[i * 10 + j];
+                }
+            }
+
+            return formation;
+        }
+    }
+
+    public bool SetFormation(int[,] gridinfo, int shiptype,int formationID)
+    {
+        formation.formationDataExists = true;
+        formation.gridinfo = gridinfo;
+        formation.shiptype = shiptype;
+
+
+        formationForJson.formationDataExists = formation.formationDataExists;
+        formationForJson.shiptype = formation.shiptype;
+
+        for (int i = 0; i < 10; i++)
+        {
+            for (int j = 0; j < 10; j++)
+            {
+                formationForJson.gridinfoForJson[i * 10 + j] = formation.gridinfo[i, j];
+            }
+        }
+
+        string json = JsonUtility.ToJson(formationForJson);
+
+        //Debug.Log("json:"+json);
+
+        PlayerPrefs.SetString("formation" + formationID.ToString(), json);
+
+        return true;
+    }
+
+
+    public UserPrefs GetUserPrefs()
+    {
+        string json = PlayerPrefs.GetString("userprefs", "NoData");
+
+        if (json == "NoData")
+        {
+            return m_userPrefs;
+        }
+        else
+        {
+            m_userPrefs = JsonUtility.FromJson<UserPrefs>(json);
+
+            return m_userPrefs;
+        }
+    }
+
+    public bool SetUserPrefs(UserPrefs userprefs)
+    {
+        m_userPrefs = userprefs;
+
+        string json = JsonUtility.ToJson(m_userPrefs);
+
+        //Debug.Log("json:"+json);
+
+        PlayerPrefs.SetString("userprefs", json);
+
+        return true;
+    }
+
 
 
     public void Delete()
