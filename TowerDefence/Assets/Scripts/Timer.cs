@@ -9,6 +9,7 @@ public class Timer : MonoBehaviour
     public float analogTime { get { return m_analogTime; } }
     public int digitalTime { get { return m_digitalTime; } }
 
+    public float rate { get { return m_digitalTime / m_time; } }
     public bool isPlaying { get; set; } = true;
     public IObservable<int> onDigitalTimeChanged
     {get { return digitalSubject; }}

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "Scriptable/Weapon/IceData")]
-public class IceData : ScriptableObject//飛び道具データ
+[CreateAssetMenu(menuName = "Scriptable/Weapon/BombData")]
+public class BombData : ScriptableObject//飛び道具データ
 {
     [Range(0, 90)] public float angle;//角度
     [Range(0, 30)] public float deviation;//偏差
