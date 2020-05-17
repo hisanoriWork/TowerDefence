@@ -5,10 +5,10 @@ using UnityEngine.Events;
 using UniRx;
 using System;
 using MyLibrary;
-public class ArrowScript : MonoBehaviour
+public class IceScript : MonoBehaviour
 {
     /*****public field*****/
-    public ArrowData data;
+    public IceData data;
     public IObservable<Unit> onDespawned
     { get { return m_despawnSubject; } }
     /*****private field*****/
@@ -20,7 +20,6 @@ public class ArrowScript : MonoBehaviour
     protected Vector3 m_move;
     protected float m_velocity;
     protected int m_power;
-    protected bool m_hitFlag = false;
     /*****Monobehaviour*****/
     void Awake()
     {
@@ -29,7 +28,6 @@ public class ArrowScript : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (m_hitFlag) return;
         m_move.x = m_speed * Mathf.Cos(m_angle * Mathf.Deg2Rad) * Time.fixedDeltaTime;
         m_velocity += m_gravity * Time.fixedDeltaTime;
         m_move.y = m_speed * Mathf.Sin(m_angle * Mathf.Deg2Rad) * Time.fixedDeltaTime - m_velocity * Time.fixedDeltaTime;
@@ -39,27 +37,22 @@ public class ArrowScript : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collider)
     {
         if (Pauser.isPaused) return;
-        if (!m_hitFlag &(collider.gameObject.tag == "Pngn" | collider.gameObject.tag == "Ship" | collider.gameObject.tag == "Block"))
+        if (collider.gameObject.tag == "Pngn" | collider.gameObject.tag == "Ship" | collider.gameObject.tag == "Block")
         {
-            m_hitFlag = true;
             collider.transform.parent.GetComponent<UnitScript>().Hurt(m_power);
-            StartCoroutine(Utility.WaitForSecond(2f, () => {
-                m_despawnSubject.OnNext(Unit.Default);
-            }));
+            m_despawnSubject.OnNext(Unit.Default);
         }
     }
     /*****public method*****/
     public void Init(Vector3 pos, UnitScript unitScript)
     {
         onDespawned.Subscribe(_ => gameObject.SetActive(false));
-        m_hitFlag = false;
         m_power = 0;
         m_speed = data.speed;
         m_gravity = data.gravity;
         m_move = Vector3.zero;
         m_velocity = 0f;
         m_angle = data.angle + UnityEngine.Random.Range(-data.deviation, data.deviation);
-        transform.localEulerAngles = m_angle * Vector3.forward;
         transform.position = pos;
         if (transform.localScale.x < 0)
             transform.localScale = Vector3.Scale(transform.localScale, new Vector3(-1, 1, 1));

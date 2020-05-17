@@ -27,4 +27,4 @@ MonoBehaviour:
   form:
   - y: 0
     x: 1
-  offset: {x: 0, y: 0, z: 0}
+  offset: {x: 0.4, y: 0, z: 0}

@@ -27,39 +27,37 @@ public class ShellScript : MonoBehaviour
     }
     void FixedUpdate()
     {
-            m_move.x = m_speed * Mathf.Cos(m_angle * Mathf.Deg2Rad) * Time.fixedDeltaTime;
+        m_move.x = m_speed * Mathf.Cos(m_angle * Mathf.Deg2Rad) * Time.fixedDeltaTime;
             m_velocity += m_gravity * Time.fixedDeltaTime;
             m_move.y = m_speed * Mathf.Sin(m_angle * Mathf.Deg2Rad) * Time.fixedDeltaTime - m_velocity * Time.fixedDeltaTime;
             transform.localPosition += m_move;
     }
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if (!Pauser.isPaused)
+        if (Pauser.isPaused) return;
+        if (collider.gameObject.tag == "Pngn" | collider.gameObject.tag == "Ship" | collider.gameObject.tag == "Block")
         {
-            if (collider.gameObject.tag == "Pngn" | collider.gameObject.tag == "Ship" | collider.gameObject.tag == "Block")
-            {
-                collider.transform.parent.GetComponent<UnitScript>().Hurt(m_power);
-                m_despawnSubject.OnNext(Unit.Default);
-            }
+            collider.transform.parent.GetComponent<UnitScript>().Hurt(m_power);
+            m_despawnSubject.OnNext(Unit.Default);
         }
     }
     /*****public method*****/
     public void Init(Vector3 pos,UnitScript unitScript)
     {
-        transform.position = pos;
         onDespawned.Subscribe(_ => gameObject.SetActive(false));
         m_power = 0;
-        m_angle = data.angle;
         m_speed = data.speed;
         m_gravity = data.gravity;
         m_move = Vector3.zero;
         m_velocity = 0f;
-        m_angle += UnityEngine.Random.Range(-data.deviation, data.deviation);
+        m_angle = data.angle + UnityEngine.Random.Range(-data.deviation, data.deviation);
+        transform.position = pos;
+        if (transform.localScale.x < 0)
+            transform.localScale = Vector3.Scale(transform.localScale, new Vector3(-1, 1, 1));
         m_unitScript = unitScript;
         string layer = Constant.WeaponLayer1;
         if (unitScript != null)
         {
-            Debug.Log(unitScript.playerNum);
             if (unitScript.playerNum == PlayerNum.Player2) layer = Constant.WeaponLayer2;
             m_power = unitScript.power;
         }
