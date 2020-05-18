@@ -1041,7 +1041,7 @@ MonoBehaviour:
   m_info:
     playerNum: 1
     AVE: 0.7
-    swingWidth: 10
+    swingWidth: 5
 --- !u!1001 &1222621305
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1552,7 +1552,7 @@ MonoBehaviour:
   m_info:
     playerNum: 0
     AVE: 0.7
-    swingWidth: 10
+    swingWidth: 5
 --- !u!1 &1693998680
 GameObject:
   m_ObjectHideFlags: 0

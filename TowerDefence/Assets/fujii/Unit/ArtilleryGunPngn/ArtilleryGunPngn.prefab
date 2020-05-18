@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pool: {fileID: 7307162337119847556}
   attackTransform: {fileID: 2781107712120362011}
+  time: 0.3
+  num: 10
 --- !u!1 &5065551779397945188
 GameObject:
   m_ObjectHideFlags: 0

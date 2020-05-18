@@ -16,7 +16,7 @@ MonoBehaviour:
   ID: 15
   power: 10
   HP: 100
-  CT: 5
+  CT: 15
   cost: 10
   prefab: {fileID: 1261801581952225174, guid: 25bd3f8531338404db4ad41614023737, type: 3}
   unitType: 0
