@@ -7,6 +7,8 @@ public class StageSelectManager : MonoBehaviour
     /*****public field*****/
     public int stageNum = 1;
 
+    public MissionDetailController missionDetailController;
+
     void Awake()
     {
     }
@@ -16,5 +18,6 @@ public class StageSelectManager : MonoBehaviour
         stageNum = selectStageNum;
         Debug.Log("ステージ" +selectStageNum + "が選ばれました");
         //TODO: MissionDetailWindowを変更する
+        missionDetailController.ChangeDetailContent(selectStageNum);
     }
 }
