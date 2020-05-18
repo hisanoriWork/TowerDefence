@@ -18,4 +18,7 @@ public class EditParam : MonoBehaviour
 
     [SerializeField] public Sprite nullSprite;
     [SerializeField] public Sprite attachingSprite;
+
+    [SerializeField] public int formationCostMax= 1000;
+    [SerializeField] public int formationCost = 1000;
 }

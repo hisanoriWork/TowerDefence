@@ -10,6 +10,7 @@ public class MovingUnit : MonoBehaviour
     public UnitType movingUnitType;
     public GridForm[] movingUnitForm;
     public Vector2 movingUnitOffset;
+    public int movingUnitCost;
 
     public int[] beforeAttachingUnitPosition;
 
