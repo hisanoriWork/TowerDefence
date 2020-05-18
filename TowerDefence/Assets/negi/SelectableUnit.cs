@@ -8,4 +8,6 @@ public class SelectableUnit : MonoBehaviour
     public UnitType selectableUnitType;
     public GridForm[] selectableUnitForm;
     public Vector2 selectableUnitOffset;
+
+    public int[] beforeAttachingPosition;
 }
