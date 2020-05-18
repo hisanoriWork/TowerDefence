@@ -12,4 +12,10 @@ public class EditParam : MonoBehaviour
 
     [SerializeField] public float attachingUnitImgSize = 0.5f;
     [SerializeField] public float attachingShipImgSize = 0.8f;
+    [SerializeField] public Color defaultColor = new Color(255f, 255f, 255f, 255f);
+    [SerializeField] public Color unAttachingColor = new Color(255f, 255f, 255f, 255f);
+    [SerializeField] public Color AttachingColor = new Color(255f, 255f, 255f, 255f);
+
+    [SerializeField] public Sprite nullSprite;
+    [SerializeField] public Sprite attachingSprite;
 }

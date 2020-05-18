@@ -221,11 +221,14 @@ public class EditManager : MonoBehaviour
             movingUnit.movingUnitType = sel.selectableUnitType;
             movingUnit.movingUnitForm = sel.selectableUnitForm;
             movingUnit.movingUnitOffset = sel.selectableUnitOffset;
+            movingUnit.beforeAttachingUnitPosition = null;
 
             var transform = movingUnitObject.transform;
             SetSpriteAndResizeImgSize(transform, editParam.movingUnitImgSize, selectableUnit.transform.Find("Image").GetComponent<Image>().sprite);
 
             movingUnitObject.transform.position = (Vector2)Input.mousePosition + sel.selectableUnitOffset;
+
+            formationGridManager.DisplayEnableGrid(movingUnit.movingUnitID,movingUnit.movingUnitType,movingUnit.movingUnitForm,movingUnit.movingUnitOffset);
 
         }
         else if(sel.selectableUnitType == UnitType.Ship)
@@ -252,6 +255,9 @@ public class EditManager : MonoBehaviour
             //PngnBlockの場合
             if (att.selectableUnitType == UnitType.Pngn || att.selectableUnitType == UnitType.Block)
             {
+
+                //ここらへん追加しすぎて乱雑なのでリファクタリング必要
+
                 Image attachingUnitImage = attachingUnit.GetComponent<Image>();
 
                 movingUnitObject.SetActive(true);
@@ -260,11 +266,12 @@ public class EditManager : MonoBehaviour
                 movingUnit.movingUnitType = att.selectableUnitType;
                 movingUnit.movingUnitForm = att.selectableUnitForm;
                 movingUnit.movingUnitOffset = att.selectableUnitOffset;
+                movingUnit.beforeAttachingUnitPosition = att.beforeAttachingPosition;
 
                 var transform = movingUnitObject.transform;
                 SetSpriteAndResizeImgSize(transform, editParam.movingUnitImgSize, attachingUnitImage.sprite);
 
-                att.selectableUnitID  = 0;
+
                 attachingUnitImage.sprite = nullSprite;
 
                 attachingUnit.transform.Find("Text").GetComponent<Text>().text = "0";
@@ -282,9 +289,14 @@ public class EditManager : MonoBehaviour
 
                 attachingUnitImage.transform.position = (Vector2)attachingUnitImage.transform.position - att.selectableUnitOffset;
 
-
-
                 movingUnitObject.transform.position = (Vector2)Input.mousePosition + att.selectableUnitOffset;
+
+                att.selectableUnitID = 0;
+                
+                att.selectableUnitForm = null;
+                att.selectableUnitOffset = new Vector2();
+
+                formationGridManager.DisplayEnableGrid(movingUnit.movingUnitID, movingUnit.movingUnitType, movingUnit.movingUnitForm, movingUnit.movingUnitOffset);
             }
 
             //Shipの場合

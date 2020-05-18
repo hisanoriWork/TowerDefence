@@ -9,7 +9,7 @@ public class EachGrid
     public Text txt;
     public SelectableUnit sel;
 
-    public void UpdateEachGrid(Sprite sprite,int unitID,UnitType unitType,GridForm[]form,Vector2 offset)
+    public void UpdateEachGrid(Sprite sprite,int unitID,UnitType unitType,GridForm[]form,Vector2 offset,int[] beforeAttachingPosition)
     {
         this.sel = this.img.GetComponent<SelectableUnit>();
 
@@ -19,8 +19,16 @@ public class EachGrid
         this.sel.selectableUnitType = unitType;
         this.sel.selectableUnitForm = form;
         this.sel.selectableUnitOffset = offset;
+        this.sel.beforeAttachingPosition = beforeAttachingPosition;
         
     }
+}
+
+public enum TilingType
+{
+    Pngn,
+    Object,
+    Empty
 }
 
 public class FormationChanger
@@ -38,30 +46,31 @@ public class FormationChanger
     public Vector2[,] eachGridsCoordinate;  
 
     //左側グリッドのタイリング状況
-    public int[,] eachGridsTiling;
+    public TilingType[,] eachGridsTiling;
     public bool[,] enableToAttaching;
 
     //船
     public EachGrid shipEachGrid;
 
     RectTransform contentRectTransform;
+    RectTransform deleteButtonRectTransform;
 
     //public List<>
 
 
     /*****private method*****/
 
-    private void SetEachGridsTiling(int unitID,int unitX,int unitY,GridForm[] gridForms)
+    private void SetEachGridsTiling(TilingType unitTilingType,int unitX,int unitY,GridForm[] gridForms)
     {
-        if (unitID != 0)
+        if (unitTilingType != TilingType.Empty)
         {
-            eachGridsTiling[unitX, unitY] = unitID;
+            eachGridsTiling[unitX, unitY] = unitTilingType;
 
             if (gridForms != null)
             {
                 foreach (GridForm form in gridForms)
                 {
-                    eachGridsTiling[unitX + form.y, unitY + form.x] = unitID;
+                    eachGridsTiling[unitX + form.y, unitY + form.x] = unitTilingType;
                 }
             }
         }
@@ -76,15 +85,24 @@ public class FormationChanger
         {
             for (int j = 0; j < 10; j++)
             {
-                eachGridsTiling[i,j] = 0;
+                eachGridsTiling[i,j] = TilingType.Empty;
             }
         }
 
         return;
     }
 
+    public TilingType ConvertTilingType(int unitID, UnitType unitType)
+    {
+        if (unitID == 0) return TilingType.Empty;
+        else if (unitType == UnitType.Pngn) return TilingType.Pngn;
+        else if (unitType == UnitType.Block) return TilingType.Object;
+        else if (unitType == UnitType.Ship) return TilingType.Object;
+        return TilingType.Empty;
+    }
+
     /*****public method*****/
-    public FormationChanger(Formation formation, EachGrid[,] eachGrids, GameObject movingUnit,RectTransform contentRectTransform,EachGrid shipEachGrid)
+    public FormationChanger(Formation formation, EachGrid[,] eachGrids, GameObject movingUnit,RectTransform contentRectTransform,RectTransform deleteButtonRectTransform, EachGrid shipEachGrid)
     {
         this.formation = formation;
         this.movingUnit = movingUnit;
@@ -94,12 +112,12 @@ public class FormationChanger
         this.eachGrids = eachGrids;
         this.eachGridsCoordinate = new Vector2[10, 10];
 
-        this.eachGridsTiling = new int[10, 10];
+        this.eachGridsTiling = new TilingType[10, 10];
 
         this.shipEachGrid = shipEachGrid;
 
 
-        SetEachGridsTiling(shipEachGrid.sel.selectableUnitID,0,0, shipEachGrid.sel.selectableUnitForm);
+        SetEachGridsTiling(ConvertTilingType(shipEachGrid.sel.selectableUnitID,shipEachGrid.sel.selectableUnitType),0,0, shipEachGrid.sel.selectableUnitForm);
 
 
         for (int i = 0; i < 10; i++)
@@ -109,7 +127,7 @@ public class FormationChanger
                 this.eachGridsCoordinate[i, j] = eachGrids[i, j].img.transform.position;
                 //Debug.Log(this.eachGridsCoordinate[i, j]);
                 //Debug.Log(eachGrids[i, j].img.transform.position);
-                SetEachGridsTiling(eachGrids[i,j].sel.selectableUnitID, i, j, eachGrids[i,j].sel.selectableUnitForm);
+                SetEachGridsTiling(ConvertTilingType(shipEachGrid.sel.selectableUnitID, shipEachGrid.sel.selectableUnitType), i, j, eachGrids[i,j].sel.selectableUnitForm);
 
             }
         }
@@ -125,16 +143,17 @@ public class FormationChanger
 
         this.enableToAttaching = new bool[10, 10];
         this.contentRectTransform = contentRectTransform;
+        this.deleteButtonRectTransform = deleteButtonRectTransform;
     }
 
     public void UpdateCoordinates(){
 
-        ResetEachGridsTiling();
+        //ResetEachGridsTiling();
 
         //movingUnitCoordinate = movingUnit.transform.position;
         this.movingUnitCoordinate = (Vector2)movingUnit.transform.position - movingUnit.GetComponent<MovingUnit>().movingUnitOffset;
 
-        SetEachGridsTiling(shipEachGrid.sel.selectableUnitID, 0, 0, shipEachGrid.sel.selectableUnitForm);
+        //SetEachGridsTiling(ConvertTilingType(shipEachGrid.sel.selectableUnitID, shipEachGrid.sel.selectableUnitType), 0, 0, shipEachGrid.sel.selectableUnitForm);
 
         for (int i = 0; i < 10; i++)
         {
@@ -142,14 +161,29 @@ public class FormationChanger
             {
                 eachGridsCoordinate[i, j] = eachGrids[i, j].img.transform.position;
                 //Debug.Log("update:"+eachGridsCoordinate[i, j]);
-                SetEachGridsTiling(eachGrids[i, j].sel.selectableUnitID, i, j, eachGrids[i, j].sel.selectableUnitForm);
+                //SetEachGridsTiling(ConvertTilingType(shipEachGrid.sel.selectableUnitID, shipEachGrid.sel.selectableUnitType), i, j, eachGrids[i, j].sel.selectableUnitForm);
             }
         }
 
         return;
     }
 
-    public int[] SearchNearSquare(int[] beforeAttachingUnitPosition)
+    public void UpdateEachGridsTiling()
+    {
+        ResetEachGridsTiling();
+
+        SetEachGridsTiling(ConvertTilingType(shipEachGrid.sel.selectableUnitID, shipEachGrid.sel.selectableUnitType), 0, 0, shipEachGrid.sel.selectableUnitForm);
+
+        for (int i = 0; i < 10; i++)
+        {
+            for (int j = 0; j < 10; j++)
+            {
+                SetEachGridsTiling(ConvertTilingType(eachGrids[i, j].sel.selectableUnitID, eachGrids[i, j].sel.selectableUnitType), i, j, eachGrids[i, j].sel.selectableUnitForm);
+            }
+        }
+    }
+
+    public int[] SearchNearSquare(int[] beforeAttachingUnitPosition, int unitID, UnitType unitType, GridForm[] unitForm)
     {
         float minDistance = float.MaxValue;
         float tmpDistance;
@@ -164,19 +198,26 @@ public class FormationChanger
 
 
         Vector2 movingUnitCoordinateRect;
+        Vector2 movingUnitCoordinateRectForDeleteButton;
+
 
         RectTransformUtility.ScreenPointToLocalPointInRectangle(contentRectTransform, movingUnitCoordinate, camera,out movingUnitCoordinateRect);
-
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(deleteButtonRectTransform, movingUnitCoordinate, camera, out movingUnitCoordinateRectForDeleteButton);
 
 
         //Debug.Log(contentRectTransform.rect);
         //Debug.Log(movingUnitCoordinateRect);
 
+        /*if (deleteButtonRectTransform.rect.Contains(movingUnitCoordinateRectForDeleteButton))
+        {
+
+            return null;
+        }*/
+
 
         if (contentRectTransform.rect.Contains(movingUnitCoordinateRect))
         {
             
-            //Debug.Log("oyoyoyoyo");
             for (int i = 0; i < 10; i++)
             {
                 for (int j = 0; j < 10; j++)
@@ -195,23 +236,156 @@ public class FormationChanger
 
 
             //置けるかの判定をする
-
+            if(!CheckingEnableToAttaching(unitID, unitType, unitForm, minUnitPosition))return beforeAttachingUnitPosition;
 
 
 
             //Debug.Log(minUnitPosition[0] + ""+minUnitPosition[1]) ;
 
             return minUnitPosition;
-        }else if(beforeAttachingUnitPosition != null)
-        {
-            return beforeAttachingUnitPosition;
         }
 
-        return null;
+        return beforeAttachingUnitPosition;
     }
 
-    public void SetEnableToAttachingColor()
+    public bool CheckingEnableToAttaching(int unitID, UnitType unitType, GridForm[] unitForm ,int[] minUnitPosition)
     {
+        bool canAttaching;
+        TilingType unitTylingType = ConvertTilingType(unitID, unitType);
+
+        canAttaching = true;
+
+        //見ること
+        //それぞれのフォームごとに
+        //枠からはみ出していない
+        //enableToAttachingと重なっている
+
+        //クリアしているならば、trueを返す
+
+        checking(minUnitPosition[0], minUnitPosition[1]);
+
+
+        foreach (GridForm attachingEachGridForm in unitForm)
+        {
+            checking(minUnitPosition[0] + attachingEachGridForm.y, minUnitPosition[1] + attachingEachGridForm.x);
+        }
+
+        return canAttaching;
+
+
+        void checking(int y, int x)
+        {
+            if (y >= 0 && y < 10 && x >= 0 && x < 10)
+            {
+                if (enableToAttaching[y, x] == false) canAttaching = false;
+
+            }
+            else canAttaching = false;
+        }
+    }
+
+
+
+    public void UpdateEnableToAttaching(int unitID, UnitType unitType, GridForm[] unitForm, Vector2 unitOffset)
+    {
+        enableToAttaching = new bool[10, 10];
+        bool canGetOnInEachSituation;
+        bool canAttaching;
+        TilingType unitTylingType = ConvertTilingType(unitID, unitType);
+
+        for (int y = 0; y < 10; y++)
+        {
+            for (int x = 0; x < 10; x++)
+            {
+                canAttaching = true;
+                canGetOnInEachSituation = false;
+
+
+                //見ること
+                //それぞれのフォームごとに
+                //マスからはみ出ていない
+                //そのブロックにオブジェクトが重なっていない(1度でも満たしたらアウト)
+                //タイプごとにその下または4方にブロックオブジェクトが隣接している(1度でも満たせばよい)
+
+                //すべてクリアしているならば、その範囲をenableToAttachingに埋め込める
+
+                checking(y, x);
+                
+
+                foreach(GridForm attachingEachGridForm in unitForm)
+                {
+                    checking(y + attachingEachGridForm.y, x + attachingEachGridForm.x);
+                }
+
+
+                if(canAttaching == true && canGetOnInEachSituation == true)
+                {
+                    //enableToAttachingに埋め込む
+
+                    enableToAttaching[y, x] = true;
+
+                    foreach (GridForm attachingEachGridForm in unitForm)
+                    {
+                        enableToAttaching[y + attachingEachGridForm.y, x + attachingEachGridForm.x] = true;
+                    }
+                }
+
+            }
+        }
+
+        void checking(int y,int x)
+        {
+            if (y >= 0 && y < 10 && x >= 0 && x < 10)
+            {
+                if (eachGridsTiling[y, x] != TilingType.Empty)
+                {
+                    canAttaching = false;
+                }
+                else if (unitTylingType == TilingType.Pngn)
+                {
+                    if (y - 1 >= 0)
+                    {
+                        if (eachGridsTiling[y - 1, x] == TilingType.Object)
+                        {
+                            canGetOnInEachSituation = true;
+                        }
+                    }
+                }
+                else if (unitTylingType == TilingType.Object)
+                {
+                    if (y - 1 >= 0)
+                    {
+                        if (eachGridsTiling[y - 1, x] == TilingType.Object)
+                        {
+                            canGetOnInEachSituation = true;
+                        }
+                    }
+                    if (y + 1 < 10)
+                    {
+                        if (eachGridsTiling[y + 1, x] == TilingType.Object)
+                        {
+                            canGetOnInEachSituation = true;
+                        }
+                    }
+                    if (x - 1 >= 0)
+                    {
+                        if (eachGridsTiling[y, x-1] == TilingType.Object)
+                        {
+                            canGetOnInEachSituation = true;
+                        }
+                    }
+                    if (x + 1 < 10)
+                    {
+                        if (eachGridsTiling[y, x + 1] == TilingType.Object)
+                        {
+                            canGetOnInEachSituation = true;
+                        }
+                    }
+                }
+            }
+            else canAttaching = false;
+        }
+
         return;
     }
 
@@ -232,6 +406,8 @@ public class FormationGridManager : MonoBehaviour
     public EachGrid[,] eachGrids = new EachGrid[10, 10];
 
     public RectTransform contentRectTransform;
+    public RectTransform deleteButtonRectTransform;
+
     public Image eachGridImage;
 
     public GameObject movingUnit;
@@ -252,7 +428,7 @@ public class FormationGridManager : MonoBehaviour
     {
 
         //ここでとりあえずPrefsManagerからformationを取得
-        //formation = prefs.GetFormation();
+        formation = prefs.GetFormation();
 
         //以下デバッグ用
         formation.formationDataExists = true;
@@ -271,7 +447,7 @@ public class FormationGridManager : MonoBehaviour
         };
         formation.shiptype = 10010;
 
-        prefs.SetFormation(formation.gridinfo, formation.shiptype);
+        //prefs.SetFormation(formation.gridinfo, formation.shiptype);
 
         //グリッドを生成、初期化
         //GenerateGridInfo();
@@ -285,7 +461,7 @@ public class FormationGridManager : MonoBehaviour
         gridLayoutGroup.enabled = false;
 
         UpdateGridInfo();
-        fc = new FormationChanger(formation, eachGrids, movingUnit, contentRectTransform, shipEachGrid);
+        fc = new FormationChanger(formation, eachGrids, movingUnit, contentRectTransform, deleteButtonRectTransform, shipEachGrid);
 
         //masterData.FindUnitData(10).
 
@@ -334,11 +510,50 @@ public class FormationGridManager : MonoBehaviour
         return;
     }
 
+    private void ResizeImgSize(Image img, float imgSize)
+    {
+
+        //var img = transform.GetComponent<Image>();
+        var t = img.GetComponent<RectTransform>();
+
+        img.SetNativeSize();
+
+        var width = t.sizeDelta.x * imgSize;
+        var height = t.sizeDelta.y * imgSize;
+
+        t.sizeDelta = new Vector2(width, height);
+
+        return;
+    }
+
     private Vector2 ConvertOffsetValue(Vector2 dataOffset)
     {
         return dataOffset * editParam.movingUnitOffset;
     }
 
+    public void BackToSaveFormation()
+    {
+        formation = prefs.GetFormation();
+
+        //prefs.SetFormation(formation.gridinfo, formation.shiptype);
+
+        //グリッドを生成、初期化
+        //GenerateGridInfo();
+
+        /*gridLayoutGroup.CalculateLayoutInputHorizontal();
+        gridLayoutGroup.CalculateLayoutInputVertical();
+        gridLayoutGroup.SetLayoutHorizontal();
+        gridLayoutGroup.SetLayoutVertical();
+        gridLayoutGroup.enabled = false;*/
+        ResetUnitOffsetAndResizeImgSize(shipEachGrid.img, editParam.attachingShipImgSize, shipEachGrid.sel.selectableUnitOffset);
+        UpdateGridInfo();
+        fc = new FormationChanger(formation, eachGrids, movingUnit, contentRectTransform, deleteButtonRectTransform, shipEachGrid);
+    }
+
+    public void SaveFormation()
+    {
+        prefs.SetFormation(formation.gridinfo, formation.shiptype);
+    }
 
     public void InstanceGridInfo()
     {
@@ -414,13 +629,13 @@ public class FormationGridManager : MonoBehaviour
                 if (m_unitData != null)
                 {
                     ResetUnitOffsetAndResizeImgSize(eachGrid.img, editParam.attachingUnitImgSize, eachGrid.sel.selectableUnitOffset);
-                    eachGrid.UpdateEachGrid(m_unitData.sprite, m_unitData.ID, m_unitData.unitType, m_unitData.form, ConvertOffsetValue(m_unitData.offset));
+                    eachGrid.UpdateEachGrid(m_unitData.sprite, m_unitData.ID, m_unitData.unitType, m_unitData.form, ConvertOffsetValue(m_unitData.offset),null);
                     SetUnitOffsetAndResizeImgSize(eachGrid.img, editParam.attachingUnitImgSize, eachGrid.sel.selectableUnitOffset);
                 }
                 else
                 {
                     ResetUnitOffsetAndResizeImgSize(eachGrid.img, editParam.attachingUnitImgSize, eachGrid.sel.selectableUnitOffset);
-                    eachGrid.UpdateEachGrid(nullSprite, 0, UnitType.Pngn, null, Vector2.zero);
+                    eachGrid.UpdateEachGrid(nullSprite, 0, UnitType.Pngn, null, Vector2.zero, null);
                     SetUnitOffsetAndResizeImgSize(eachGrid.img, editParam.attachingUnitImgSize, Vector2.zero);
                 }
                 
@@ -439,12 +654,15 @@ public class FormationGridManager : MonoBehaviour
 
         if (m_unitData != null)
         {
-            shipEachGrid.UpdateEachGrid(m_unitData.sprite, m_unitData.ID, m_unitData.unitType, m_unitData.form, ConvertOffsetValue(m_unitData.offset));
+            //ResetUnitOffsetAndResizeImgSize(shipEachGrid.img, editParam.attachingShipImgSize, ConvertOffsetValue(m_unitData.offset));
+
+            shipEachGrid.UpdateEachGrid(m_unitData.sprite, m_unitData.ID, m_unitData.unitType, m_unitData.form, ConvertOffsetValue(m_unitData.offset), null);
 
             SetUnitOffsetAndResizeImgSize(shipEachGrid.img, editParam.attachingShipImgSize, ConvertOffsetValue(m_unitData.offset));
         }
         else
         {
+            //ResetUnitOffsetAndResizeImgSize(shipEachGrid.img, editParam.attachingShipImgSize, ConvertOffsetValue(m_unitData.offset));
             SetUnitOffsetAndResizeImgSize(shipEachGrid.img, editParam.attachingShipImgSize, Vector2.zero);
         }
 
@@ -494,23 +712,103 @@ public class FormationGridManager : MonoBehaviour
         formation.shiptype = shipID;
 
         UpdateGridInfo();
-        fc = new FormationChanger(formation, eachGrids, movingUnit, contentRectTransform, shipEachGrid);
+        fc = new FormationChanger(formation, eachGrids, movingUnit, contentRectTransform, deleteButtonRectTransform, shipEachGrid);
 
         return;
     }
 
-
-
-    public void SetEnableToAttachingColor()
+    public void DisplayEnableGrid(int unitID,UnitType unitType,GridForm[] unitForm,Vector2 unitOffset)
     {
-        fc.SetEnableToAttachingColor();
+
+        fc.UpdateEachGridsTiling();
+
+        fc.UpdateEnableToAttaching(unitID, unitType, unitForm, unitOffset);
+
+        /*fc.enableToAttaching = new bool[10, 10]
+        {
+            {  true,  true, false,  true,  true,  true,  true,  true,  true,  true},
+            {  true,  true,  true,  true,  true,  true,  true,  true,  true,  true},
+            {  true,  true,  true,  true,  true,  true,  true,  true,  true,  true},
+            {  true,  true,  true,  true,  true,  true,  true,  true,  true,  true},
+            {  true,  true, false,  true,  true,  true,  true,  true,  true,  true},
+            {  true,  true,  true,  true,  true,  true,  true,  true,  true,  true},
+            {  true,  true,  true,  true,  true,  true,  true,  true,  true,  true},
+            {  true,  true,  true,  true,  true,  true,  true,  true,  true,  true},
+            {  true,  true,  true,  true,  true,  true,  true,  true,  true,  true},
+            {  true,  true,  true,  true,  true,  true,  true,  true,  true, false},
+        };*/
+
+        /*for (int i = 0; i < 10; i++)
+        {
+            for (int j = 0; j < 10; j++)
+            {
+                //enabletoattachingのマス目を光らせる
+                if (fc.eachGridsTiling[i, j] != TilingType.Empty)
+                {
+                    //eachGrids[i, j].img.color = editParam.AttachingColor;
+                    eachGrids[i, j].img.sprite = editParam.attachingSprite;
+                    ResizeImgSize(eachGrids[i, j].img, editParam.attachingUnitImgSize);
+                }
+            }
+        }*/
+
+        for (int i = 0; i < 10; i++)
+        {
+            for (int j = 0; j < 10; j++)
+            {
+                //enabletoattachingのマス目を光らせる
+                if (fc.enableToAttaching[i, j] == true)
+                {
+                    //eachGrids[i, j].img.color = editParam.AttachingColor;
+                    eachGrids[i, j].img.sprite = editParam.attachingSprite;
+                    ResizeImgSize(eachGrids[i, j].img, editParam.attachingUnitImgSize);
+                }
+            }
+        }
+
+        return;
+    }
+
+    public void HideEnableGrid()
+    {
+        /*for (int i = 0; i < 10; i++)
+        {
+            for (int j = 0; j < 10; j++)
+            {
+                //enabletoattachingのマス目の画像をもとに戻す
+                if (fc.eachGridsTiling[i, j] == TilingType.Empty)
+                {
+                    //eachGrids[i, j].img.color = editParam.AttachingColor;
+                    eachGrids[i, j].img.sprite = editParam.nullSprite;
+                    ResizeImgSize(eachGrids[i, j].img, editParam.attachingUnitImgSize);
+                }
+
+            }
+        }*/
+
+        for (int i = 0; i < 10; i++)
+        {
+            for (int j = 0; j < 10; j++)
+            {
+                //enabletoattachingのマス目の画像をもとに戻す
+                if (fc.enableToAttaching[i, j] == true)
+                {
+                    //eachGrids[i, j].img.color = editParam.AttachingColor;
+                    eachGrids[i, j].img.sprite = editParam.nullSprite;
+                    ResizeImgSize(eachGrids[i, j].img, editParam.attachingUnitImgSize);
+                }
+
+            }
+        }
+
+        return;
     }
 
 
     public void Attach(int movingUnitID, UnitType movinUnitType,GridForm[] movingUnitForm,Vector2 movingUnitOffset, int[] beforeAttachingUnitPosition)
     {
 
-        int[] attachingUnitPosition = fc.SearchNearSquare(beforeAttachingUnitPosition);
+        int[] attachingUnitPosition = fc.SearchNearSquare(beforeAttachingUnitPosition, movingUnitID, movinUnitType, movingUnitForm);
 
         m_unitData = masterData.FindUnitData(movingUnitID);
 
@@ -521,8 +819,17 @@ public class FormationGridManager : MonoBehaviour
             if (m_unitData != null)
             {
                 EachGrid eachGrid = fc.eachGrids[attachingUnitPosition[0], attachingUnitPosition[1]];
-                eachGrid.UpdateEachGrid(m_unitData.sprite, m_unitData.ID, m_unitData.unitType,m_unitData.form, ConvertOffsetValue(m_unitData.offset));
+
+                ResetUnitOffsetAndResizeImgSize(eachGrid.img, editParam.attachingUnitImgSize, eachGrid.sel.selectableUnitOffset);
+
+                eachGrid.UpdateEachGrid(m_unitData.sprite, m_unitData.ID, m_unitData.unitType,m_unitData.form, ConvertOffsetValue(m_unitData.offset),attachingUnitPosition);
+                
                 SetUnitOffsetAndResizeImgSize(eachGrid.img,editParam.attachingUnitImgSize,movingUnitOffset);
+
+                //fc.UpdateCoordinates();
+                
+
+                //GridColorSelecting();
             }
 
         }
@@ -532,7 +839,53 @@ public class FormationGridManager : MonoBehaviour
         return;
     }
 
+    public void GridColorDefault()
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            for (int j = 0; j < 10; j++)
+            {
+                if (fc.eachGridsTiling[i, j] == 0)
+                {
+                    eachGrids[i, j].img.sprite = nullSprite;
+                    ResizeImgSize(eachGrids[i, j].img, editParam.attachingUnitImgSize);
+                }
 
+                eachGrids[i, j].img.color = editParam.defaultColor;
+            }
+        }
+
+        return;
+    }
+
+
+
+
+
+
+
+
+
+    //この先デバッグ用
+
+
+    public void GridColorSelecting()
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            for (int j = 0; j < 10; j++)
+            {
+                if (fc.eachGridsTiling[i, j] != TilingType.Empty)
+                {
+                    //eachGrids[i, j].img.color = editParam.unAttachingColor;
+                    eachGrids[i, j].img.sprite = editParam.attachingSprite;
+                    ResizeImgSize(eachGrids[i, j].img, editParam.attachingUnitImgSize);
+                }
+                else ResizeImgSize(eachGrids[i, j].img, editParam.attachingUnitImgSize);
+            }
+        }
+        return;
+    }
 
 
 
