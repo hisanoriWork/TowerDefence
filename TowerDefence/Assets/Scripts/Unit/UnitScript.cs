@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using MyLibrary;
 
 public class UnitScript : MonoBehaviour
 {
@@ -13,16 +14,15 @@ public class UnitScript : MonoBehaviour
 
     }
     [Serializable] protected class IntEvent : UnityEvent<int> { }
-
     /*****public field*****/
     public UnitData data;
+    public InstDataScript player1, player2;
+    public PlayerNum playerNum { get; set; } = PlayerNum.Player1;
     public int power { get { return m_power; } }
     public int maxHP { get { return m_maxHP; } }
     public int HP { get { return m_HP; } }
     public float maxCT { get { return m_maxCT; } }
     public float CT { get { return m_CT; } }
-
-    public bool isPlaying { get; set; } = true;
     public bool isInverted { get; set; } = false;
     /*****protected field*****/
     protected Animator m_animator;
@@ -55,7 +55,7 @@ public class UnitScript : MonoBehaviour
 
     void Update()
     {
-        if (isPlaying)
+        if (!Pauser.isPaused)
         {
             transform.position += m_movePos;
             m_movePos = Vector3.zero;
@@ -63,20 +63,12 @@ public class UnitScript : MonoBehaviour
             if (m_CT < 0) Attack(m_power);
 
             if (m_HP < 0 & !m_isDead) Dead();
-
-            //if (m_isDead)
-            //{
-            //    gameObject.SetActive(false);
-            //}
         }
     }
 
     void FixedUpdate()
     {
-        if (isPlaying)
-        {
             if (m_CT > 0) m_CT -= Time.fixedDeltaTime;
-        }
     }
 
     /*****public method*****/
@@ -101,7 +93,6 @@ public class UnitScript : MonoBehaviour
             m_CT = m_maxCT;
             m_animator.SetTrigger(m_HashAttackParam);
             m_animator.SetTrigger(m_HashIdleParam);
-            
             attackEvent.Invoke(power);
         }
     }
@@ -115,7 +106,7 @@ public class UnitScript : MonoBehaviour
         {
             m_isDead = true;
             m_animator.SetTrigger(m_HashDeadParam);
-            
+            Debug.Log(data.name);
             deadEvent.Invoke();
         }
     }
@@ -129,11 +120,8 @@ public class UnitScript : MonoBehaviour
             && !m_animator.IsInTransition(0))
         {
             m_HP -= damage;
-            if (m_animator != null)
-            {
-                m_animator.SetTrigger(m_HashHurtParam);
-                m_animator.SetTrigger(m_HashIdleParam);
-            }
+            m_animator.SetTrigger(m_HashHurtParam);
+            m_animator.SetTrigger(m_HashIdleParam);
             hurtEvent.Invoke(damage);
         }
     }
@@ -150,9 +138,8 @@ public class UnitScript : MonoBehaviour
         m_movePos += vec;
     }
 
-    public void ToInactive()
+    public void Inactive()
     {
         gameObject.SetActive(false);
     }
 }
-

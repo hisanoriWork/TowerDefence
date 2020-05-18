@@ -14,7 +14,6 @@ public enum UnitType
 [CreateAssetMenu(menuName = "Scriptable/UnitData")]
 public class UnitData : ScriptableObject
 {
-    
     public new string name; //Unitの名前
     public int ID = 0; //Unitを識別するためのID
     [Range(0, 2000)] public int power = 10;　//Unitの攻撃力
