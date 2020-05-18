@@ -62,6 +62,8 @@ public class EditManager : MonoBehaviour
 
         //Cursor非表示
         movingUnitObject.SetActive(false);
+
+        editParam.deleteButton.SetActive(false);
     }
 
     // Start is called before the first frame update
@@ -120,6 +122,7 @@ public class EditManager : MonoBehaviour
             sel.selectableUnitID = data.ID;
             sel.selectableUnitType = data.unitType;
             sel.selectableUnitForm = data.form;
+            sel.selectableUnitCost = data.cost;
 
             sel.selectableUnitOffset = ConvertOffsetValue(data.offset);
 
@@ -152,6 +155,7 @@ public class EditManager : MonoBehaviour
             sel.selectableUnitID = data.unitData.ID;
             sel.selectableUnitType = data.unitData.unitType;
             sel.selectableUnitForm = data.unitData.form;
+            sel.selectableUnitCost = data.unitData.cost;
 
             sel.selectableUnitOffset = ConvertOffsetValue(data.unitData.offset);
 
@@ -212,31 +216,46 @@ public class EditManager : MonoBehaviour
         //Debug.Log(sel.selectableUnitType);
         //Debug.Log(UnitType.Pngn);
 
+
         //PngnBlockの場合
-        if (sel.selectableUnitType == UnitType.Pngn||sel.selectableUnitType == UnitType.Block)
+        if (sel.selectableUnitType == UnitType.Pngn || sel.selectableUnitType == UnitType.Block)
         {
-            movingUnitObject.SetActive(true);
+            //まずそれを選択したときにコストが負にならないか判定する
+            if (editParam.formationCost - sel.selectableUnitCost >= 0)
+            {
+                editParam.deleteButton.SetActive(true);
 
-            movingUnit.movingUnitID = sel.selectableUnitID;
-            movingUnit.movingUnitType = sel.selectableUnitType;
-            movingUnit.movingUnitForm = sel.selectableUnitForm;
-            movingUnit.movingUnitOffset = sel.selectableUnitOffset;
-            movingUnit.beforeAttachingUnitPosition = null;
+                //Debug.Log(editParam.formationCost - sel.selectableUnitCost);
+                movingUnitObject.SetActive(true);
 
-            var transform = movingUnitObject.transform;
-            SetSpriteAndResizeImgSize(transform, editParam.movingUnitImgSize, selectableUnit.transform.Find("Image").GetComponent<Image>().sprite);
+                movingUnit.movingUnitID = sel.selectableUnitID;
+                movingUnit.movingUnitType = sel.selectableUnitType;
+                movingUnit.movingUnitForm = sel.selectableUnitForm;
+                movingUnit.movingUnitOffset = sel.selectableUnitOffset;
+                movingUnit.movingUnitCost = sel.selectableUnitCost;
+                movingUnit.beforeAttachingUnitPosition = null;
 
-            movingUnitObject.transform.position = (Vector2)Input.mousePosition + sel.selectableUnitOffset;
+                var transform = movingUnitObject.transform;
+                SetSpriteAndResizeImgSize(transform, editParam.movingUnitImgSize, selectableUnit.transform.Find("Image").GetComponent<Image>().sprite);
 
-            formationGridManager.DisplayEnableGrid(movingUnit.movingUnitID,movingUnit.movingUnitType,movingUnit.movingUnitForm,movingUnit.movingUnitOffset);
+                movingUnitObject.transform.position = (Vector2)Input.mousePosition + sel.selectableUnitOffset;
+
+                formationGridManager.DisplayEnableGrid(movingUnit.movingUnitID, movingUnit.movingUnitType, movingUnit.movingUnitForm, movingUnit.movingUnitOffset);
+
+
+            }
 
         }
-        else if(sel.selectableUnitType == UnitType.Ship)
+        //Shipの場合
+        else if (sel.selectableUnitType == UnitType.Ship)
         {
             formationGridManager.SelectEachShip(sel.selectableUnitID);
         }
 
-        //Shipの場合
+        
+
+        
+
 
         return;
     }
@@ -247,64 +266,91 @@ public class EditManager : MonoBehaviour
 
         //Debug.Log(sel.selectableUnitID);
 
+
         if (att.selectableUnitID != 0)
         {
             //Debug.Log(sel.selectableUnitType);
             //Debug.Log(UnitType.Pngn);
 
+
             //PngnBlockの場合
             if (att.selectableUnitType == UnitType.Pngn || att.selectableUnitType == UnitType.Block)
             {
 
-                //ここらへん追加しすぎて乱雑なのでリファクタリング必要
+                //そのユニットを外すことが禁則であるとき、外させない
+                //if (formationGridManager.CheckingCutVertex(att.selectableUnitForm, att.beforeAttachingPosition))
+                //↑非常に危険、見直してから使う
+                if(true)
+                {
+                    //Debug.Log("aho");
+                    //Debug.Log(att.beforeAttachingPosition[0] + ":" + att.beforeAttachingPosition[1]);
 
-                Image attachingUnitImage = attachingUnit.GetComponent<Image>();
+                    //ここらへん追加しすぎて乱雑なのでリファクタリング必要
 
-                movingUnitObject.SetActive(true);
+                    editParam.deleteButton.SetActive(true);
 
-                movingUnit.movingUnitID = att.selectableUnitID;
-                movingUnit.movingUnitType = att.selectableUnitType;
-                movingUnit.movingUnitForm = att.selectableUnitForm;
-                movingUnit.movingUnitOffset = att.selectableUnitOffset;
-                movingUnit.beforeAttachingUnitPosition = att.beforeAttachingPosition;
+                    Image attachingUnitImage = attachingUnit.GetComponent<Image>();
 
-                var transform = movingUnitObject.transform;
-                SetSpriteAndResizeImgSize(transform, editParam.movingUnitImgSize, attachingUnitImage.sprite);
+                    movingUnitObject.SetActive(true);
+
+                    movingUnit.movingUnitID = att.selectableUnitID;
+                    movingUnit.movingUnitType = att.selectableUnitType;
+                    movingUnit.movingUnitForm = att.selectableUnitForm;
+                    movingUnit.movingUnitOffset = att.selectableUnitOffset;
+                    movingUnit.movingUnitCost = att.selectableUnitCost;
+                    movingUnit.beforeAttachingUnitPosition = att.beforeAttachingPosition;
+
+                    editParam.formationCost = editParam.formationCost + att.selectableUnitCost;
+                    formationGridManager.UpdateFormationCostDisplay();
+
+                    var transform = movingUnitObject.transform;
+                    SetSpriteAndResizeImgSize(transform, editParam.movingUnitImgSize, attachingUnitImage.sprite);
 
 
-                attachingUnitImage.sprite = nullSprite;
+                    attachingUnitImage.sprite = nullSprite;
 
-                attachingUnit.transform.Find("Text").GetComponent<Text>().text = "0";
+                    attachingUnit.transform.Find("Text").GetComponent<Text>().text = "0";
 
 
-                //var img = transform.GetComponent<Image>();
-                var t = attachingUnitImage.GetComponent<RectTransform>();
+                    //var img = transform.GetComponent<Image>();
+                    var t = attachingUnitImage.GetComponent<RectTransform>();
 
-                attachingUnitImage.SetNativeSize();
+                    attachingUnitImage.SetNativeSize();
 
-                var width = t.sizeDelta.x * editParam.attachingUnitImgSize;
-                var height = t.sizeDelta.y * editParam.attachingUnitImgSize;
+                    var width = t.sizeDelta.x * editParam.attachingUnitImgSize;
+                    var height = t.sizeDelta.y * editParam.attachingUnitImgSize;
 
-                t.sizeDelta = new Vector2(width, height);
+                    t.sizeDelta = new Vector2(width, height);
 
-                attachingUnitImage.transform.position = (Vector2)attachingUnitImage.transform.position - att.selectableUnitOffset;
+                    attachingUnitImage.transform.position = (Vector2)attachingUnitImage.transform.position - att.selectableUnitOffset;
 
-                movingUnitObject.transform.position = (Vector2)Input.mousePosition + att.selectableUnitOffset;
+                    movingUnitObject.transform.position = (Vector2)Input.mousePosition + att.selectableUnitOffset;
 
-                att.selectableUnitID = 0;
+                    att.selectableUnitID = 0;
+
+                    att.selectableUnitForm = null;
+                    att.selectableUnitOffset = new Vector2();
+                    att.selectableUnitCost = 0;
+
+                    formationGridManager.DisplayEnableGrid(movingUnit.movingUnitID, movingUnit.movingUnitType, movingUnit.movingUnitForm, movingUnit.movingUnitOffset);
+                }
+
+
                 
-                att.selectableUnitForm = null;
-                att.selectableUnitOffset = new Vector2();
-
-                formationGridManager.DisplayEnableGrid(movingUnit.movingUnitID, movingUnit.movingUnitType, movingUnit.movingUnitForm, movingUnit.movingUnitOffset);
             }
 
             //Shipの場合
+
+
         }
 
 
-
         return;
+    }
+
+    public void LoadEditSelectScene()
+    {
+        SceneManager.LoadScene("EditSelectScene");
     }
 
 

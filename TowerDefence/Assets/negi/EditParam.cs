@@ -18,4 +18,15 @@ public class EditParam : MonoBehaviour
 
     [SerializeField] public Sprite nullSprite;
     [SerializeField] public Sprite attachingSprite;
+
+    [SerializeField] public int formationCostMax= 1000;
+    [SerializeField] public int formationCost = 1000;
+    public GameObject deleteButton;
+
+    public int ownFormationNum;
+
+    private void Awake()
+    {
+        ownFormationNum = int.Parse(PlayerPrefs.GetString("ownFormationNum", "1"));
+    }
 }

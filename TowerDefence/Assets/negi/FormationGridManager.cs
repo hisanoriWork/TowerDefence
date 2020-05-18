@@ -9,7 +9,7 @@ public class EachGrid
     public Text txt;
     public SelectableUnit sel;
 
-    public void UpdateEachGrid(Sprite sprite,int unitID,UnitType unitType,GridForm[]form,Vector2 offset,int[] beforeAttachingPosition)
+    public void UpdateEachGrid(Sprite sprite,int unitID,UnitType unitType,GridForm[]form,Vector2 offset,int cost,int[] beforeAttachingPosition)
     {
         this.sel = this.img.GetComponent<SelectableUnit>();
 
@@ -19,6 +19,7 @@ public class EachGrid
         this.sel.selectableUnitType = unitType;
         this.sel.selectableUnitForm = form;
         this.sel.selectableUnitOffset = offset;
+        this.sel.selectableUnitCost = cost;
         this.sel.beforeAttachingPosition = beforeAttachingPosition;
         
     }
@@ -208,11 +209,14 @@ public class FormationChanger
         //Debug.Log(contentRectTransform.rect);
         //Debug.Log(movingUnitCoordinateRect);
 
-        /*if (deleteButtonRectTransform.rect.Contains(movingUnitCoordinateRectForDeleteButton))
-        {
+        //Debug.Log("a"+deleteButtonRectTransform.rect);
+        //Debug.Log("a"+movingUnitCoordinateRectForDeleteButton);
 
+        if (deleteButtonRectTransform.rect.Contains(movingUnitCoordinateRectForDeleteButton))
+        {
+            //Debug.Log("OOYOYOYOYO");
             return null;
-        }*/
+        }
 
 
         if (contentRectTransform.rect.Contains(movingUnitCoordinateRect))
@@ -401,7 +405,7 @@ public class FormationGridManager : MonoBehaviour
     //編成データ読み書き用
     PrefsManager prefs = new PrefsManager();
     //データ
-    private Formation formation = new Formation();//マス目部分int[] gridinfo = new int[120] ,船部分 int shiptype;
+    private Formation formation = new Formation();//マス目部分int[] gridinfo = new int[10,10] ,船部分 int shiptype;
 
     public EachGrid[,] eachGrids = new EachGrid[10, 10];
 
@@ -419,6 +423,8 @@ public class FormationGridManager : MonoBehaviour
 
     public Sprite nullSprite;
 
+    public Text formationCostText;
+
     /*****private field*****/
     private UnitData m_unitData;
 
@@ -428,10 +434,10 @@ public class FormationGridManager : MonoBehaviour
     {
 
         //ここでとりあえずPrefsManagerからformationを取得
-        formation = prefs.GetFormation();
+        formation = prefs.GetFormation(editParam.ownFormationNum);
 
         //以下デバッグ用
-        formation.formationDataExists = true;
+        /*formation.formationDataExists = true;
         formation.gridinfo = new int[10, 10]
         {
             {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
@@ -445,9 +451,9 @@ public class FormationGridManager : MonoBehaviour
             {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
             {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
         };
-        formation.shiptype = 10010;
+        formation.shiptype = 10010;*/
 
-        //prefs.SetFormation(formation.gridinfo, formation.shiptype);
+        //prefs.SetFormation(formation.gridinfo, formation.shiptype,editParam.ownFormationNum);
 
         //グリッドを生成、初期化
         //GenerateGridInfo();
@@ -533,9 +539,9 @@ public class FormationGridManager : MonoBehaviour
 
     public void BackToSaveFormation()
     {
-        formation = prefs.GetFormation();
+        formation = prefs.GetFormation(editParam.ownFormationNum);
 
-        //prefs.SetFormation(formation.gridinfo, formation.shiptype);
+        //prefs.SetFormation(formation.gridinfo, formation.shiptype,editParam.ownFormationNum);
 
         //グリッドを生成、初期化
         //GenerateGridInfo();
@@ -552,7 +558,7 @@ public class FormationGridManager : MonoBehaviour
 
     public void SaveFormation()
     {
-        prefs.SetFormation(formation.gridinfo, formation.shiptype);
+        prefs.SetFormation(formation.gridinfo, formation.shiptype, editParam.ownFormationNum);
     }
 
     public void InstanceGridInfo()
@@ -578,46 +584,18 @@ public class FormationGridManager : MonoBehaviour
         shipEachGrid.txt = attachingShip.transform.Find("Text").GetComponent<Text>();
         shipEachGrid.txt.text = "0";
 
-        return;
-    }
+        editParam.formationCost = editParam.formationCostMax;
+        UpdateFormationCostDisplay();
 
-
-    public void GenerateGridInfo()
-    {
-        for (int i = 0; i < 10; i++)
-        {
-            for (int j = 0; j < 10; j++)
-            {
-                Image img = Instantiate(eachGridImage, contentRectTransform);
-
-                m_unitData = masterData.FindUnitData(formation.gridinfo[i, j]);
-
-                EachGrid eachGrid = new EachGrid();
-                eachGrid.img = img.GetComponent<Image>();
-                eachGrid.txt = img.transform.Find("Text").GetComponent<Text>();
-
-
-                if (m_unitData != null) {
-                    SelectableUnit sel = eachGrid.img.GetComponent<SelectableUnit>();
-                    eachGrid.img.sprite = m_unitData.sprite;
-                    sel.selectableUnitID = m_unitData.ID;
-                    sel.selectableUnitType = m_unitData.unitType;
-                    sel.selectableUnitForm = m_unitData.form;
-
-                    ConvertOffsetValue(m_unitData.offset);
-                    sel.selectableUnitOffset = m_unitData.offset;
-                }
-                eachGrid.txt.text = formation.gridinfo[i, j].ToString();
-
-                eachGrids[i, j] = eachGrid;
-                //Debug.Log("start:"+eachGrids[i, j].img.transform.position);
-            }
-        }
         return;
     }
 
     public void UpdateGridInfo()
     {
+        editParam.formationCost = editParam.formationCostMax;
+
+        int[] attachingPosition = new int[2];
+
         for (int i = 0; i < 10; i++)
         {
             for (int j = 0; j < 10; j++)
@@ -626,16 +604,24 @@ public class FormationGridManager : MonoBehaviour
 
                 EachGrid eachGrid = eachGrids[i, j];
 
+                attachingPosition[0] = i;
+                attachingPosition[1] = j;
+
+                //Debug.Log(attachingPosition[0] + ":" + attachingPosition[1]);
+
                 if (m_unitData != null)
                 {
                     ResetUnitOffsetAndResizeImgSize(eachGrid.img, editParam.attachingUnitImgSize, eachGrid.sel.selectableUnitOffset);
-                    eachGrid.UpdateEachGrid(m_unitData.sprite, m_unitData.ID, m_unitData.unitType, m_unitData.form, ConvertOffsetValue(m_unitData.offset),null);
+                    //eachGrid.UpdateEachGrid(m_unitData.sprite, m_unitData.ID, m_unitData.unitType, m_unitData.form, ConvertOffsetValue(m_unitData.offset), m_unitData.cost, attachingPosition);
+                    eachGrid.UpdateEachGrid(m_unitData.sprite, m_unitData.ID, m_unitData.unitType, m_unitData.form, ConvertOffsetValue(m_unitData.offset), m_unitData.cost, null);
                     SetUnitOffsetAndResizeImgSize(eachGrid.img, editParam.attachingUnitImgSize, eachGrid.sel.selectableUnitOffset);
+                    editParam.formationCost = editParam.formationCost - m_unitData.cost;
                 }
                 else
                 {
                     ResetUnitOffsetAndResizeImgSize(eachGrid.img, editParam.attachingUnitImgSize, eachGrid.sel.selectableUnitOffset);
-                    eachGrid.UpdateEachGrid(nullSprite, 0, UnitType.Pngn, null, Vector2.zero, null);
+                    //eachGrid.UpdateEachGrid(nullSprite, 0, UnitType.Pngn, null, Vector2.zero, 0, attachingPosition);
+                    eachGrid.UpdateEachGrid(nullSprite, 0, UnitType.Pngn, null, Vector2.zero, 0, null);
                     SetUnitOffsetAndResizeImgSize(eachGrid.img, editParam.attachingUnitImgSize, Vector2.zero);
                 }
                 
@@ -643,6 +629,8 @@ public class FormationGridManager : MonoBehaviour
                 eachGrid.txt.text = formation.gridinfo[i, j].ToString();
 
                 eachGrids[i, j] = eachGrid;
+
+                //Debug.Log(eachGrids[i, j].sel.beforeAttachingPosition[0] + ":::" + eachGrids[i, j].sel.beforeAttachingPosition[1]);
                 //Debug.Log("start:"+eachGrids[i, j].img.transform.position);
             }
         }
@@ -656,15 +644,18 @@ public class FormationGridManager : MonoBehaviour
         {
             //ResetUnitOffsetAndResizeImgSize(shipEachGrid.img, editParam.attachingShipImgSize, ConvertOffsetValue(m_unitData.offset));
 
-            shipEachGrid.UpdateEachGrid(m_unitData.sprite, m_unitData.ID, m_unitData.unitType, m_unitData.form, ConvertOffsetValue(m_unitData.offset), null);
+            shipEachGrid.UpdateEachGrid(m_unitData.sprite, m_unitData.ID, m_unitData.unitType, m_unitData.form, ConvertOffsetValue(m_unitData.offset), m_unitData.cost, null);
 
             SetUnitOffsetAndResizeImgSize(shipEachGrid.img, editParam.attachingShipImgSize, ConvertOffsetValue(m_unitData.offset));
+            editParam.formationCost = editParam.formationCost - m_unitData.cost;
         }
         else
         {
             //ResetUnitOffsetAndResizeImgSize(shipEachGrid.img, editParam.attachingShipImgSize, ConvertOffsetValue(m_unitData.offset));
             SetUnitOffsetAndResizeImgSize(shipEachGrid.img, editParam.attachingShipImgSize, Vector2.zero);
         }
+
+        UpdateFormationCostDisplay();
 
 
         return;
@@ -695,7 +686,7 @@ public class FormationGridManager : MonoBehaviour
         };
         formation.shiptype = 10010;
 
-        GenerateGridInfo();
+        //GenerateGridInfo();
         
         return;
     }
@@ -822,8 +813,10 @@ public class FormationGridManager : MonoBehaviour
 
                 ResetUnitOffsetAndResizeImgSize(eachGrid.img, editParam.attachingUnitImgSize, eachGrid.sel.selectableUnitOffset);
 
-                eachGrid.UpdateEachGrid(m_unitData.sprite, m_unitData.ID, m_unitData.unitType,m_unitData.form, ConvertOffsetValue(m_unitData.offset),attachingUnitPosition);
-                
+                eachGrid.UpdateEachGrid(m_unitData.sprite, m_unitData.ID, m_unitData.unitType, m_unitData.form, ConvertOffsetValue(m_unitData.offset), m_unitData.cost, attachingUnitPosition);
+                editParam.formationCost = editParam.formationCost - m_unitData.cost;
+                UpdateFormationCostDisplay();
+
                 SetUnitOffsetAndResizeImgSize(eachGrid.img,editParam.attachingUnitImgSize,movingUnitOffset);
 
                 //fc.UpdateCoordinates();
@@ -859,7 +852,80 @@ public class FormationGridManager : MonoBehaviour
     }
 
 
+    public void UpdateFormationCostDisplay()
+    {
+        formationCostText.text = "残りコスト:" + editParam.formationCost;
+        return;
+    }
 
+    public bool CheckingCutVertex(GridForm[] unitForm,int[] attachingPosition)
+    {
+        TilingType[,] eachGridsTilingTmp = new TilingType[10,10];
+        bool[,] checkedGrids = new bool[10, 10];
+        bool alreadyFirstCheckingIsFinish = false;
+
+        for (int y = 0; y < 10; y++)
+        {
+            for (int x = 0; x < 10; x++)
+            {
+                eachGridsTilingTmp[y, x] = fc.eachGridsTiling[y, x];
+
+            }
+        }
+
+        eachGridsTilingTmp[attachingPosition[0], attachingPosition[1]] = TilingType.Empty;
+        foreach(GridForm form in unitForm)
+        {
+            eachGridsTilingTmp[attachingPosition[0] + form.y, attachingPosition[1] + form.x] = TilingType.Empty;
+        }
+
+        for (int y = 0; y < 10; y++)
+        {
+            for (int x = 0; x < 10; x++)
+            {
+                eachGridsTilingTmp[y, x] = fc.eachGridsTiling[y, x];
+                if (eachGridsTilingTmp[y, x] != TilingType.Empty)
+                {
+                    if (checkedGrids[y, x] == false && alreadyFirstCheckingIsFinish == true)
+                    {
+                        return false;
+                    }else if(checkedGrids[y, x] == false)
+                    {
+                        checking(y,x);
+                        alreadyFirstCheckingIsFinish = true;
+                    }
+                }
+            }
+        }
+
+
+
+        void checking(int y,int x)
+        {
+            if (eachGridsTilingTmp[y, x] != TilingType.Empty) checkedGrids[y, x] = true;
+
+            if (eachGridsTilingTmp[y, x] == TilingType.Pngn)
+            {
+                if (y - 1 >= 0) checking(y - 1, x);
+            }else if(eachGridsTilingTmp[y,x] == TilingType.Object)
+            {
+                if (y - 1 >= 0)
+                {
+                    Debug.Log(y - 1);
+                    checking(y - 1, x);
+                }
+                if (y + 1 < 10) checking(y + 1, x);
+                if (x - 1 >= 0) checking(y, x - 1);
+                if (x + 1 < 10) checking(y, x + 1);
+            }
+
+            return;
+
+        }
+
+
+        return true;
+    }
 
 
 
