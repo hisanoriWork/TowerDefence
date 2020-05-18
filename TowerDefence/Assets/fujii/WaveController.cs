@@ -7,49 +7,34 @@ public class WaveController : MonoBehaviour
     [System.Serializable]
     public struct WaveInfo
     {
+        public PlayerNum playerNum;
         [Range(0, 1)] public float width;//X振幅
         [Range(0, 1)] public float hight;//Y振幅
-        [Range(0, 100)] public float swingWidth;//振れ幅
-        [Range(0, 10)] public float AVE;//角速度
-        [Range(0, 1)] public float deviation;
+        [Range(0, 10)] public float AVEx;//角速度
+        [Range(0, 10)] public float AVEy;//角速度
+        [Range(0, 1)] public float daviation;
     }
-    [SerializeField] private WaveInfo[] m_info = default;
-    private float[] m_angleX;
-    private float[] m_angleY;
-    private float[] m_AVE;
-    private Vector3 m_temp = Vector3.zero;
-    private Vector3 m_origin;
-    private float[] m_angleZ;
-    private float[] m_swingAVE;
-    private Vector3 m_tempAngle = Vector3.zero;
-    private Vector3 m_originAngle;
+    public WaveInfo info = default;
+    private Vector3 m_angle = Vector3.zero;
+    WaveInfo m_info = default;
+
     void Awake()
     {
-        m_angleX = new float[m_info.Length];
-        m_angleY = new float[m_info.Length];
-        m_angleZ = new float[m_info.Length];
-        m_AVE = new float[m_info.Length];
-        m_origin = transform.position;
-        m_originAngle = transform.localEulerAngles;
-        
+        m_info = info;
     }
     void FixedUpdate()
     {
-        for (int i= 0;i< m_info.Length; i++)
+        Vector3 m_temp = Vector3.zero;
+        m_temp.x = m_info.width * m_info.AVEx * Mathf.Sin(m_angle.x += m_info.AVEx * Time.fixedDeltaTime) * Time.fixedDeltaTime;
+        m_temp.y = m_info.hight * m_info.AVEy * Mathf.Cos(m_angle.y += m_info.AVEy * Time.fixedDeltaTime) * Time.fixedDeltaTime;
+
+        if (m_info.playerNum == PlayerNum.Player2)
         {
-            m_AVE[i] = UnityEngine.Random.Range(m_info[i].AVE * (1-m_info[i].deviation), m_info[i].AVE * (1 + m_info[i].deviation));
-            m_temp = m_origin;
-            m_tempAngle = m_originAngle;
-
-            m_temp.x += m_info[i].width * Mathf.Sin(m_angleX[i] += m_info[i].AVE * Time.fixedDeltaTime);
-            m_temp.y += m_info[i].hight * Mathf.Cos(m_angleY[i] += m_info[i].AVE * Time.fixedDeltaTime);
-            m_tempAngle.z += m_info[i].swingWidth * Mathf.Sin(m_angleZ[i] += m_info[i].AVE * Time.fixedDeltaTime);
-
-            transform.position = m_temp;
-            transform.localEulerAngles = m_tempAngle;
-            if (m_angleX[i] > 2 * Mathf.PI) m_angleX[i] -= 2 * Mathf.PI;
-            if (m_angleY[i] > 2 * Mathf.PI) m_angleY[i] -= 2 * Mathf.PI;
-            if (m_angleZ[i] > 2 * Mathf.PI) m_angleZ[i] -= 2 * Mathf.PI;
+            m_temp *= -1;
         }
+
+        transform.localPosition += m_temp;
+        if (m_angle.x > 2 * Mathf.PI) m_angle.x -= 2 * Mathf.PI;
+        if (m_angle.y > 2 * Mathf.PI) m_angle.y -= 2 * Mathf.PI;
     }
 }

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Block
   ID: 100
-  power: 10
+  power: 0
   HP: 100
   CT: 101
   cost: 10

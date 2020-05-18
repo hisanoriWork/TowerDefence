@@ -7,7 +7,6 @@ public class BoomerangPool : ObjectPool<BoomerangPool, BoomerangObject, Vector3>
     void Start()
     {
         transform.parent = null;
-
         for (int i = 0; i < initialPoolCount; i++)
         {
             BoomerangObject newPoolObject = CreateNewPoolObject();

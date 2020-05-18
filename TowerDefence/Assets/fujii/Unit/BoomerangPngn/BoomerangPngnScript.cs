@@ -11,9 +11,4 @@ public class BoomerangPngnScript : MonoBehaviour
     {
         pool.Pop(attackTransform.position);
     }
-
-    void Update()
-    {
-        Debug.Log(attackTransform.position);
-    }
 }

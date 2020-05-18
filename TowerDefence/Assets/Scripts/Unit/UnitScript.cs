@@ -93,7 +93,6 @@ public class UnitScript : MonoBehaviour
             m_CT = m_maxCT;
             m_animator.SetTrigger(m_HashAttackParam);
             m_animator.SetTrigger(m_HashIdleParam);
-            
             attackEvent.Invoke(power);
         }
     }
@@ -107,7 +106,7 @@ public class UnitScript : MonoBehaviour
         {
             m_isDead = true;
             m_animator.SetTrigger(m_HashDeadParam);
-            
+            Debug.Log(data.name);
             deadEvent.Invoke();
         }
     }
@@ -121,11 +120,8 @@ public class UnitScript : MonoBehaviour
             && !m_animator.IsInTransition(0))
         {
             m_HP -= damage;
-            if (m_animator != null)
-            {
-                m_animator.SetTrigger(m_HashHurtParam);
-                m_animator.SetTrigger(m_HashIdleParam);
-            }
+            m_animator.SetTrigger(m_HashHurtParam);
+            m_animator.SetTrigger(m_HashIdleParam);
             hurtEvent.Invoke(damage);
         }
     }
