@@ -209,11 +209,14 @@ public class FormationChanger
         //Debug.Log(contentRectTransform.rect);
         //Debug.Log(movingUnitCoordinateRect);
 
-        /*if (deleteButtonRectTransform.rect.Contains(movingUnitCoordinateRectForDeleteButton))
-        {
+        //Debug.Log("a"+deleteButtonRectTransform.rect);
+        //Debug.Log("a"+movingUnitCoordinateRectForDeleteButton);
 
+        if (deleteButtonRectTransform.rect.Contains(movingUnitCoordinateRectForDeleteButton))
+        {
+            //Debug.Log("OOYOYOYOYO");
             return null;
-        }*/
+        }
 
 
         if (contentRectTransform.rect.Contains(movingUnitCoordinateRect))
@@ -591,6 +594,8 @@ public class FormationGridManager : MonoBehaviour
     {
         editParam.formationCost = editParam.formationCostMax;
 
+        int[] attachingPosition = new int[2];
+
         for (int i = 0; i < 10; i++)
         {
             for (int j = 0; j < 10; j++)
@@ -599,9 +604,15 @@ public class FormationGridManager : MonoBehaviour
 
                 EachGrid eachGrid = eachGrids[i, j];
 
+                attachingPosition[0] = i;
+                attachingPosition[1] = j;
+
+                //Debug.Log(attachingPosition[0] + ":" + attachingPosition[1]);
+
                 if (m_unitData != null)
                 {
                     ResetUnitOffsetAndResizeImgSize(eachGrid.img, editParam.attachingUnitImgSize, eachGrid.sel.selectableUnitOffset);
+                    //eachGrid.UpdateEachGrid(m_unitData.sprite, m_unitData.ID, m_unitData.unitType, m_unitData.form, ConvertOffsetValue(m_unitData.offset), m_unitData.cost, attachingPosition);
                     eachGrid.UpdateEachGrid(m_unitData.sprite, m_unitData.ID, m_unitData.unitType, m_unitData.form, ConvertOffsetValue(m_unitData.offset), m_unitData.cost, null);
                     SetUnitOffsetAndResizeImgSize(eachGrid.img, editParam.attachingUnitImgSize, eachGrid.sel.selectableUnitOffset);
                     editParam.formationCost = editParam.formationCost - m_unitData.cost;
@@ -609,6 +620,7 @@ public class FormationGridManager : MonoBehaviour
                 else
                 {
                     ResetUnitOffsetAndResizeImgSize(eachGrid.img, editParam.attachingUnitImgSize, eachGrid.sel.selectableUnitOffset);
+                    //eachGrid.UpdateEachGrid(nullSprite, 0, UnitType.Pngn, null, Vector2.zero, 0, attachingPosition);
                     eachGrid.UpdateEachGrid(nullSprite, 0, UnitType.Pngn, null, Vector2.zero, 0, null);
                     SetUnitOffsetAndResizeImgSize(eachGrid.img, editParam.attachingUnitImgSize, Vector2.zero);
                 }
@@ -617,6 +629,8 @@ public class FormationGridManager : MonoBehaviour
                 eachGrid.txt.text = formation.gridinfo[i, j].ToString();
 
                 eachGrids[i, j] = eachGrid;
+
+                //Debug.Log(eachGrids[i, j].sel.beforeAttachingPosition[0] + ":::" + eachGrids[i, j].sel.beforeAttachingPosition[1]);
                 //Debug.Log("start:"+eachGrids[i, j].img.transform.position);
             }
         }

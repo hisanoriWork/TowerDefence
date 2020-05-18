@@ -21,4 +21,5 @@ public class EditParam : MonoBehaviour
 
     [SerializeField] public int formationCostMax= 1000;
     [SerializeField] public int formationCost = 1000;
+    public GameObject deleteButton;
 }

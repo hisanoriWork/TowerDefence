@@ -11,6 +11,7 @@ public class MovingUnit : MonoBehaviour
     public GridForm[] movingUnitForm;
     public Vector2 movingUnitOffset;
     public int movingUnitCost;
+    public EditParam editParam;
 
     public int[] beforeAttachingUnitPosition;
 
@@ -34,6 +35,7 @@ public class MovingUnit : MonoBehaviour
         formationGridManager.HideEnableGrid();
         formationGridManager.Attach(movingUnitID, movingUnitType,movingUnitForm,movingUnitOffset, beforeAttachingUnitPosition);
         beforeAttachingUnitPosition = null;
+        editParam.deleteButton.SetActive(false);
         this.gameObject.SetActive(false);
         return;
     }

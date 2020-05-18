@@ -62,6 +62,8 @@ public class EditManager : MonoBehaviour
 
         //Cursor非表示
         movingUnitObject.SetActive(false);
+
+        editParam.deleteButton.SetActive(false);
     }
 
     // Start is called before the first frame update
@@ -214,14 +216,16 @@ public class EditManager : MonoBehaviour
         //Debug.Log(sel.selectableUnitType);
         //Debug.Log(UnitType.Pngn);
 
-        //まずそれを選択したときにコストが負にならないか判定する
-        if (editParam.formationCost - sel.selectableUnitCost >= 0)
-        {
-            Debug.Log(editParam.formationCost - sel.selectableUnitCost);
 
-            //PngnBlockの場合
-            if (sel.selectableUnitType == UnitType.Pngn || sel.selectableUnitType == UnitType.Block)
+        //PngnBlockの場合
+        if (sel.selectableUnitType == UnitType.Pngn || sel.selectableUnitType == UnitType.Block)
+        {
+            //まずそれを選択したときにコストが負にならないか判定する
+            if (editParam.formationCost - sel.selectableUnitCost >= 0)
             {
+                editParam.deleteButton.SetActive(true);
+
+                //Debug.Log(editParam.formationCost - sel.selectableUnitCost);
                 movingUnitObject.SetActive(true);
 
                 movingUnit.movingUnitID = sel.selectableUnitID;
@@ -238,15 +242,19 @@ public class EditManager : MonoBehaviour
 
                 formationGridManager.DisplayEnableGrid(movingUnit.movingUnitID, movingUnit.movingUnitType, movingUnit.movingUnitForm, movingUnit.movingUnitOffset);
 
-            }
-            else if (sel.selectableUnitType == UnitType.Ship)
-            {
-                formationGridManager.SelectEachShip(sel.selectableUnitID);
-            }
 
-            //Shipの場合
+            }
 
         }
+        //Shipの場合
+        else if (sel.selectableUnitType == UnitType.Ship)
+        {
+            formationGridManager.SelectEachShip(sel.selectableUnitID);
+        }
+
+        
+
+        
 
 
         return;
@@ -271,9 +279,15 @@ public class EditManager : MonoBehaviour
 
                 //そのユニットを外すことが禁則であるとき、外させない
                 //if (formationGridManager.CheckingCutVertex(att.selectableUnitForm, att.beforeAttachingPosition))
+                //↑非常に危険、見直してから使う
                 if(true)
                 {
+                    //Debug.Log("aho");
+                    //Debug.Log(att.beforeAttachingPosition[0] + ":" + att.beforeAttachingPosition[1]);
+
                     //ここらへん追加しすぎて乱雑なのでリファクタリング必要
+
+                    editParam.deleteButton.SetActive(true);
 
                     Image attachingUnitImage = attachingUnit.GetComponent<Image>();
 
