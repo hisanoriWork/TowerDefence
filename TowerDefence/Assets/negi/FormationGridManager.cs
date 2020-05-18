@@ -405,7 +405,7 @@ public class FormationGridManager : MonoBehaviour
     //編成データ読み書き用
     PrefsManager prefs = new PrefsManager();
     //データ
-    private Formation formation = new Formation();//マス目部分int[] gridinfo = new int[120] ,船部分 int shiptype;
+    private Formation formation = new Formation();//マス目部分int[] gridinfo = new int[10,10] ,船部分 int shiptype;
 
     public EachGrid[,] eachGrids = new EachGrid[10, 10];
 
@@ -434,10 +434,10 @@ public class FormationGridManager : MonoBehaviour
     {
 
         //ここでとりあえずPrefsManagerからformationを取得
-        formation = prefs.GetFormation();
+        formation = prefs.GetFormation(editParam.ownFormationNum);
 
         //以下デバッグ用
-        formation.formationDataExists = true;
+        /*formation.formationDataExists = true;
         formation.gridinfo = new int[10, 10]
         {
             {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
@@ -451,9 +451,9 @@ public class FormationGridManager : MonoBehaviour
             {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
             {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
         };
-        formation.shiptype = 10010;
+        formation.shiptype = 10010;*/
 
-        //prefs.SetFormation(formation.gridinfo, formation.shiptype);
+        //prefs.SetFormation(formation.gridinfo, formation.shiptype,editParam.ownFormationNum);
 
         //グリッドを生成、初期化
         //GenerateGridInfo();
@@ -539,9 +539,9 @@ public class FormationGridManager : MonoBehaviour
 
     public void BackToSaveFormation()
     {
-        formation = prefs.GetFormation();
+        formation = prefs.GetFormation(editParam.ownFormationNum);
 
-        //prefs.SetFormation(formation.gridinfo, formation.shiptype);
+        //prefs.SetFormation(formation.gridinfo, formation.shiptype,editParam.ownFormationNum);
 
         //グリッドを生成、初期化
         //GenerateGridInfo();
@@ -558,7 +558,7 @@ public class FormationGridManager : MonoBehaviour
 
     public void SaveFormation()
     {
-        prefs.SetFormation(formation.gridinfo, formation.shiptype);
+        prefs.SetFormation(formation.gridinfo, formation.shiptype, editParam.ownFormationNum);
     }
 
     public void InstanceGridInfo()

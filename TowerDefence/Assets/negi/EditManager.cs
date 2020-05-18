@@ -348,5 +348,10 @@ public class EditManager : MonoBehaviour
         return;
     }
 
+    public void LoadEditSelectScene()
+    {
+        SceneManager.LoadScene("EditSelectScene");
+    }
+
 
 }
