@@ -16,12 +16,19 @@ public class MissionDetailController : MonoBehaviour
 
     /*****private field*****/
     private StageData stageData;
+    private int stageIndex = 0;
 
-    public void ChangeDetailContent(int selectStageNum)
+    private void Start()
     {
-        if (stageData = stageDataManager.stageDataList[selectStageNum - 1])
+        ChangeDetailContent();
+    }
+
+    public void ChangeDetailContent()
+    {
+        if (stageDataManager.stageDataList.Count >= stageIndex)
         {
-            selectMissionTV.text = "ステージ" + selectStageNum;
+            stageData = stageDataManager.stageDataList[stageIndex];
+            selectMissionTV.text = "ステージ" + (stageIndex + 1);
             enemyPreViewIV.sprite = stageData.preViewSprite;
             DetailContentTV.text = stageData.detailContent;
             var difficultyStarNum = "";
@@ -33,7 +40,23 @@ public class MissionDetailController : MonoBehaviour
         }
         else
         {
-            Debug.Log("不正なステージが選択されました.");
+            Debug.Log("不正な値が入力されました.");
+            stageIndex = 0;
+            ChangeDetailContent();
         }
+    }
+
+    public void ChangeSelectStageNum(int selectStageNum)
+    {
+        if (selectStageNum >= 0)
+        {
+            stageIndex = selectStageNum - 1;
+        }
+        else
+        {
+            Debug.Log("不正なステージが選択されました.");
+            stageIndex = 0;
+        }
+        ChangeDetailContent();
     }
 }

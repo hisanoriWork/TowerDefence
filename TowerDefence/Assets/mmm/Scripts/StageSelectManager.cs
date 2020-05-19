@@ -18,6 +18,6 @@ public class StageSelectManager : MonoBehaviour
         stageNum = selectStageNum;
         Debug.Log("ステージ" + selectStageNum + "が選ばれました");
         //TODO: MissionDetailWindowを変更する
-        missionDetailController.ChangeDetailContent(selectStageNum);
+        missionDetailController.ChangeSelectStageNum(selectStageNum);
     }
 }
