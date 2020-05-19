@@ -27,8 +27,7 @@ public class InstManager : MonoBehaviour
     void Awake()
     {
         //PrefsManager prefs = new PrefsManager();
-        //Formation formation = prefs.getFormation();
-        //gird = formation.girdinfo;
+        //Formation formation = prefs.GetFormation(int.Parse(PlayerPrefs.GetString("ownFormationNum", "1")));
         //下はデバッグ用
         Formation formation = new Formation();
         formation.formationDataExists = true;
@@ -46,6 +45,12 @@ public class InstManager : MonoBehaviour
             {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
         };
         formation.shiptype = 10010;
+        if (!formation.formationDataExists)
+        {
+            Debug.Log("そのようなformationはないです");
+            return;
+        }
+
         CreateInst(formation);
         ChangeLayer();
         if (m_instData.playerNum == PlayerNum.Player2)
