@@ -403,8 +403,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 239550587}
+  - component: {fileID: 239550590}
   - component: {fileID: 239550588}
+  - component: {fileID: 239550589}
   m_Layer: 0
   m_Name: StageDetailController
   m_TagString: Untagged
@@ -412,20 +413,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &239550587
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 239550586}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &239550588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -438,10 +425,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97d22af7c3c6cc6419baaa66bc5f1a07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  misshionDetailWindow: {fileID: 0}
-  missionDetailTV: {fileID: 0}
-  enemyPreViewIV: {fileID: 0}
+  misshionDetailWindow: {fileID: 572503470}
+  selectMissionTV: {fileID: 1420428927}
+  enemyPreViewIV: {fileID: 363870226}
   DetailContentTV: {fileID: 258761626}
+  Difficulty: {fileID: 1502797762}
+  stageDataManager: {fileID: 900626573}
+--- !u!222 &239550589
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 239550586}
+  m_CullTransparentMesh: 0
+--- !u!224 &239550590
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 239550586}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &258761624
 GameObject:
   m_ObjectHideFlags: 0
@@ -732,9 +748,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: bf4dc2d82d65f9142839511ceff56efe, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -788,7 +804,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.00000047684, y: -2.9}
+  m_AnchoredPosition: {x: -0.000000715, y: -0.0000024}
   m_SizeDelta: {x: 450, y: 310}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &471532003
@@ -1020,7 +1036,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stageNum: 2
-  stageSelectManager: {fileID: 0}
+  stageSelectManager: {fileID: 682113265}
 --- !u!114 &500042082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1242,7 +1258,6 @@ GameObject:
   - component: {fileID: 572503471}
   - component: {fileID: 572503473}
   - component: {fileID: 572503472}
-  - component: {fileID: 572503474}
   m_Layer: 5
   m_Name: MissionDetailWindow
   m_TagString: Untagged
@@ -1309,22 +1324,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 572503470}
   m_CullTransparentMesh: 0
---- !u!114 &572503474
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 572503470}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97d22af7c3c6cc6419baaa66bc5f1a07, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  misshionDetailWindow: {fileID: 572503470}
-  missionDetailTV: {fileID: 1420428925}
-  enemyPreViewIV: {fileID: 363870224}
-  DetailContentTV: {fileID: 0}
 --- !u!1 &648132821
 GameObject:
   m_ObjectHideFlags: 0
@@ -1414,9 +1413,8 @@ GameObject:
   - component: {fileID: 680808405}
   - component: {fileID: 680808407}
   - component: {fileID: 680808406}
-  - component: {fileID: 680808408}
   m_Layer: 5
-  m_Name: MissionDetailWindow
+  m_Name: DetailTextbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1481,22 +1479,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 680808404}
   m_CullTransparentMesh: 0
---- !u!114 &680808408
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 680808404}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97d22af7c3c6cc6419baaa66bc5f1a07, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  misshionDetailWindow: {fileID: 572503470}
-  missionDetailTV: {fileID: 1420428925}
-  enemyPreViewIV: {fileID: 363870224}
-  DetailContentTV: {fileID: 258761626}
 --- !u!1 &682113264
 GameObject:
   m_ObjectHideFlags: 0
@@ -1601,6 +1583,53 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &900626572
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 900626574}
+  - component: {fileID: 900626573}
+  m_Layer: 0
+  m_Name: StageDataManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &900626573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 900626572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 639b29f01ea805540b715b4435d38edc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stageDataList:
+  - {fileID: 7299018787800512939, guid: 38b77025405161d4cadee44ab13385b1, type: 3}
+  - {fileID: 7539090730302432320, guid: 3b7ce4250d6366a4992c42485a46d382, type: 3}
+  - {fileID: 3263569791312412802, guid: 83778046ec636ed4b9af69e2e9fe27bf, type: 3}
+--- !u!4 &900626574
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 900626572}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &908841145
 GameObject:
@@ -2001,7 +2030,7 @@ GameObject:
   - component: {fileID: 1420428928}
   - component: {fileID: 1420428927}
   m_Layer: 5
-  m_Name: MissionDetailTV
+  m_Name: SelectMissionTV
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2158,7 +2187,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stageNum: 3
-  stageSelectManager: {fileID: 0}
+  stageSelectManager: {fileID: 682113265}
 --- !u!114 &1435871794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2747,7 +2776,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stageNum: 1
-  stageSelectManager: {fileID: 0}
+  stageSelectManager: {fileID: 682113265}
 --- !u!114 &2143842451
 MonoBehaviour:
   m_ObjectHideFlags: 0
