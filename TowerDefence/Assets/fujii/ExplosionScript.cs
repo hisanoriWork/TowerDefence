@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UniRx;
+using UnityEngine;
 public class ExplosionScript : MonoBehaviour
 {
     public int power;
@@ -37,10 +35,17 @@ public class ExplosionScript : MonoBehaviour
             {
                 collider.transform.parent.GetComponent<UnitScript>().Hurt(m_power);
             }
+            if (collider.gameObject.tag == "Weapon")
+            {
+                WeaponScript otherWeapon = collider.transform.parent.GetComponent<WeaponScript>();
+                if (otherWeapon)
+                {
+                    otherWeapon.Hit();
+                }
+            }
         }
         
     }
-
     public void Init(int power = -10, float initialSize = -10f, float finalSize = -10f, float time = -10f)
     {
         m_power = power < 0 ? 1 : power;

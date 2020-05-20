@@ -109,6 +109,7 @@ GameObject:
   - component: {fileID: 8497247845232880927}
   - component: {fileID: 4042311405470919971}
   - component: {fileID: 6745932185775459024}
+  - component: {fileID: 3385489227256586555}
   m_Layer: 12
   m_Name: Bomb
   m_TagString: Weapon
@@ -165,9 +166,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73e9318de68f27f4c95fe67e838d9227, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  baseWeapon: {fileID: 3385489227256586555}
   data: {fileID: 11400000, guid: 039fa8a82ffd08b4e870b11cbc161b0b, type: 2}
   body: {fileID: 2575288419476038070}
   explosion: {fileID: 5124998735887696817}
+--- !u!114 &3385489227256586555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8497247845232880925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28c435ae17318f446b49c9e4a02e5c67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &495344995126713066
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -264,6 +278,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 9084060438738693789, guid: 498f0c3c0f4b1104f825eb49b5f7174e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 498f0c3c0f4b1104f825eb49b5f7174e, type: 3}

@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UniRx;
-public class BombPool : ObjectPool<BombPool, BombObject, Vector3>
+public class StoneBulletPool : ObjectPool<StoneBulletPool, StoneBulletObject, Vector3>
 {
     public UnitScript unitScript;
     void Start()
@@ -9,20 +11,20 @@ public class BombPool : ObjectPool<BombPool, BombObject, Vector3>
 
         for (int i = 0; i < initialPoolCount; i++)
         {
-            BombObject newPoolObject = CreateNewPoolObject();
+            StoneBulletObject newPoolObject = CreateNewPoolObject();
             pool.Add(newPoolObject);
         }
     }
 }
 
-public class BombObject : PoolObject<BombPool, BombObject, Vector3>
+public class StoneBulletObject : PoolObject<StoneBulletPool, StoneBulletObject, Vector3>
 {
     public Transform transform;
-    public BombScript script;
+    public StoneBulletScript script;
     protected override void SetReferences()
     {
         transform = instance.transform;
-        script = instance.GetComponent<BombScript>();
+        script = instance.GetComponent<StoneBulletScript>();
         script.baseWeapon.onDespawned.Subscribe(_ => ReturnToPool());
     }
 

@@ -1,16 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using UniRx;
 using UnityEngine;
-using UnityEngine.Events;
-using UniRx;
-using System;
-using MyLibrary;
-public class ArrowScript : MonoBehaviour
+public class StoneBulletScript : MonoBehaviour
 {
     /*****public field*****/
     public WeaponScript baseWeapon;
-    public ArrowData data;
-    /*****proteced field*****/
+    public StoneBulletData data;
+    /*****protected field*****/
     protected float m_angle;
     protected float m_speed;
     protected float m_gravity;
@@ -21,17 +16,11 @@ public class ArrowScript : MonoBehaviour
     {
         Init(Vector3.zero);
         baseWeapon.onHit.Subscribe(_ => baseWeapon.Despawn());
-        baseWeapon.onHitUnit.Subscribe(other =>
-        {
-            other.Hurt(baseWeapon.power);
-            //StartCoroutine(Utility.WaitForSecond(2f, () => baseWeapon.Despawn()));
-        });
-        baseWeapon.onHitWeapon.Subscribe(other =>other.Hit());
+        baseWeapon.onHitUnit.Subscribe(other => other.Hurt(baseWeapon.power));
+        baseWeapon.onHitWeapon.Subscribe(other => other.Hit());
     }
     void FixedUpdate()
     {
-        if (!baseWeapon.canHit)
-            return;
         m_move.x = m_speed * Mathf.Cos(m_angle * Mathf.Deg2Rad) * Time.fixedDeltaTime;
         m_velocity += m_gravity * Time.fixedDeltaTime;
         m_move.y = m_speed * Mathf.Sin(m_angle * Mathf.Deg2Rad) * Time.fixedDeltaTime - m_velocity * Time.fixedDeltaTime;
@@ -41,12 +30,11 @@ public class ArrowScript : MonoBehaviour
     /*****public method*****/
     public void Init(Vector3 pos, UnitScript unitScript = null)
     {
-        baseWeapon.Init(pos, null, false);
+        baseWeapon.Init(pos, unitScript, false);
         m_speed = data.speed;
         m_gravity = data.gravity;
         m_move = Vector3.zero;
         m_velocity = 0f;
         m_angle = data.angle + UnityEngine.Random.Range(-data.deviation, data.deviation);
-        transform.localEulerAngles = m_angle * Vector3.forward;
     }
 }

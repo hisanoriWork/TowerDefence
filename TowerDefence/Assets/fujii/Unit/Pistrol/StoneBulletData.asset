@@ -9,13 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20463651501a8e548aba03e244d3b7d7, type: 3}
-  m_Name: ShellData
+  m_Script: {fileID: 11500000, guid: 8150a00ee4ba3614b955a2fe1904511e, type: 3}
+  m_Name: StoneBulletData
   m_EditorClassIdentifier: 
-  angle: 30
-  deviation: 10
+  angle: 0
+  deviation: 0
   speed: 1.5
-  gravity: 0.3
-  explosionTime: 0.1
-  explosionInitialSize: 4
-  explosionFinalSize: 8
+  gravity: 0.1

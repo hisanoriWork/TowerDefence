@@ -23,7 +23,7 @@ public class BoomerangObject : PoolObject<BoomerangPool, BoomerangObject, Vector
     {
         transform = instance.transform;
         script = instance.GetComponent<BoomerangScript>();
-        script.onDespawned.Subscribe(_ => ReturnToPool());
+        script.baseWeapon.onDespawned.Subscribe(_ => ReturnToPool());
     }
 
     public override void WakeUp(Vector3 pos)

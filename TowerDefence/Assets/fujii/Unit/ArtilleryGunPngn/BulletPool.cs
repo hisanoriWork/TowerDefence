@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using UniRx;
 using UnityEngine;
-using UnityEngine.Events;
-using UniRx;
 public class BulletPool : ObjectPool<BulletPool, BulletObject, Vector3>
 {
     public UnitScript unitScript;
@@ -26,7 +23,7 @@ public class BulletObject : PoolObject<BulletPool, BulletObject, Vector3>
     {
         transform = instance.transform;
         script = instance.GetComponent<BulletScript>();
-        script.onDespawned.Subscribe(_ => ReturnToPool());
+        script.baseWeapon.onDespawned.Subscribe(_ => ReturnToPool());
     }
 
     public override void WakeUp(Vector3 pos)

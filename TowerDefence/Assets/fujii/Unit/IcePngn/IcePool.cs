@@ -26,7 +26,7 @@ public class IceObject : PoolObject<IcePool, IceObject, Vector3>
     {
         transform = instance.transform;
         script = instance.GetComponent<IceScript>();
-        script.onDespawned.Subscribe(_ => ReturnToPool());
+        script.baseWeapon.onDespawned.Subscribe(_ => ReturnToPool());
     }
 
     public override void WakeUp(Vector3 pos)

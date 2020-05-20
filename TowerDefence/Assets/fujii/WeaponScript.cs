@@ -1,17 +1,27 @@
-﻿using System;
+﻿using MyLibrary;
+using System;
 using UniRx;
 using UnityEngine;
-using MyLibrary;
 public class WeaponScript : MonoBehaviour
 {
     /*****public filed*****/
+    public bool canHit { get{return !(m_hitFlag & m_canHitAfterHit);}}
+    public UnitScript unit { get { return m_unitScript; } }
+
+    public int power { get { return m_power; } }
     public IObservable<Unit> onDespawned
     { get { return m_despawnSubject; } }
+    public IObservable<UnitScript> onHitUnit
+    { get { return m_hitUnit; }}
+    public IObservable<WeaponScript> onHitWeapon
+    { get { return m_hitWeapon; } }
     public IObservable<Unit> onHit
-    { get { return m_hitSubject; }}
+    { get { return m_hit; } }
     /*****protected field*****/
     protected Subject<Unit> m_despawnSubject = new Subject<Unit>();
-    protected Subject<Unit> m_hitSubject = new Subject<Unit>();
+    protected Subject<Unit> m_hit = new Subject<Unit>();
+    protected Subject<UnitScript> m_hitUnit = new Subject<UnitScript>();
+    protected Subject<WeaponScript> m_hitWeapon = new Subject<WeaponScript>();
     protected UnitScript m_unitScript;
     protected int m_power;
     protected bool m_hitFlag;
@@ -21,11 +31,10 @@ public class WeaponScript : MonoBehaviour
     {
         onDespawned.Subscribe(_ => gameObject.SetActive(false));
     }
-
     void OnTriggerEnter2D(Collider2D collider)
     {
         if (Pauser.isPaused) return;
-        if (m_hitFlag & m_canHitAfterHit) return;
+        if (!canHit) return;
         if (collider.gameObject.tag == "Outside")
         {
             m_despawnSubject.OnNext(Unit.Default);
@@ -37,7 +46,7 @@ public class WeaponScript : MonoBehaviour
             if (otherUnit)
             {
                 m_hitFlag = true;
-                m_hitSubject.OnNext(Unit.Default);
+                HitUnit(otherUnit);
                 return;
             }
         }
@@ -47,13 +56,13 @@ public class WeaponScript : MonoBehaviour
             if (otherWeapon)
             {
                 m_hitFlag = true;
-                m_hitSubject.OnNext(Unit.Default);
+                HitWeapon(otherWeapon);
             }
         }
 
     }
     /*****public method*****/
-    public void Init(Vector3 pos, bool canHitAfterHit = false,UnitScript unitScript = null)
+    public void Init(Vector3 pos,UnitScript unitScript = null, bool canHitAfterHit = false)
     {
         transform.position = pos;
         if (transform.localScale.x < 0)
@@ -62,9 +71,29 @@ public class WeaponScript : MonoBehaviour
         m_canHitAfterHit = canHitAfterHit;
         m_unitScript = unitScript;
         m_power = unitScript ? unitScript.power : 0;
-        string layer = (!unitScript | unitScript.playerNum == PlayerNum.Player2) ? Constant.WeaponLayer1 : Constant.WeaponLayer2;
+        string layer = (unitScript != null && unitScript.playerNum == PlayerNum.Player2) ? Constant.WeaponLayer2 : Constant.WeaponLayer1;
         Utility.SetLayerRecursively(gameObject, layer);
     }
 
-    
+    public void Despawn()
+    {
+        m_despawnSubject.OnNext(Unit.Default);
+    }
+
+    public void HitUnit(UnitScript unit)
+    {
+        m_hitUnit.OnNext(unit);
+        Hit();
+    }
+
+    public void HitWeapon(WeaponScript weapon)
+    {
+        m_hitWeapon.OnNext(weapon);
+        Hit();
+    }
+
+    public void Hit()
+    {
+        m_hit.OnNext(Unit.Default);
+    }
 }
