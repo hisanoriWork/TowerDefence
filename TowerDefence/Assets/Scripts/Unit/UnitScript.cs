@@ -13,10 +13,15 @@ public class UnitScript : MonoBehaviour
         ClosestEnemy, //一番近い敵をターゲット
 
     }
-    [Serializable] protected class IntEvent : UnityEvent<int> { }
+    [System.Serializable]
+    public class IntEvent : UnityEvent<int> { }
     /*****public field*****/
     public UnitData data;
     public InstDataScript player1, player2;
+    public IntEvent attackEvent = null;
+    public IntEvent hurtEvent = null;
+    public UnityEvent deadEvent = null;
+
     public PlayerNum playerNum { get; set; } = PlayerNum.Player1;
     public int power { get { return m_power; } }
     public int maxHP { get { return m_maxHP; } }
@@ -35,15 +40,10 @@ public class UnitScript : MonoBehaviour
     
     protected bool m_isDead = false;
     
-
     protected readonly int m_HashIdleParam = Animator.StringToHash("IdleParam");
     protected readonly int m_HashAttackParam = Animator.StringToHash("AttackParam");
     protected readonly int m_HashHurtParam = Animator.StringToHash("HurtParam");
     protected readonly int m_HashDeadParam = Animator.StringToHash("DeadParam");
-
-    [SerializeField] protected IntEvent attackEvent = null;
-    [SerializeField] protected IntEvent hurtEvent = null;
-    [SerializeField] protected UnityEvent deadEvent = null;
 
     protected Attack_Strategy m_strategy;
 
@@ -61,8 +61,7 @@ public class UnitScript : MonoBehaviour
             m_movePos = Vector3.zero;
 
             if (m_CT < 0) Attack(m_power);
-
-            if (m_HP < 0 & !m_isDead) Dead();
+            if (m_HP <= 0 & !m_isDead) Dead();
         }
     }
 
@@ -106,7 +105,6 @@ public class UnitScript : MonoBehaviour
         {
             m_isDead = true;
             m_animator.SetTrigger(m_HashDeadParam);
-            Debug.Log(data.name);
             deadEvent.Invoke();
         }
     }
@@ -120,9 +118,16 @@ public class UnitScript : MonoBehaviour
             && !m_animator.IsInTransition(0))
         {
             m_HP -= damage;
-            m_animator.SetTrigger(m_HashHurtParam);
-            m_animator.SetTrigger(m_HashIdleParam);
-            hurtEvent.Invoke(damage);
+            if (m_HP <= 0 & !m_isDead)
+            {
+                Dead();
+            }
+            else
+            {
+                m_animator.SetTrigger(m_HashHurtParam);
+                m_animator.SetTrigger(m_HashIdleParam);
+                hurtEvent.Invoke(damage);
+            }
         }
     }
 

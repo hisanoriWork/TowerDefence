@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: BombPngn
   ID: 14
-  power: 10
+  power: 20
   HP: 100
   CT: 5
   cost: 10

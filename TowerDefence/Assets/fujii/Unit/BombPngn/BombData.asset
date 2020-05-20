@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd2a34d0bf9edb648b07522766ead533, type: 3}
   m_Name: BombData
   m_EditorClassIdentifier: 
-  angle: 45
-  deviation: 20
-  speed: 2
-  gravity: 1
+  angle: 40
+  deviation: 15
+  speed: 1.5
+  gravity: 0.4
+  explosionTime: 0.05
+  explosionInitialSize: 4
+  explosionFinalSize: 8

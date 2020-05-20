@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Block
   ID: 100
   power: 0
-  HP: 100
+  HP: 50
   CT: 101
   cost: 10
   prefab: {fileID: 5476036888444427127, guid: 1717022658035414f80042bf0663739c, type: 3}

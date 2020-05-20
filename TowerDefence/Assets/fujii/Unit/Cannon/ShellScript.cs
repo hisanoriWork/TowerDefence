@@ -35,6 +35,11 @@ public class ShellScript : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collider)
     {
         if (Pauser.isPaused) return;
+        if (collider.gameObject.tag == "Outside")
+        {
+            m_despawnSubject.OnNext(Unit.Default);
+            return;
+        }
         if (collider.gameObject.tag == "Pngn" | collider.gameObject.tag == "Ship" | collider.gameObject.tag == "Block")
         {
             collider.transform.parent.GetComponent<UnitScript>().Hurt(m_power);

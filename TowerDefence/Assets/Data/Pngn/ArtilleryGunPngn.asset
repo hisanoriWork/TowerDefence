@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: ArtilleryGunPngn
   ID: 15
-  power: 10
+  power: 5
   HP: 100
   CT: 15
   cost: 10

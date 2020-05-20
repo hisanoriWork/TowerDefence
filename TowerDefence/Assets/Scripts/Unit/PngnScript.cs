@@ -6,8 +6,10 @@ public class PngnScript : MonoBehaviour
 {
     /*****public field*****/
     public UnitScript baseUnit;
-    public GameObject ground = null;
+    /*****protected field*****/
+    protected UnitScript m_groundUnit;
     /*****Monobehaviour method*****/
+
     void Update()
     {
         if (!Pauser.isPaused)
@@ -19,27 +21,32 @@ public class PngnScript : MonoBehaviour
                 baseUnit.Hurt(damage);
             }
         }
-        
     }
-    void OnCollisionEnter2D(Collision2D collision)
+
+    void OnCollisionEnter2D(Collision2D col)
     {
-        if (!Pauser.isPaused)
+        if (col.gameObject.tag == "Outside")
         {
-            if ((collision.transform.tag == "Ship" || collision.transform.tag == "Block")
-                & this.transform.position.y >= collision.contacts[0].point.y)
+            baseUnit.Dead();
+            return;
+        }
+        if (m_groundUnit != null)
+            return;
+
+        if (col.gameObject.tag == "Ship" | col.gameObject.tag == "Block")
+        {
+            UnitScript unit = col.transform.GetComponent<UnitScript>();
+            if (unit != null)
             {
-                ground = collision.gameObject;
+                m_groundUnit = unit;
+                unit.deadEvent.AddListener(() => { baseUnit.Dead(); });
+            }
+            else
+            {
+                Debug.Log("はっ？キレそう");
             }
         }
     }
-    void OnCollisionExit2D(Collision2D collision)
-    {
-        if (!Pauser.isPaused)
-        {
-            if (ground.GetInstanceID() == collision.gameObject.GetInstanceID())
-            {
-                baseUnit.Hurt(10000);
-            }
-        }
-    }
+    /*****protected method*****/
+    
 }

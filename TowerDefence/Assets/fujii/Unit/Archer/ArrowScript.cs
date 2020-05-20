@@ -20,7 +20,7 @@ public class ArrowScript : MonoBehaviour
     protected Vector3 m_move;
     protected float m_velocity;
     protected int m_power;
-    protected bool m_hitFlag = false;
+    protected bool m_hitFlag;
     /*****Monobehaviour*****/
     void Awake()
     {
@@ -39,7 +39,12 @@ public class ArrowScript : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collider)
     {
         if (Pauser.isPaused) return;
-        if (!m_hitFlag &(collider.gameObject.tag == "Pngn" | collider.gameObject.tag == "Ship" | collider.gameObject.tag == "Block"))
+        if (collider.gameObject.tag == "Outside")
+        {
+            m_despawnSubject.OnNext(Unit.Default);
+            return;
+        }
+        if (!m_hitFlag &(collider.gameObject.tag == "Pngn" | collider.gameObject.tag == "Ship" | collider.gameObject.tag == "Block") | collider.gameObject.tag == "Weapon")
         {
             m_hitFlag = true;
             collider.transform.parent.GetComponent<UnitScript>().Hurt(m_power);
