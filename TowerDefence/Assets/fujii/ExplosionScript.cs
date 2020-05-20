@@ -33,7 +33,7 @@ public class ExplosionScript : MonoBehaviour
     {
         if (m_power > 0)
         {
-            if (collider.gameObject.tag == "Pngn" | collider.gameObject.tag == "Ship" | collider.gameObject.tag == "Block" | collider.gameObject.tag == "Weapon")
+            if (collider.gameObject.tag == "Pngn" | collider.gameObject.tag == "Ship" | collider.gameObject.tag == "Block")
             {
                 collider.transform.parent.GetComponent<UnitScript>().Hurt(m_power);
             }

@@ -25,6 +25,8 @@ public class ArrowScript : MonoBehaviour
     void Awake()
     {
         Init(Vector3.zero, m_unitScript);
+        
+
     }
 
     void FixedUpdate()
@@ -44,7 +46,7 @@ public class ArrowScript : MonoBehaviour
             m_despawnSubject.OnNext(Unit.Default);
             return;
         }
-        if (!m_hitFlag &(collider.gameObject.tag == "Pngn" | collider.gameObject.tag == "Ship" | collider.gameObject.tag == "Block") | collider.gameObject.tag == "Weapon")
+        if (!m_hitFlag &(collider.gameObject.tag == "Pngn" | collider.gameObject.tag == "Ship" | collider.gameObject.tag == "Block"))
         {
             m_hitFlag = true;
             collider.transform.parent.GetComponent<UnitScript>().Hurt(m_power);
