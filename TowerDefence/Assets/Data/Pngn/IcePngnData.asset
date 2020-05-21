@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 98b403c1afce91a4287803f7fab651aa, type: 3}
-  m_Name: DeckData
+  m_Name: IcePngnData
   m_EditorClassIdentifier: 
-  name: Deck
-  ID: -1
-  power: 10
-  HP: 1000
-  CT: 101
-  cost: 10
-  prefab: {fileID: 1854955134177114285, guid: 5eba9a63feda3314d8347a5a18a65977, type: 3}
-  unitType: 3
-  sprite: {fileID: 21300000, guid: 7244c31f58aeedd44a751aa6891461e9, type: 3}
-  pngnCanGetOn: 1
-  blockCanGetOn: 1
-  indestructible: 1
+  name: "\u30A2\u30A4\u30B9\u30DA\u30F3\u30AE\u30F3"
+  ID: 14
+  power: 20
+  HP: 100
+  CT: 3
+  cost: 40
+  prefab: {fileID: 5383022211340844421, guid: 42c6e84f1a656d041ae116e7cd09a638, type: 3}
+  unitType: 0
+  sprite: {fileID: 21300000, guid: b4a1fdd4fc63c7f44b1336c672a72654, type: 3}
+  pngnCanGetOn: 0
+  blockCanGetOn: 0
+  indestructible: 0
   form: []
   offset: {x: 0, y: 0, z: 0}

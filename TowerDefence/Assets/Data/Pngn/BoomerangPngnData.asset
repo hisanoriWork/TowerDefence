@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98b403c1afce91a4287803f7fab651aa, type: 3}
   m_Name: BoomerangPngnData
   m_EditorClassIdentifier: 
-  name: BoomerangPngn
+  name: "\u30D6\u30FC\u30E1\u30E9\u30F3"
   ID: 13
-  power: 10
-  HP: 100
-  CT: 10
+  power: 3
+  HP: 60
+  CT: 13
   cost: 10
   prefab: {fileID: 5457476299941973732, guid: 602901aeccb489443b3b7185d40cedac, type: 3}
   unitType: 0

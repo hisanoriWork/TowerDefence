@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98b403c1afce91a4287803f7fab651aa, type: 3}
   m_Name: BlockData
   m_EditorClassIdentifier: 
-  name: Block
+  name: "\u6728\u306E\u30D6\u30ED\u30C3\u30AF"
   ID: 100
   power: 0
   HP: 50

@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   angle: 30
   deviation: 10
-  speed: 1.5
-  gravity: 0.3
+  speed: 2
+  gravity: 1
   explosionTime: 0.1
   explosionInitialSize: 4
   explosionFinalSize: 8

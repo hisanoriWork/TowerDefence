@@ -12,9 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c8b07dc3897ff247b74461c8cd33a97, type: 3}
   m_Name: BoomerangData
   m_EditorClassIdentifier: 
-  angle: 0
-  deviation: 0
-  speed: 0
   xCurve:
     serializedVersion: 2
     m_Curve:

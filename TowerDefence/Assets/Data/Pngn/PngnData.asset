@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98b403c1afce91a4287803f7fab651aa, type: 3}
   m_Name: PngnData
   m_EditorClassIdentifier: 
-  name: Pngn
+  name: "\u30DA\u30F3\u30AE\u30F3"
   ID: 10
-  power: 10
-  HP: 100
-  CT: 5
-  cost: 10
+  power: 0
+  HP: 30
+  CT: 101
+  cost: 5
   prefab: {fileID: 2706958961471863537, guid: b38e3d62b2ed1cc4e966418e11eda93b, type: 3}
   unitType: 0
   sprite: {fileID: 21300000, guid: b4a1fdd4fc63c7f44b1336c672a72654, type: 3}

@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 98b403c1afce91a4287803f7fab651aa, type: 3}
-  m_Name: PirateShipDataAlpha
+  m_Name: BattleShipDataAlpha
   m_EditorClassIdentifier: 
-  name: "\u6D77\u8CCA\u8239"
-  ID: 10010
-  power: 10
-  HP: 400
+  name: "\u6226\u8266"
+  ID: 10020
+  power: 0
+  HP: 500
   CT: 101
-  cost: 800
-  prefab: {fileID: 7151728711608997689, guid: c8b0f23dbe91bee418e3626d18e7d57e, type: 3}
+  cost: 1000
+  prefab: {fileID: 784875828288635638, guid: db8cb0a354ef4924a988a4aa8c017ced, type: 3}
   unitType: 1
-  sprite: {fileID: 21300000, guid: fa41641c2e6eaa94a88af63e96f05708, type: 3}
+  sprite: {fileID: 21300000, guid: d5079354dbdae8443849ef27e931507f, type: 3}
   pngnCanGetOn: 1
   blockCanGetOn: 1
   indestructible: 0
@@ -43,8 +43,6 @@ MonoBehaviour:
     x: 8
   - y: 0
     x: 9
-  - y: 0
-    x: 0
   - y: 1
     x: 0
   - y: 1
@@ -55,10 +53,42 @@ MonoBehaviour:
     x: 3
   - y: 1
     x: 4
+  - y: 1
+    x: 5
+  - y: 1
+    x: 6
+  - y: 1
+    x: 7
+  - y: 1
+    x: 8
+  - y: 1
+    x: 9
   - y: 2
     x: 0
   - y: 2
     x: 1
   - y: 2
     x: 2
-  offset: {x: 0.11, y: -1.6, z: 0}
+  - y: 2
+    x: 3
+  - y: 2
+    x: 4
+  - y: 2
+    x: 5
+  - y: 2
+    x: 6
+  - y: 3
+    x: 0
+  - y: 4
+    x: 0
+  - y: 5
+    x: 0
+  - y: 6
+    x: 0
+  - y: 7
+    x: 0
+  - y: 8
+    x: 0
+  - y: 9
+    x: 0
+  offset: {x: 0.2, y: -0.81, z: 0}

@@ -8,5 +8,4 @@ using UnityEngine;
 public class ShipData : ScriptableObject
 {
     public UnitData unitData;
-    public Vector3 offSet; 
 }
