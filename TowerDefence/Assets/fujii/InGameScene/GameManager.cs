@@ -9,8 +9,10 @@ public class GameManager : MonoBehaviour
 {
     /*****public field*****/
     public bool isPlaying { get; set; } = true;
+    public float timeScale { get; set; } = 1.0f;
     /*****private field*****/
     [SerializeField] private UIManager m_option = default;
+    [SerializeField] private UIManager m_stop, m_play, m_X2Play, m_X4Play;
     [SerializeField] private TimeView m_timeView = default;
     [SerializeField] private InstManager m_player1 = default, m_player2 = default;
     [SerializeField] private Gauge m_player1HP = default, m_player2HP = default;
@@ -20,11 +22,15 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         //オプションを開いたときゲームを停止
-        m_option.whenDisplayed.Subscribe(_ => Stop(true));
+        m_option.whenDisplayed.Subscribe(_ => Stop(false));
         //オプションを閉じたとき，もともとゲームを再生していたら再生する
-        m_option.whenHidden.Where(_ => isPlaying).Subscribe(_ => Play());
+        m_option.whenHidden.Where(_ => isPlaying).Subscribe(_ => Play(timeScale));
         //オプションを閉じたとき，もともとゲームを停止していたら停止する
-        m_option.whenHidden.Where(_ => !isPlaying).Subscribe(_ => Stop());
+        m_option.whenHidden.Where(_ => !isPlaying).Subscribe(_ => Stop(true));
+        m_stop.whenHidden.Subscribe(_ => { m_play.Display(); Play(1.0f); });
+        m_play.whenHidden.Subscribe(_ => { m_X2Play.Display(); Play(2.0f); });
+        m_X2Play.whenHidden.Subscribe(_ => { m_X4Play.Display(); Play(4.0f); });
+        m_X4Play.whenHidden.Subscribe(_ => { m_stop.Display(); Stop(true); });
     }
     void Start()
     {
@@ -58,16 +64,21 @@ public class GameManager : MonoBehaviour
         }
     }
     /*****public method*****/
-    public void Play()
+    public void Play(float timeScale = 1.0f)
     {
-        Pauser.Resume();
+        Pauser.Play(timeScale);
+        this.timeScale = timeScale;
         isPlaying = true;
         m_timeView.timer.Play();
     }
-    public void Stop(bool flag = false)
+    public void Stop(bool flag = true)
     {
         Pauser.Pause();
-        if(flag) this.isPlaying = false;
+        if (flag)
+        {
+            this.isPlaying = false;
+            this.timeScale = timeScale;
+        }
         m_timeView.timer.Stop();
     }
     public void TransitionScene(String sceneName)
