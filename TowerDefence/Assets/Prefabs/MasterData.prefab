@@ -68,3 +68,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 27bd88c4a4abf6846aa4695fccc9cfda, type: 2}
   shipDataList:
   - {fileID: 11400000, guid: 62009e7e75fca39479f4dd9a94f62fc9, type: 2}
+  stageDataList:
+  - {fileID: 11400000, guid: 553c2c282f6b5144b8514e9bbac8494b, type: 2}
+  - {fileID: 11400000, guid: d27e34aa11752de4b98739b108e8179f, type: 2}
+  - {fileID: 11400000, guid: 83618954b2e606b4f964c1a428fe4318, type: 2}
