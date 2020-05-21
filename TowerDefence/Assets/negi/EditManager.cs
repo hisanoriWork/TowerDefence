@@ -278,9 +278,9 @@ public class EditManager : MonoBehaviour
             {
 
                 //そのユニットを外すことが禁則であるとき、外させない
-                //if (formationGridManager.CheckingCutVertex(att.selectableUnitForm, att.beforeAttachingPosition))
+                if (formationGridManager.CheckingCutVertex(att.selectableUnitForm, att.beforeAttachingPosition))
                 //↑非常に危険、見直してから使う
-                if(true)
+                //if(true)
                 {
                     //Debug.Log("aho");
                     //Debug.Log(att.beforeAttachingPosition[0] + ":" + att.beforeAttachingPosition[1]);

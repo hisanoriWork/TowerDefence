@@ -21,7 +21,8 @@ public class EachGrid
         this.sel.selectableUnitOffset = offset;
         this.sel.selectableUnitCost = cost;
         this.sel.beforeAttachingPosition = beforeAttachingPosition;
-        
+
+
     }
 }
 
@@ -61,17 +62,17 @@ public class FormationChanger
 
     /*****private method*****/
 
-    private void SetEachGridsTiling(TilingType unitTilingType,int unitX,int unitY,GridForm[] gridForms)
+    private void SetEachGridsTiling(TilingType unitTilingType,int unitY,int unitX,GridForm[] gridForms)
     {
         if (unitTilingType != TilingType.Empty)
         {
-            eachGridsTiling[unitX, unitY] = unitTilingType;
+            eachGridsTiling[unitY, unitX] = unitTilingType;
 
             if (gridForms != null)
             {
                 foreach (GridForm form in gridForms)
                 {
-                    eachGridsTiling[unitX + form.y, unitY + form.x] = unitTilingType;
+                    eachGridsTiling[unitY + form.y, unitX + form.x] = unitTilingType;
                 }
             }
         }
@@ -469,6 +470,8 @@ public class FormationGridManager : MonoBehaviour
         UpdateGridInfo();
         fc = new FormationChanger(formation, eachGrids, movingUnit, contentRectTransform, deleteButtonRectTransform, shipEachGrid);
 
+        //UpdateGridInfo();
+
         //masterData.FindUnitData(10).
 
         return;
@@ -563,10 +566,15 @@ public class FormationGridManager : MonoBehaviour
 
     public void InstanceGridInfo()
     {
+        int[] attachingPosition = new int[2];
+
         for (int i = 0; i < 10; i++)
         {
             for (int j = 0; j < 10; j++)
             {
+                attachingPosition[0] = i;
+                attachingPosition[1] = j;
+
                 Image img = Instantiate(eachGridImage, contentRectTransform);
 
                 EachGrid eachGrid = new EachGrid();
@@ -574,6 +582,7 @@ public class FormationGridManager : MonoBehaviour
                 eachGrid.txt = img.transform.Find("Text").GetComponent<Text>();
                 eachGrid.txt.text = "0";
                 eachGrid.sel = img.GetComponent<SelectableUnit>();
+                eachGrid.sel.beforeAttachingPosition = attachingPosition;
 
                 eachGrids[i, j] = eachGrid;
                 //Debug.Log("start:"+eachGrids[i, j].img.transform.position);
@@ -594,8 +603,6 @@ public class FormationGridManager : MonoBehaviour
     {
         editParam.formationCost = editParam.formationCostMax;
 
-        int[] attachingPosition = new int[2];
-
         for (int i = 0; i < 10; i++)
         {
             for (int j = 0; j < 10; j++)
@@ -604,6 +611,8 @@ public class FormationGridManager : MonoBehaviour
 
                 EachGrid eachGrid = eachGrids[i, j];
 
+                
+                int[] attachingPosition = new int[2];
                 attachingPosition[0] = i;
                 attachingPosition[1] = j;
 
@@ -612,8 +621,8 @@ public class FormationGridManager : MonoBehaviour
                 if (m_unitData != null)
                 {
                     ResetUnitOffsetAndResizeImgSize(eachGrid.img, editParam.attachingUnitImgSize, eachGrid.sel.selectableUnitOffset);
-                    //eachGrid.UpdateEachGrid(m_unitData.sprite, m_unitData.ID, m_unitData.unitType, m_unitData.form, ConvertOffsetValue(m_unitData.offset), m_unitData.cost, attachingPosition);
-                    eachGrid.UpdateEachGrid(m_unitData.sprite, m_unitData.ID, m_unitData.unitType, m_unitData.form, ConvertOffsetValue(m_unitData.offset), m_unitData.cost, null);
+                    eachGrid.UpdateEachGrid(m_unitData.sprite, m_unitData.ID, m_unitData.unitType, m_unitData.form, ConvertOffsetValue(m_unitData.offset), m_unitData.cost, attachingPosition);
+                    //eachGrid.UpdateEachGrid(m_unitData.sprite, m_unitData.ID, m_unitData.unitType, m_unitData.form, ConvertOffsetValue(m_unitData.offset), m_unitData.cost, null);
                     SetUnitOffsetAndResizeImgSize(eachGrid.img, editParam.attachingUnitImgSize, eachGrid.sel.selectableUnitOffset);
                     editParam.formationCost = editParam.formationCost - m_unitData.cost;
                 }
@@ -860,9 +869,18 @@ public class FormationGridManager : MonoBehaviour
 
     public bool CheckingCutVertex(GridForm[] unitForm,int[] attachingPosition)
     {
+        fc.UpdateEachGridsTiling();
+
+        //Debug.Log(attachingPosition[0]+","+ attachingPosition[1]);
+
+
         TilingType[,] eachGridsTilingTmp = new TilingType[10,10];
-        bool[,] checkedGrids = new bool[10, 10];
+        bool[,] checkedObjectTiledGrids = new bool[10, 10];
+        bool[,] pngnGuard = new bool[10, 10];
+        bool[,] pngnCheckedGuard = new bool[10, 10];
         bool alreadyFirstCheckingIsFinish = false;
+
+        //bool jud_pngn;
 
         for (int y = 0; y < 10; y++)
         {
@@ -883,35 +901,104 @@ public class FormationGridManager : MonoBehaviour
         {
             for (int x = 0; x < 10; x++)
             {
-                eachGridsTilingTmp[y, x] = fc.eachGridsTiling[y, x];
                 if (eachGridsTilingTmp[y, x] != TilingType.Empty)
                 {
-                    if (checkedGrids[y, x] == false && alreadyFirstCheckingIsFinish == true)
+                    /*if (eachGridsTilingTmp[y, x] == TilingType.Pngn && fc.eachGrids[y, x].sel.selectableUnitType == UnitType.Pngn)
                     {
+                        pngnGuard[y, x] = true;
+
+                        if (fc.eachGrids[y, x].sel.selectableUnitForm != null)
+                        {
+                            foreach (GridForm form in fc.eachGrids[y, x].sel.selectableUnitForm)
+                            {
+                                pngnGuard[y + form.y, x + form.x] = true;
+                            }
+                        }
+                    }*/
+
+                    if (checkedObjectTiledGrids[y, x] == false && alreadyFirstCheckingIsFinish == true && eachGridsTilingTmp[y, x] != TilingType.Pngn)
+                    {
+                        /*if (pngnCheckedGuard[y, x] != false)
+                        {
+                            Debug.Log("false" + y + "" + x);
+                            return false;
+                        }*/
+
                         return false;
-                    }else if(checkedGrids[y, x] == false)
+
+                    }
+                    else if(checkedObjectTiledGrids[y, x] == false)
                     {
+                        //Debug.Log("notchecked"+y + "," + x + ":" + eachGridsTilingTmp[y, x]);
                         checking(y,x);
                         alreadyFirstCheckingIsFinish = true;
                     }
+
+                    /*jud_pngn = true;
+                    for (int py = 0; py < 10; py++)
+                    {
+                        for (int px = 0; px < 10; px++)
+                        {
+                            eachGridsTilingTmp[y, x] = fc.eachGridsTiling[y, x];
+                            if (pngnGuard[py, px] != pngnCheckedGuard[py, px])
+                            {
+                                jud_pngn = false;
+                            }
+
+                        }
+                    }
+
+                    if (jud_pngn) deletepngnGuard();*/
+
                 }
             }
         }
 
 
 
+        /*void deletepngnGuard()
+        {
+
+            for (int y = 0; y < 10; y++)
+            {
+                for (int x = 0; x < 10; x++)
+                {
+                    pngnGuard[y, x] = false;
+                    pngnCheckedGuard[y, x] = false;
+
+                }
+            }
+
+            return;
+        }*/
+
+
+
         void checking(int y,int x)
         {
-            if (eachGridsTilingTmp[y, x] != TilingType.Empty) checkedGrids[y, x] = true;
+            if (checkedObjectTiledGrids[y, x] == true) return;
 
-            if (eachGridsTilingTmp[y, x] == TilingType.Pngn)
+            if (eachGridsTilingTmp[y, x] == TilingType.Empty) return;
+            else checkedObjectTiledGrids[y, x] = true;
+
+            //Debug.Log(y + "," + x);
+
+            /*if (eachGridsTilingTmp[y, x] == TilingType.Pngn)
             {
+                //下方向は確認する
                 if (y - 1 >= 0) checking(y - 1, x);
-            }else if(eachGridsTilingTmp[y,x] == TilingType.Object)
+
+                //やばいかも
+                if (y + 1 < 10) checking(y + 1, x);
+                if (x - 1 >= 0) checking(y, x - 1);
+                if (x + 1 < 10) checking(y, x + 1);
+            }
+            else */if(eachGridsTilingTmp[y,x] == TilingType.Object)
             {
                 if (y - 1 >= 0)
                 {
-                    Debug.Log(y - 1);
+                    //Debug.Log(y - 1);
+                    
                     checking(y - 1, x);
                 }
                 if (y + 1 < 10) checking(y + 1, x);
