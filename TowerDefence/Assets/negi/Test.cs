@@ -8,7 +8,7 @@ public class Test : MonoBehaviour
     //編成データを読み書きするときはPrefManager.csにあります
 
     //編成データ読み書き用
-    PlayerManager prefs = new PlayerManager();
+    PrefsManager prefs = new PrefsManager();
     //データ
     Formation formation = new Formation();//マス目部分int[] gridinfo = new int[100] ,船部分 int shiptype;
 
