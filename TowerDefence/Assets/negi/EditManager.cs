@@ -28,6 +28,8 @@ public class EditManager : MonoBehaviour
 
     public Sprite nullSprite;
 
+    public SelectShipWindow selectShipWindow;
+
     /*****private field*****/
     private Dictionary<UnitType, string> type = new Dictionary<UnitType, string>()
     {
@@ -249,7 +251,7 @@ public class EditManager : MonoBehaviour
         //Shipの場合
         else if (sel.selectableUnitType == UnitType.Ship)
         {
-            formationGridManager.SelectEachShip(sel.selectableUnitID);
+            selectShipWindow.ShowSelectShipWindow(sel.selectableUnitID);
         }
 
         
@@ -322,7 +324,8 @@ public class EditManager : MonoBehaviour
 
                     t.sizeDelta = new Vector2(width, height);
 
-                    attachingUnitImage.transform.position = (Vector2)attachingUnitImage.transform.position - att.selectableUnitOffset;
+                    attachingUnitImage.transform.position = (Vector2)attachingUnitImage.transform.position - att.selectableUnitOffset * editParam.canvasScale;
+                    //attachingUnitImage.rectTransform.position = (Vector2)attachingUnitImage.rectTransform.position - att.selectableUnitOffset * editParam.attachingUnitImgSize;
 
                     movingUnitObject.transform.position = (Vector2)Input.mousePosition + att.selectableUnitOffset;
 
