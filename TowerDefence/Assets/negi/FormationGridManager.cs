@@ -426,6 +426,8 @@ public class FormationGridManager : MonoBehaviour
 
     public Text formationCostText;
 
+    public DialogManager dialogManager;
+
     /*****private field*****/
     private UnitData m_unitData;
 
@@ -854,6 +856,8 @@ public class FormationGridManager : MonoBehaviour
 
         }
 
+        DeleteFlyingPngn();
+
         UpdateFormation();
 
         //Regenerate();
@@ -884,6 +888,72 @@ public class FormationGridManager : MonoBehaviour
     public void UpdateFormationCostDisplay()
     {
         formationCostText.text = "残りコスト:" + editParam.formationCost;
+        return;
+    }
+
+    public void DeleteFlyingPngn()
+    {
+        fc.UpdateEachGridsTiling();
+
+        bool judPngnGround;
+
+        for (int y = 0; y < 10; y++)
+        {
+            for (int x = 0; x < 10; x++)
+            {
+                if(fc.eachGridsTiling[y,x] == TilingType.Pngn && fc.eachGrids[y,x].sel.selectableUnitID != 0)
+                {
+
+                    judPngnGround = checkPngnGround(y, x, fc.eachGrids[y, x].sel.selectableUnitForm);
+                    if (!judPngnGround)
+                    {
+                        ResetUnitOffsetAndResizeImgSize(fc.eachGrids[y, x].img, editParam.attachingUnitImgSize, fc.eachGrids[y, x].sel.selectableUnitOffset);
+
+                        int[] pos = { y, x };
+                        
+
+                        editParam.formationCost = editParam.formationCost + fc.eachGrids[y,x].sel.selectableUnitCost;
+                        UpdateFormationCostDisplay();
+
+                        fc.eachGrids[y, x].UpdateEachGrid(nullSprite, 0, UnitType.Pngn, null, new Vector2(0, 0), 0, pos);
+
+                        SetUnitOffsetAndResizeImgSize(fc.eachGrids[y, x].img, editParam.attachingUnitImgSize, new Vector2(0, 0));
+
+                        dialogManager.ShowDialog("宙に浮いたペンギンは消えてしまいました…");
+
+                    }
+                }
+
+            }
+        }
+
+
+        bool checkPngnGround(int y,int x,GridForm[] gridForms)
+        {
+            bool judFlying = false;
+
+            if (y - 1 >= 0)
+            {
+                if (fc.eachGridsTiling[y - 1, x] == TilingType.Object) judFlying = true;
+            }
+
+            if(gridForms != null)
+            {
+                foreach (GridForm form in gridForms)
+                {
+                    if ((y + form.y - 1) >= 0 && (y + form.y - 1) < 10 && (x + form.x) >= 0 && (x + form.x) < 10)
+                    {
+                        if (fc.eachGridsTiling[y + form.y - 1, x + form.x] == TilingType.Object) judFlying = true;
+                    }
+                }
+            }
+
+            //if (judFlying) Debug.Log(y + "" + x);
+
+            return judFlying;
+        }
+
+
         return;
     }
 
@@ -944,6 +1014,10 @@ public class FormationGridManager : MonoBehaviour
                             return false;
                         }*/
 
+                        //Blockが置けない
+
+                        dialogManager.ShowDialog("ブロックが宙に浮きます！");
+
                         return false;
 
                     }
@@ -1003,17 +1077,17 @@ public class FormationGridManager : MonoBehaviour
 
             //Debug.Log(y + "," + x);
 
-            /*if (eachGridsTilingTmp[y, x] == TilingType.Pngn)
+            if (eachGridsTilingTmp[y, x] == TilingType.Pngn)
             {
                 //下方向は確認する
-                if (y - 1 >= 0) checking(y - 1, x);
+                //if (y - 1 >= 0) checking(y - 1, x);
 
                 //やばいかも
-                if (y + 1 < 10) checking(y + 1, x);
-                if (x - 1 >= 0) checking(y, x - 1);
-                if (x + 1 < 10) checking(y, x + 1);
+                //if (y + 1 < 10) checking(y + 1, x);
+                //if (x - 1 >= 0) checking(y, x - 1);
+                //if (x + 1 < 10) checking(y, x + 1);
             }
-            else */if(eachGridsTilingTmp[y,x] == TilingType.Object)
+            else if(eachGridsTilingTmp[y,x] == TilingType.Object)
             {
                 if (y - 1 >= 0)
                 {

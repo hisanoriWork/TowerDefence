@@ -28,6 +28,8 @@ public class EditManager : MonoBehaviour
 
     public Sprite nullSprite;
 
+    public SelectShipWindow selectShipWindow;
+
     /*****private field*****/
     private Dictionary<UnitType, string> type = new Dictionary<UnitType, string>()
     {
@@ -249,7 +251,7 @@ public class EditManager : MonoBehaviour
         //Shipの場合
         else if (sel.selectableUnitType == UnitType.Ship)
         {
-            formationGridManager.SelectEachShip(sel.selectableUnitID);
+            selectShipWindow.ShowSelectShipWindow(sel.selectableUnitID);
         }
 
         
