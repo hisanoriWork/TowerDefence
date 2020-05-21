@@ -3108,9 +3108,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   missionItemList:
-  - {fileID: 8049948155175611830, guid: d00ecc499483d7b418cbf8b0d4fb3aa0, type: 3}
-  - {fileID: 8049948155175611830, guid: d00ecc499483d7b418cbf8b0d4fb3aa0, type: 3}
-  - {fileID: 8049948155175611830, guid: d00ecc499483d7b418cbf8b0d4fb3aa0, type: 3}
+  - {fileID: 7874486102705561403, guid: 492680b356400cc40aaabe656ba5ed4c, type: 3}
+  - {fileID: 5596053561297002102, guid: c4069bb748d78c54ea081a7b9a98e0c9, type: 3}
+  - {fileID: 8105923091699084834, guid: 5b959644bf04c8044b680450e1b1da9c, type: 3}
   missionContainer: {fileID: 3055170948077039150, guid: 454e8450bd36b2d458794ef51b18e647,
     type: 3}
 --- !u!4 &2041604519
