@@ -1,22 +1,23 @@
-﻿using System;
-using System.Collections;
+﻿using MyLibrary;
+using System;
 using System.Linq;
 using UniRx;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     /*****public field*****/
     public bool isPlaying { get; set; } = true;
     public float timeScale { get; set; } = 1.0f;
+
     /*****private field*****/
     [SerializeField] private UIManager m_option = default;
-    [SerializeField] private UIManager m_stop, m_play, m_X2Play, m_X4Play;
+    [SerializeField] private UIManager m_stop = default, m_play = default, m_X2Play = default, m_X4Play = default;
     [SerializeField] private TimeView m_timeView = default;
     [SerializeField] private InstManager m_player1 = default, m_player2 = default;
     [SerializeField] private Gauge m_player1HP = default, m_player2HP = default;
-    [SerializeField] private GameObject m_winCanvas = default, m_loseCanvas = default, m_drawCanvas = default;
+    [SerializeField] private Text m_victoryCanvas = default;
     private int[,] gird;
     /*****Mobehabiour method*****/
     void Awake()
@@ -45,21 +46,24 @@ public class GameManager : MonoBehaviour
                 m_player1HP.value = m_player1.shipHP;
             if (m_player2HP.value != m_player2.shipHP)
                 m_player2HP.value = m_player2.shipHP;
-           
+
             int victoryNum = CheckVictory(m_player1.shipHP, m_player2.shipHP, m_player1.pngnNum, m_player2.pngnNum);
-            switch (victoryNum)
+            if (victoryNum > 0)
             {
-                case 3:
-                    m_drawCanvas.SetActive(true);
-                    break;
-                case 2:
-                    m_loseCanvas.SetActive(true);
-                    break;
-                case 1:
-                    m_winCanvas.SetActive(true);
-                    break;
-                default:
-                    break;
+                switch (victoryNum)
+                {
+                    case 3:
+                        m_victoryCanvas.text = "引き分け";
+                        break;
+                    case 2:
+                        m_victoryCanvas.text = "負けた";
+                        break;
+                    case 1:
+                        m_victoryCanvas.text = "勝った";
+                        break;
+                }
+                Stop(true);
+                m_victoryCanvas.gameObject.SetActive(true);
             }
         }
     }
@@ -110,5 +114,4 @@ public class GameManager : MonoBehaviour
         return 0;
     }
 }
-/*****public class*****/
 

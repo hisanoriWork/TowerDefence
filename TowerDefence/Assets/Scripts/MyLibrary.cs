@@ -27,6 +27,15 @@ namespace MyLibrary
             yield return new WaitForSeconds(time);
             action();
         }
+
+        public static IEnumerator WaitForSecond(int delayFrameCount, Action action)
+        {
+            for (var i = 0; i < delayFrameCount; i++)
+            {
+                yield return null;
+            }
+            action();
+        }
     }
 
     public class Constant

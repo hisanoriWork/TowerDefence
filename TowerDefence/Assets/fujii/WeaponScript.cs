@@ -5,7 +5,7 @@ using UnityEngine;
 public class WeaponScript : MonoBehaviour
 {
     /*****public filed*****/
-    public bool canHit { get{return !(m_hitFlag & m_canHitAfterHit);}}
+    public bool canHit { get{return !(m_hitFlag & !m_canHitAfterHit);}}
     public UnitScript unit { get { return m_unitScript; } }
 
     public int power { get { return m_power; } }
