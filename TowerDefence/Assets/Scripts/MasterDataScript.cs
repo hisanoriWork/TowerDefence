@@ -15,7 +15,6 @@ public class MasterDataScript : MonoBehaviour
         {
             if (data.ID == unitID) return data;
         }
-        Debug.Log("IDが" + unitID + "であるPngnは存在しません");
         return null;
     }
 
@@ -25,7 +24,6 @@ public class MasterDataScript : MonoBehaviour
         {
             if (data.name == unitName) return data;
         }
-        Debug.Log("名前が" + unitName + "であるPngnは存在しません");
         return null;
     }
 
@@ -35,7 +33,6 @@ public class MasterDataScript : MonoBehaviour
         {
             if (data.ID == unitID) return data;
         }
-        Debug.Log("IDが" + unitID + "であるPngnは存在しません");
         return null;
     }
 
@@ -45,7 +42,6 @@ public class MasterDataScript : MonoBehaviour
         {
             if (data.name == unitName) return data;
         }
-        Debug.Log("名前が" + unitName + "であるPngnは存在しません");
         return null;
     }
 
@@ -56,7 +52,6 @@ public class MasterDataScript : MonoBehaviour
         {
             if (data.ID == unitID) return data;
         }
-        Debug.Log("IDが" + unitID + "であるPngnは存在しません");
         return null;
     }
 
@@ -66,7 +61,6 @@ public class MasterDataScript : MonoBehaviour
         {
             if (data.name == unitName) return data;
         }
-        Debug.Log("名前が" + unitName + "であるPngnは存在しません");
         return null;
     }
 
@@ -77,7 +71,6 @@ public class MasterDataScript : MonoBehaviour
         {
             if (shipData.unitData.ID == unitID) return shipData;
         }
-        Debug.Log("IDが" + unitID + "であるShipは存在しません");
         return null;
     }
 
@@ -87,7 +80,6 @@ public class MasterDataScript : MonoBehaviour
         {
             if (shipData.unitData.name == unitName) return shipData;
         }
-        Debug.Log("名前が" + unitName + "であるPngnは存在しません");
         return null;
     }
 }

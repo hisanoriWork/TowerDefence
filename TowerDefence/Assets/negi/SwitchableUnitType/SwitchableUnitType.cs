@@ -13,7 +13,6 @@ public class SwitchableUnitType : MonoBehaviour
     {
         m_defaultColors = m_buttons[0].colors;
         ChangeButtonColor(m_buttons[0]);
-            
     }
 
 
