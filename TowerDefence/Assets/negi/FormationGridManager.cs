@@ -496,7 +496,8 @@ public class FormationGridManager : MonoBehaviour
 
         t.sizeDelta = new Vector2(width, height);
 
-        img.transform.position = (Vector2)img.transform.position + selectableUnitOffset;
+        img.transform.position = (Vector2)img.transform.position + selectableUnitOffset * editParam.canvasScale;
+        //img.rectTransform.position = (Vector2)img.rectTransform.position - selectableUnitOffset * imgSize;
 
         return;
     }
@@ -514,7 +515,8 @@ public class FormationGridManager : MonoBehaviour
 
         t.sizeDelta = new Vector2(width, height);
 
-        img.transform.position = (Vector2)img.transform.position - selectableUnitOffset;
+        img.transform.position = (Vector2)img.transform.position - selectableUnitOffset * editParam.canvasScale;
+        //img.rectTransform.position = (Vector2)img.rectTransform.position - selectableUnitOffset * imgSize;
 
         return;
     }

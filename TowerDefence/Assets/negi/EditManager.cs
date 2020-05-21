@@ -322,7 +322,8 @@ public class EditManager : MonoBehaviour
 
                     t.sizeDelta = new Vector2(width, height);
 
-                    attachingUnitImage.transform.position = (Vector2)attachingUnitImage.transform.position - att.selectableUnitOffset;
+                    attachingUnitImage.transform.position = (Vector2)attachingUnitImage.transform.position - att.selectableUnitOffset * editParam.canvasScale;
+                    //attachingUnitImage.rectTransform.position = (Vector2)attachingUnitImage.rectTransform.position - att.selectableUnitOffset * editParam.attachingUnitImgSize;
 
                     movingUnitObject.transform.position = (Vector2)Input.mousePosition + att.selectableUnitOffset;
 
