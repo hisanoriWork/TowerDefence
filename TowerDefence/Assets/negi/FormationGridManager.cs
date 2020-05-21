@@ -403,7 +403,7 @@ public class FormationGridManager : MonoBehaviour
 
 
     //編成データ読み書き用
-    PrefsManager prefs = new PrefsManager();
+    PlayerManager prefs = new PlayerManager();
     //データ
     private Formation formation = new Formation();//マス目部分int[] gridinfo = new int[10,10] ,船部分 int shiptype;
 
