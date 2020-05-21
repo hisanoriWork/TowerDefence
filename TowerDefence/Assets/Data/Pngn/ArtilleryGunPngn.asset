@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98b403c1afce91a4287803f7fab651aa, type: 3}
   m_Name: ArtilleryGunPngn
   m_EditorClassIdentifier: 
-  name: ArtilleryGunPngn
-  ID: 15
-  power: 10
-  HP: 100
-  CT: 15
-  cost: 10
+  name: 12.7cmA
+  ID: 17
+  power: 5
+  HP: 300
+  CT: 10
+  cost: 200
   prefab: {fileID: 1261801581952225174, guid: 25bd3f8531338404db4ad41614023737, type: 3}
   unitType: 0
-  sprite: {fileID: 21300000, guid: b4a1fdd4fc63c7f44b1336c672a72654, type: 3}
+  sprite: {fileID: 21300000, guid: 37ef701cf295e8e499fd987ff114a092, type: 3}
   pngnCanGetOn: 0
   blockCanGetOn: 0
   indestructible: 0

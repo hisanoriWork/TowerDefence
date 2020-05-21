@@ -6,7 +6,7 @@ using System;
 public class UIManager : MonoBehaviour
 {
     /*****public field*****/
-    public GameObject OptionCanvas;
+    public GameObject canvas;
     public IObservable<Unit> whenDisplayed { get { return displaySubject; } }
     public IObservable<Unit> whenHidden { get { return hideSubject; } }
     /*****protected field*****/
@@ -15,13 +15,13 @@ public class UIManager : MonoBehaviour
 
     public void Display()
     {
-        OptionCanvas.SetActive(true);
+        canvas.SetActive(true);
         displaySubject.OnNext(Unit.Default);
     }
 
     public void Hide()
     {
-        OptionCanvas.SetActive(false);
+        canvas.SetActive(false);
         hideSubject.OnNext(Unit.Default);
     }
 }

@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98b403c1afce91a4287803f7fab651aa, type: 3}
   m_Name: PistolPngnData
   m_EditorClassIdentifier: 
-  name: PistolPngn
-  ID: 11
+  name: "\u30E9\u30C3\u30D1\u9283"
+  ID: 12
   power: 10
   HP: 100
-  CT: 5
-  cost: 10
+  CT: 3
+  cost: 20
   prefab: {fileID: 3092829003171429575, guid: 81a7b5b186bd1de478318a1bea2abe8e, type: 3}
   unitType: 0
   sprite: {fileID: 21300000, guid: 8de3e09c954164042a267d4ad81e74ea, type: 3}

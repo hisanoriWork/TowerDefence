@@ -23,7 +23,7 @@ public class BombObject : PoolObject<BombPool, BombObject, Vector3>
     {
         transform = instance.transform;
         script = instance.GetComponent<BombScript>();
-        script.onDespawned.Subscribe(_ => ReturnToPool());
+        script.baseWeapon.onDespawned.Subscribe(_ => ReturnToPool());
     }
 
     public override void WakeUp(Vector3 pos)

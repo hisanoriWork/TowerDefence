@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98b403c1afce91a4287803f7fab651aa, type: 3}
   m_Name: BlockData
   m_EditorClassIdentifier: 
-  name: Block
+  name: "\u6728\u306E\u30D6\u30ED\u30C3\u30AF"
   ID: 100
   power: 0
-  HP: 100
+  HP: 50
   CT: 101
   cost: 10
   prefab: {fileID: 5476036888444427127, guid: 1717022658035414f80042bf0663739c, type: 3}

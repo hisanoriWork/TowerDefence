@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98b403c1afce91a4287803f7fab651aa, type: 3}
   m_Name: ArcherPngnData
   m_EditorClassIdentifier: 
-  name: ArcherPngnData
-  ID: 16
+  name: "\u30A2\u30FC\u30C1\u30E3\u30FC"
+  ID: 11
   power: 5
-  HP: 81
-  CT: 10
+  HP: 100
+  CT: 6
   cost: 10
   prefab: {fileID: 8721749235883527789, guid: e7308dbba5433264790408c5431dec75, type: 3}
   unitType: 0

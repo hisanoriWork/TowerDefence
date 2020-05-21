@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98b403c1afce91a4287803f7fab651aa, type: 3}
   m_Name: PirateShipDataAlpha
   m_EditorClassIdentifier: 
-  name: PirateShip
+  name: "\u6D77\u8CCA\u8239"
   ID: 10010
   power: 10
-  HP: 922
+  HP: 400
   CT: 101
-  cost: 10
+  cost: 800
   prefab: {fileID: 7151728711608997689, guid: c8b0f23dbe91bee418e3626d18e7d57e, type: 3}
   unitType: 1
   sprite: {fileID: 21300000, guid: fa41641c2e6eaa94a88af63e96f05708, type: 3}
@@ -55,6 +55,8 @@ MonoBehaviour:
     x: 3
   - y: 1
     x: 4
+  - y: 2
+    x: 0
   - y: 2
     x: 1
   - y: 2

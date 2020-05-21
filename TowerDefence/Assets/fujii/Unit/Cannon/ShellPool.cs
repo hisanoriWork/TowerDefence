@@ -26,7 +26,7 @@ public class ShellObject :PoolObject<ShellPool,ShellObject,Vector3>
     {
         transform = instance.transform;
         script = instance.GetComponent<ShellScript>();
-        script.onDespawned.Subscribe(_ => ReturnToPool());
+        script.baseWeapon.onDespawned.Subscribe(_ => ReturnToPool());
     }
 
     public override void WakeUp(Vector3 pos)
