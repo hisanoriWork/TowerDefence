@@ -88,7 +88,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 4729005013615957856, guid: db1275c032b2b894b8e39cccb8da485b, type: 3}
-  initialPoolCount: 5
+  initialPoolCount: 4
   unitScript: {fileID: 3721642698938581703}
 --- !u!1001 &1115453734044419638
 PrefabInstance:
@@ -171,7 +171,7 @@ PrefabInstance:
     - target: {fileID: 4386238940931212529, guid: b38e3d62b2ed1cc4e966418e11eda93b,
         type: 3}
       propertyPath: attackEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4386238940931212529, guid: b38e3d62b2ed1cc4e966418e11eda93b,
         type: 3}
@@ -219,6 +219,11 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: -1
       objectReference: {fileID: 0}
+    - target: {fileID: 6635415149230036256, guid: b38e3d62b2ed1cc4e966418e11eda93b,
+        type: 3}
+      propertyPath: baseUnit
+      value: 
+      objectReference: {fileID: 3721642698938581703}
     - target: {fileID: 6951267722053183930, guid: b38e3d62b2ed1cc4e966418e11eda93b,
         type: 3}
       propertyPath: m_Sprite

@@ -41,10 +41,6 @@ public class PngnScript : MonoBehaviour
                 m_groundUnit = unit;
                 unit.deadEvent.AddListener(() => { baseUnit.Dead(); });
             }
-            else
-            {
-                Debug.Log("はっ？キレそう");
-            }
         }
     }
     /*****protected method*****/

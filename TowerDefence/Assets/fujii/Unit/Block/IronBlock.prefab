@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 1307384898107178810}
   - component: {fileID: 495905300934545194}
   - component: {fileID: 2482467757720556679}
-  - component: {fileID: 3602788899914790503}
   m_Layer: 9
   m_Name: IronBlock
   m_TagString: Block
@@ -111,19 +110,6 @@ SortingGroup:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &3602788899914790503
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2283271104510832938}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05fd73de5cdeacf43a3517bf5a3f914c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  baseUnit: {fileID: 495905300934545194}
 --- !u!1 &4426606792405934692
 GameObject:
   m_ObjectHideFlags: 0
