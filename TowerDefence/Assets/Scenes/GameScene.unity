@@ -2156,6 +2156,10 @@ PrefabInstance:
       propertyPath: canvas
       value: 
       objectReference: {fileID: 5083751136004422432}
+    - target: {fileID: 1647786412, guid: a6f3f15d3bebca0479c9e68e91688e97, type: 3}
+      propertyPath: time
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 1647786413, guid: a6f3f15d3bebca0479c9e68e91688e97, type: 3}
       propertyPath: timeText
       value: 
