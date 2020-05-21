@@ -53,7 +53,7 @@ public class FormationForJson
 }
 
 
-public class PrefsManager
+public class PlayerManager
 { 
     Formation formation = new Formation();
     FormationForJson formationForJson = new FormationForJson();

@@ -45,5 +45,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stageNum: 1
   preViewSprite: {fileID: 21300000, guid: 32eeb2d49e625b6438fc9d92d4b38779, type: 3}
-  detailContent: "\u30B9\u30C6\u30FC\u30B81\u3067\u3059\u3001\u7720\u3044\u3067\u3059\u306D."
+  detailContent: "\u30B9\u30C6\u30FC\u30B81\u3067\u3059\u3001"
   difficulty: 1

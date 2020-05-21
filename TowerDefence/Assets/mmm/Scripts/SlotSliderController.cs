@@ -12,13 +12,14 @@ public class SlotSliderController : MonoBehaviour
 
     void Start()
     {
-        // TODO: ownFormationNumの値を繁栄させる
+        ownFormationNum = int.Parse(PlayerPrefs.GetString("ownFormationNum", "1"));
         slotSlider.value = ownFormationNum;
     }
 
     public void OnValueChanged()
     {
         ownFormationNum = (int)slotSlider.value;
+        PlayerPrefs.SetString("ownFormationNum", ownFormationNum.ToString());
         slotText.text = "編成 " + ownFormationNum;
     }
 }
