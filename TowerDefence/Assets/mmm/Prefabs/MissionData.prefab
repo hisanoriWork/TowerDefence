@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7299018787800512940
+--- !u!1 &4759237942963547495
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7299018787800512938}
-  - component: {fileID: 7299018787800512939}
+  - component: {fileID: 4567042495396261048}
+  - component: {fileID: 8049948155175611830}
   m_Layer: 0
-  m_Name: StageDataObject 1
+  m_Name: MissionData
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7299018787800512938
+--- !u!4 &4567042495396261048
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7299018787800512940}
+  m_GameObject: {fileID: 4759237942963547495}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -31,19 +31,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7299018787800512939
+--- !u!114 &8049948155175611830
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7299018787800512940}
+  m_GameObject: {fileID: 4759237942963547495}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e352ec3dce030b48b4bee91b1402d7c, type: 3}
+  m_Script: {fileID: 11500000, guid: ba14e60c2150a3d4e804ba0a711ce87c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   stageNum: 1
-  preViewSprite: {fileID: 21300000, guid: 32eeb2d49e625b6438fc9d92d4b38779, type: 3}
-  detailContent: "\u30B9\u30C6\u30FC\u30B81\u3067\u3059\u3001\u7720\u3044\u3067\u3059\u306D."
-  difficulty: 1
+  stageIcon: {fileID: 21300000, guid: 8de3e09c954164042a267d4ad81e74ea, type: 3}
+  title: "\u30B9\u30C6\u30FC\u30B8"
