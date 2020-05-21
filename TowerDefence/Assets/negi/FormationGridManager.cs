@@ -566,6 +566,22 @@ public class FormationGridManager : MonoBehaviour
         prefs.SetFormation(formation.gridinfo, formation.shiptype, editParam.ownFormationNum);
     }
 
+    public void UpdateFormation()
+    {
+        for (int y = 0; y < 10; y++)
+        {
+            for (int x = 0; x < 10; x++)
+            {
+                fc.formation.gridinfo[y, x] = fc.eachGrids[y, x].sel.selectableUnitID;
+
+            }
+        }
+
+        fc.formation.shiptype = fc.shipEachGrid.sel.selectableUnitID;
+
+
+    }
+
     public void InstanceGridInfo()
     {
         int[] attachingPosition = new int[2];
@@ -837,6 +853,8 @@ public class FormationGridManager : MonoBehaviour
             }
 
         }
+
+        UpdateFormation();
 
         //Regenerate();
 
