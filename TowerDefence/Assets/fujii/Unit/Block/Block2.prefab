@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &4928225962389329241
+--- !u!1001 &8615134605494002618
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -11,8 +11,28 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: b8c7b4a283fb620489599e1c60508ddf,
+      objectReference: {fileID: 21300000, guid: e70e8c7ccf51fa84f812caf7d4da3c66,
         type: 3}
+    - target: {fileID: 3023749949131376922, guid: 1717022658035414f80042bf0663739c,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 1.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3023749949131376922, guid: 1717022658035414f80042bf0663739c,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 2.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3023749949131376922, guid: 1717022658035414f80042bf0663739c,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 1.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3023749949131376922, guid: 1717022658035414f80042bf0663739c,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 2.4
+      objectReference: {fileID: 0}
     - target: {fileID: 5476036888444427121, guid: 1717022658035414f80042bf0663739c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -71,13 +91,13 @@ PrefabInstance:
     - target: {fileID: 5476036888444427127, guid: 1717022658035414f80042bf0663739c,
         type: 3}
       propertyPath: m_Name
-      value: IronBlock
+      value: Block2
       objectReference: {fileID: 0}
     - target: {fileID: 5958485851042063735, guid: 1717022658035414f80042bf0663739c,
         type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 11400000, guid: 72934480c38cc194bba977a0e0795d76,
+      objectReference: {fileID: 11400000, guid: acc3aebba0c172c47b5eb17346c51386,
         type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1717022658035414f80042bf0663739c, type: 3}

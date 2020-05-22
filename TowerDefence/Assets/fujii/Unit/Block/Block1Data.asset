@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 98b403c1afce91a4287803f7fab651aa, type: 3}
-  m_Name: IronBlockData
+  m_Name: Block1Data
   m_EditorClassIdentifier: 
-  name: "\u9244\u306E\u30D6\u30ED\u30C3\u30AF"
-  ID: 110
-  power: 0
+  name: 
+  ID: 130
+  power: 10
   HP: 100
-  CT: 101
-  cost: 20
-  prefab: {fileID: 1124309942392098350, guid: a31f02f9efb89a0479fa82f395bea5c7, type: 3}
+  CT: 5
+  cost: 10
+  prefab: {fileID: 3500257629876424437, guid: 73a88dfb700b48b468a935c361c692f0, type: 3}
   unitType: 2
-  sprite: {fileID: 21300000, guid: b8c7b4a283fb620489599e1c60508ddf, type: 3}
-  pngnCanGetOn: 0
-  blockCanGetOn: 0
+  sprite: {fileID: 21300000, guid: 6973f375d7c8a1e4db91ee1142cd7d67, type: 3}
+  pngnCanGetOn: 1
+  blockCanGetOn: 1
   indestructible: 0
   form: []
-  offset: {x: 0, y: 0, z: 0}
+  offset: {x: 1.2, y: 0.4, z: 0}
