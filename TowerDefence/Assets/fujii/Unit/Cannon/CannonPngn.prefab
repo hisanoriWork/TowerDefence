@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 8367861753450576244, guid: 8829fbf969d04ab4d83f9eb1d5bb0e0b, type: 3}
-  initialPoolCount: 5
+  initialPoolCount: 3
   unitScript: {fileID: 1626754708305547018}
 --- !u!114 &940649996246917703
 MonoBehaviour:
@@ -228,6 +228,11 @@ PrefabInstance:
       propertyPath: m_Offset.y
       value: 0.005453825
       objectReference: {fileID: 0}
+    - target: {fileID: 6635415149230036256, guid: b38e3d62b2ed1cc4e966418e11eda93b,
+        type: 3}
+      propertyPath: baseUnit
+      value: 
+      objectReference: {fileID: 1626754708305547018}
     - target: {fileID: 6951267722053183930, guid: b38e3d62b2ed1cc4e966418e11eda93b,
         type: 3}
       propertyPath: m_Sprite

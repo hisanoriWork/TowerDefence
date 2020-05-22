@@ -74,7 +74,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 8411262578367315728, guid: ee25f6df97c05cf44905fbe0f9063809, type: 3}
-  initialPoolCount: 5
+  initialPoolCount: 2
   unitScript: {fileID: 5977077154985308388}
   throwPos: {fileID: 946440520565315351}
 --- !u!114 &105664769558880605
@@ -204,6 +204,11 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6635415149230036256, guid: b38e3d62b2ed1cc4e966418e11eda93b,
+        type: 3}
+      propertyPath: baseUnit
+      value: 
+      objectReference: {fileID: 5977077154985308388}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b38e3d62b2ed1cc4e966418e11eda93b, type: 3}
 --- !u!1 &5457476299941973732 stripped

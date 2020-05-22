@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 4054720125546378506, guid: 89b69af4fd26b054a9e0c99d8ea47864, type: 3}
-  initialPoolCount: 10
+  initialPoolCount: 5
   unitScript: {fileID: 6937761686278942829}
 --- !u!1 &3491946769806139645
 GameObject:
@@ -198,6 +198,11 @@ PrefabInstance:
       propertyPath: attackEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 6635415149230036256, guid: b38e3d62b2ed1cc4e966418e11eda93b,
+        type: 3}
+      propertyPath: baseUnit
+      value: 
+      objectReference: {fileID: 6937761686278942829}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b38e3d62b2ed1cc4e966418e11eda93b, type: 3}
 --- !u!1 &8721749235883527789 stripped

@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5bdb6730d56e2e4e8c18e265212b7a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseUnit: {fileID: 4386238940931212529}
+  baseUnit: {fileID: 0}
 --- !u!1001 &8182554569676877107
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -153,7 +153,7 @@ PrefabInstance:
     - target: {fileID: 5571316767179286978, guid: 23110c9c5b0d3fc47b3d55ef1fa2f821,
         type: 3}
       propertyPath: hurtEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5571316767179286978, guid: 23110c9c5b0d3fc47b3d55ef1fa2f821,
         type: 3}
@@ -163,11 +163,6 @@ PrefabInstance:
     - target: {fileID: 5571316767179286978, guid: 23110c9c5b0d3fc47b3d55ef1fa2f821,
         type: 3}
       propertyPath: attackEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5571316767179286978, guid: 23110c9c5b0d3fc47b3d55ef1fa2f821,
-        type: 3}
-      propertyPath: attackEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5571316767179286978, guid: 23110c9c5b0d3fc47b3d55ef1fa2f821,
@@ -178,22 +173,22 @@ PrefabInstance:
     - target: {fileID: 5571316767179286978, guid: 23110c9c5b0d3fc47b3d55ef1fa2f821,
         type: 3}
       propertyPath: hurtEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5571316767179286978, guid: 23110c9c5b0d3fc47b3d55ef1fa2f821,
         type: 3}
       propertyPath: hurtEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5571316767179286978, guid: 23110c9c5b0d3fc47b3d55ef1fa2f821,
         type: 3}
       propertyPath: hurtEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 6635415149230036256}
     - target: {fileID: 5571316767179286978, guid: 23110c9c5b0d3fc47b3d55ef1fa2f821,
         type: 3}
       propertyPath: hurtEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Hurt
+      value: HurtVoice
       objectReference: {fileID: 0}
     - target: {fileID: 5571316767179286978, guid: 23110c9c5b0d3fc47b3d55ef1fa2f821,
         type: 3}
@@ -203,7 +198,7 @@ PrefabInstance:
     - target: {fileID: 5571316767179286978, guid: 23110c9c5b0d3fc47b3d55ef1fa2f821,
         type: 3}
       propertyPath: attackEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: 
+      value: AttackVoice
       objectReference: {fileID: 0}
     - target: {fileID: 5571316767179286978, guid: 23110c9c5b0d3fc47b3d55ef1fa2f821,
         type: 3}
@@ -241,6 +236,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 24568d864d6a237459064b7b0dbff184,
         type: 2}
+    - target: {fileID: 5571316767179286978, guid: 23110c9c5b0d3fc47b3d55ef1fa2f821,
+        type: 3}
+      propertyPath: attackEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6061645891025098690, guid: 23110c9c5b0d3fc47b3d55ef1fa2f821,
         type: 3}
       propertyPath: m_Name
@@ -340,15 +340,3 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 8182554569676877107}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4386238940931212529 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5571316767179286978, guid: 23110c9c5b0d3fc47b3d55ef1fa2f821,
-    type: 3}
-  m_PrefabInstance: {fileID: 8182554569676877107}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2706958961471863537}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ca24c74ef8561a4c9ccc8f1a1037adf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

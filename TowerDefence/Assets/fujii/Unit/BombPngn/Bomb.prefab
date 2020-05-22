@@ -244,26 +244,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6734944067598620871, guid: 498f0c3c0f4b1104f825eb49b5f7174e,
-        type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8272799832833540740, guid: 498f0c3c0f4b1104f825eb49b5f7174e,
-        type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8272799832833540740, guid: 498f0c3c0f4b1104f825eb49b5f7174e,
-        type: 3}
-      propertyPath: m_Color.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8272799832833540740, guid: 498f0c3c0f4b1104f825eb49b5f7174e,
-        type: 3}
-      propertyPath: m_Color.b
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 9084060438738693789, guid: 498f0c3c0f4b1104f825eb49b5f7174e,
         type: 3}
       propertyPath: m_Name
@@ -273,16 +253,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9084060438738693789, guid: 498f0c3c0f4b1104f825eb49b5f7174e,
-        type: 3}
-      propertyPath: m_TagString
-      value: Weapon
-      objectReference: {fileID: 0}
-    - target: {fileID: 9084060438738693789, guid: 498f0c3c0f4b1104f825eb49b5f7174e,
-        type: 3}
-      propertyPath: m_Layer
-      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 498f0c3c0f4b1104f825eb49b5f7174e, type: 3}

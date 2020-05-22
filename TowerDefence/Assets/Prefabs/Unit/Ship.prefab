@@ -1,5 +1,18 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &3211361375395406313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2175080275073575139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06f207b4a2cbf7442bf778f187ea33d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 0}
 --- !u!1 &5232469947371762965
 GameObject:
   m_ObjectHideFlags: 0
@@ -130,19 +143,6 @@ PolygonCollider2D:
       - {x: 2.075, y: -2.8899999}
       - {x: 2.4099998, y: -2.5349998}
       - {x: 2.875, y: -2.1699998}
---- !u!114 &3211361375395406313
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2175080275073575139}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06f207b4a2cbf7442bf778f187ea33d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: 62009e7e75fca39479f4dd9a94f62fc9, type: 2}
 --- !u!1001 &5345813637614927649
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -200,7 +200,8 @@ PrefabInstance:
         type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 11400000, guid: 33c42c2dbad16cc4ea00d8f352fe7a09,
+        type: 2}
     - target: {fileID: 6061645891025098690, guid: 23110c9c5b0d3fc47b3d55ef1fa2f821,
         type: 3}
       propertyPath: m_Name

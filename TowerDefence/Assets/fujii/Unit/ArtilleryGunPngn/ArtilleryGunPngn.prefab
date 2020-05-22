@@ -90,7 +90,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 2265023379348484392, guid: 1b6f549e8eae5a740942de4f95a726b7, type: 3}
-  initialPoolCount: 20
+  initialPoolCount: 10
   unitScript: {fileID: 634110470314144150}
 --- !u!1001 &3752585971650983271
 PrefabInstance:
@@ -220,6 +220,11 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 0.7116526
       objectReference: {fileID: 0}
+    - target: {fileID: 6635415149230036256, guid: b38e3d62b2ed1cc4e966418e11eda93b,
+        type: 3}
+      propertyPath: baseUnit
+      value: 
+      objectReference: {fileID: 634110470314144150}
     - target: {fileID: 6951267722053183930, guid: b38e3d62b2ed1cc4e966418e11eda93b,
         type: 3}
       propertyPath: m_Sprite

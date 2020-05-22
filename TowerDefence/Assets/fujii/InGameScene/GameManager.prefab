@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1234079520}
   - component: {fileID: 1234079519}
   - component: {fileID: 1234079521}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Player1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1273697098}
   - component: {fileID: 1273697099}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: OptionManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -114,7 +114,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1378282329}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: PlayUIManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -150,7 +150,7 @@ GameObject:
   - component: {fileID: 1647786411}
   - component: {fileID: 1647786412}
   - component: {fileID: 1647786413}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: TimeManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -183,7 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b30bea9cce044048b8b92699399d0bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 100
+  time: 0
 --- !u!114 &1647786413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -209,7 +209,7 @@ GameObject:
   - component: {fileID: 1757432502}
   - component: {fileID: 1757432503}
   - component: {fileID: 1757432504}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Player2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -269,7 +269,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5692649135091431540}
   - component: {fileID: 842960489126133878}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Play
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -313,7 +313,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6004240893944757611}
   - component: {fileID: 9007063644747197921}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: X2Play
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -357,7 +357,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1868259447504237258}
   - component: {fileID: 4831081717652252424}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Player1HPGauge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -401,7 +401,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8721687954740891865}
   - component: {fileID: 3963381642310628336}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: X4Play
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -445,7 +445,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1998759668299861672}
   - component: {fileID: 352801787441289027}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -486,18 +486,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_option: {fileID: 1273697099}
-  m_stop: {fileID: 0}
-  m_play: {fileID: 0}
-  m_X2Play: {fileID: 0}
-  m_X4Play: {fileID: 0}
+  m_stop: {fileID: 1758782159942187965}
+  m_play: {fileID: 842960489126133878}
+  m_X2Play: {fileID: 9007063644747197921}
+  m_X4Play: {fileID: 3963381642310628336}
   m_timeView: {fileID: 1647786413}
   m_player1: {fileID: 1234079519}
   m_player2: {fileID: 1757432503}
   m_player1HP: {fileID: 4831081717652252424}
   m_player2HP: {fileID: 140803167797734449}
-  m_winCanvas: {fileID: 0}
-  m_loseCanvas: {fileID: 0}
-  m_drawCanvas: {fileID: 0}
+  m_victoryCanvas: {fileID: 0}
 --- !u!1 &5637021755080492728
 GameObject:
   m_ObjectHideFlags: 0
@@ -508,7 +506,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4218969473253794804}
   - component: {fileID: 1758782159942187965}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Stop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -552,7 +550,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7423298070415156171}
   - component: {fileID: 140803167797734449}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Player2HPGauge
   m_TagString: Untagged
   m_Icon: {fileID: 0}

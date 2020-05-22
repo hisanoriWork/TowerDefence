@@ -39,14 +39,13 @@ public class PngnScript : MonoBehaviour
             if (unit != null)
             {
                 m_groundUnit = unit;
-                unit.deadEvent.AddListener(() => { baseUnit.Dead(); });
-            }
-            else
-            {
-                Debug.Log("はっ？キレそう");
+                unit.deadEvent.AddListener(() => { baseUnit.Dead();});
             }
         }
     }
-    /*****protected method*****/
-    
+    /*****public method*****/
+    public void HurtVoice()
+    {
+        SEManager.instance.Play("ダメージ");
+    }
 }

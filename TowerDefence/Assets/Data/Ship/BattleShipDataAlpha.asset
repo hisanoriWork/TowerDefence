@@ -26,8 +26,6 @@ MonoBehaviour:
   indestructible: 0
   form:
   - y: 0
-    x: 1
-  - y: 0
     x: 2
   - y: 0
     x: 3
@@ -43,10 +41,6 @@ MonoBehaviour:
     x: 8
   - y: 0
     x: 9
-  - y: 1
-    x: 0
-  - y: 1
-    x: 1
   - y: 1
     x: 2
   - y: 1
@@ -64,10 +58,6 @@ MonoBehaviour:
   - y: 1
     x: 9
   - y: 2
-    x: 0
-  - y: 2
-    x: 1
-  - y: 2
     x: 2
   - y: 2
     x: 3
@@ -77,6 +67,13 @@ MonoBehaviour:
     x: 5
   - y: 2
     x: 6
+  emptyForm:
+  - y: 0
+    x: 0
+  - y: 1
+    x: 0
+  - y: 2
+    x: 0
   - y: 3
     x: 0
   - y: 4
@@ -91,4 +88,24 @@ MonoBehaviour:
     x: 0
   - y: 9
     x: 0
-  offset: {x: 0.2, y: -0.81, z: 0}
+  - y: 0
+    x: 1
+  - y: 1
+    x: 1
+  - y: 2
+    x: 1
+  - y: 3
+    x: 1
+  - y: 4
+    x: 1
+  - y: 5
+    x: 1
+  - y: 6
+    x: 1
+  - y: 7
+    x: 1
+  - y: 8
+    x: 1
+  - y: 9
+    x: 1
+  offset: {x: 0.71, y: -0.81, z: 0}
