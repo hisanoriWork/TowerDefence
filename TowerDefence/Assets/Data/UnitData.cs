@@ -28,6 +28,7 @@ public class UnitData : ScriptableObject
     public bool indestructible = false; //破壊不能オブジェクトかどうか
     [SerializeField]
     public GridForm[] form;
+    public GridForm[] emptyForm;
     public Vector3 offset;
 }
 

@@ -13,4 +13,5 @@ public class aStageData : ScriptableObject
     [Tooltip("詳細")] [TextArea] public string detailContent;
     [Tooltip("難易度")] public int difficulty = 1;
     [Tooltip("編成情報")][SmartArray] public int[] gridInfo;
+    [Tooltip("編成の舟のID")] public int shipType;
 }
