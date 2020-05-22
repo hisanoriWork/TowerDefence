@@ -1,19 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &5371479729257386518
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3092829003171429575}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76700b6357f7e1e4aaad640cf0e49511, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pool: {fileID: 713518668448589454}
-  attackTransform: {fileID: 2795997430453579735}
 --- !u!1 &1917035194768546252
 GameObject:
   m_ObjectHideFlags: 0
@@ -44,6 +30,20 @@ Transform:
   m_Father: {fileID: 3092829003171429569}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5371479729257386518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3092829003171429575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76700b6357f7e1e4aaad640cf0e49511, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pool: {fileID: 713518668448589454}
+  attackTransform: {fileID: 2795997430453579735}
 --- !u!1 &4556802649611551275
 GameObject:
   m_ObjectHideFlags: 0
@@ -180,6 +180,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4386238940931212529, guid: b38e3d62b2ed1cc4e966418e11eda93b,
         type: 3}
+      propertyPath: hurtEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4386238940931212529, guid: b38e3d62b2ed1cc4e966418e11eda93b,
+        type: 3}
       propertyPath: data
       value: 
       objectReference: {fileID: 11400000, guid: bf80bb9061442604eb26d30659a6945e,
@@ -207,6 +212,31 @@ PrefabInstance:
     - target: {fileID: 4386238940931212529, guid: b38e3d62b2ed1cc4e966418e11eda93b,
         type: 3}
       propertyPath: attackEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4386238940931212529, guid: b38e3d62b2ed1cc4e966418e11eda93b,
+        type: 3}
+      propertyPath: hurtEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4386238940931212529, guid: b38e3d62b2ed1cc4e966418e11eda93b,
+        type: 3}
+      propertyPath: hurtEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4386238940931212529, guid: b38e3d62b2ed1cc4e966418e11eda93b,
+        type: 3}
+      propertyPath: hurtEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 6012122634744222486}
+    - target: {fileID: 4386238940931212529, guid: b38e3d62b2ed1cc4e966418e11eda93b,
+        type: 3}
+      propertyPath: hurtEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: AttackVoice
+      objectReference: {fileID: 0}
+    - target: {fileID: 4386238940931212529, guid: b38e3d62b2ed1cc4e966418e11eda93b,
+        type: 3}
+      propertyPath: hurtEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4995037995604748823, guid: b38e3d62b2ed1cc4e966418e11eda93b,
@@ -284,5 +314,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3ca24c74ef8561a4c9ccc8f1a1037adf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6012122634744222486 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6635415149230036256, guid: b38e3d62b2ed1cc4e966418e11eda93b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1115453734044419638}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3092829003171429575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5bdb6730d56e2e4e8c18e265212b7a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

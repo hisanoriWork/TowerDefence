@@ -48,12 +48,14 @@ public class BGMManager : MonoBehaviour
     }
     public void Play(AudioClip clip)
     {
-        m_audioSource.PlayOneShot(clip);
+        if (clip)
+            m_audioSource.PlayOneShot(clip);
     }
 
     public void Play(string clipName)
     {
-        m_audioSource.PlayOneShot(m_clipDictionary[clipName]);
+        if (m_clipDictionary.ContainsKey(clipName) && m_clipDictionary[clipName])
+            m_audioSource.PlayOneShot(m_clipDictionary[clipName]);
     }
 
     public void Mute()

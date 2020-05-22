@@ -27,7 +27,7 @@ public class SEManager : MonoBehaviour
     /**********/
     [SerializeField] protected AudioSource m_audioSource;
     [SerializeField] protected List<AudioClipInfo> m_clipList;
-    protected Dictionary<string, AudioClip> m_clipDictionary;
+    protected Dictionary<string, AudioClip> m_clipDictionary = new Dictionary<string,AudioClip>();
     void Awake()
     {
         if (instance != this)
@@ -37,30 +37,34 @@ public class SEManager : MonoBehaviour
         }
         DontDestroyOnLoad(gameObject);
 
-        //foreach (var i in m_clipList)
-        //    m_clipDictionary[i.name] = i.clip;
-        //m_clipList.Clear();
+        foreach (var i in m_clipList)
+            m_clipDictionary[i.name] = i.clip;
+        m_clipList.Clear();
 
     }
+    //音量(0から1)をセットする
     public void SetVolume(float value)
     {
         m_audioSource.volume = value;
-    }
+    } 
+    //オーディオクリップから再生
     public void Play(AudioClip clip)
     {
-        m_audioSource.PlayOneShot(clip);
+        if(clip)
+            m_audioSource.PlayOneShot(clip);
     }
-
+    //オーディオクリップの名前から再生
     public void Play(string clipName)
     {
-        m_audioSource.PlayOneShot(m_clipDictionary[clipName]);
+        if (m_clipDictionary.ContainsKey(clipName) && m_clipDictionary[clipName])
+            m_audioSource.PlayOneShot(m_clipDictionary[clipName]);
     }
-
+    //ミュート
     public void Mute()
     {
         m_audioSource.mute = true;
     }
-
+    //ミュート解除
     public void UnMute()
     {
         m_audioSource.mute = false;
