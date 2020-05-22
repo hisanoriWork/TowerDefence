@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AudioManager : MonoBehaviour
+public class SEManager : MonoBehaviour
 {
     [System.Serializable]
     public class AudioClipInfo
@@ -11,19 +11,19 @@ public class AudioManager : MonoBehaviour
         public AudioClip clip;
     }
     /*****singleton*****/
-    public static AudioManager instance
+    public static SEManager instance
     {
         get
         {
             if (m_instance != null)
-                return instance;
-            m_instance = FindObjectOfType<AudioManager>();
-            if (instance != null)
-                return instance;
+                return m_instance;
+            m_instance = FindObjectOfType<SEManager>();
+            if (m_instance != null)
+                return m_instance;
             return null;
         }
     }
-    protected static AudioManager m_instance;
+    protected static SEManager m_instance;
     /**********/
     [SerializeField] protected AudioSource m_audioSource;
     [SerializeField] protected List<AudioClipInfo> m_clipList;
@@ -37,9 +37,9 @@ public class AudioManager : MonoBehaviour
         }
         DontDestroyOnLoad(gameObject);
 
-        foreach (var i in m_clipList)
-            m_clipDictionary[i.name] = i.clip;
-        m_clipList.Clear();
+        //foreach (var i in m_clipList)
+        //    m_clipDictionary[i.name] = i.clip;
+        //m_clipList.Clear();
 
     }
     public void SetVolume(float value)

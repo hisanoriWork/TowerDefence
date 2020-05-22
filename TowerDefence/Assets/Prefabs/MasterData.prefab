@@ -57,6 +57,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bf80bb9061442604eb26d30659a6945e, type: 2}
   - {fileID: 11400000, guid: 24568d864d6a237459064b7b0dbff184, type: 2}
   - {fileID: 11400000, guid: 72934480c38cc194bba977a0e0795d76, type: 2}
+  - {fileID: 11400000, guid: 48a878d6e022b3e49a9d3d7650e888cb, type: 2}
+  - {fileID: 11400000, guid: acc3aebba0c172c47b5eb17346c51386, type: 2}
   pngnDataList:
   - {fileID: 11400000, guid: 24568d864d6a237459064b7b0dbff184, type: 2}
   - {fileID: 11400000, guid: bf80bb9061442604eb26d30659a6945e, type: 2}
@@ -69,6 +71,8 @@ MonoBehaviour:
   blockDataList:
   - {fileID: 11400000, guid: 27bd88c4a4abf6846aa4695fccc9cfda, type: 2}
   - {fileID: 11400000, guid: 72934480c38cc194bba977a0e0795d76, type: 2}
+  - {fileID: 11400000, guid: 48a878d6e022b3e49a9d3d7650e888cb, type: 2}
+  - {fileID: 11400000, guid: acc3aebba0c172c47b5eb17346c51386, type: 2}
   shipDataList:
   - {fileID: 11400000, guid: 62009e7e75fca39479f4dd9a94f62fc9, type: 2}
   - {fileID: 11400000, guid: 785d63301e0832b468ae5c0636520453, type: 2}
