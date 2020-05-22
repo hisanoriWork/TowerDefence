@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EditParam : MonoBehaviour
 {
@@ -25,8 +26,14 @@ public class EditParam : MonoBehaviour
 
     public int ownFormationNum;
 
+    public CanvasScaler canvasScaler;
+
+    public float canvasScale = 1;
+
     private void Awake()
     {
         ownFormationNum = int.Parse(PlayerPrefs.GetString("ownFormationNum", "1"));
+        canvasScale = Screen.height / canvasScaler.referenceResolution.y;
+        //Debug.Log(canvasScale);
     }
 }
