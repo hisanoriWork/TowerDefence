@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MissionItemData : MonoBehaviour
+[CreateAssetMenu(menuName = "Scriptable/MissionItemData")]
+public class MissionItemData : ScriptableObject
 {
     public int stageNum = 1;
     public Sprite stageIcon;
-    public string title = "";
+    [TextArea] public string title = "ミッションのタイトル";
 }
