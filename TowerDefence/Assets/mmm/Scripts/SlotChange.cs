@@ -13,7 +13,6 @@ public class SlotChange : MonoBehaviour
         ownFormationNum = int.Parse(PlayerPrefs.GetString("ownFormationNum", "1"));
         if (ownFormationNum - 1 <= slotBtns.Length)
         {
-            Debug.Log("aaa");
             //TODO: 対応するボタンの有効化
             slotBtns[ownFormationNum - 1].SetActive(false); //test
         }
