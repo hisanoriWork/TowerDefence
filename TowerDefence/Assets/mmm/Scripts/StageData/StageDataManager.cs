@@ -4,5 +4,6 @@ using UnityEngine;
 
 public class StageDataManager : MonoBehaviour
 {
+    //public List<StageData> stageDataList;
     public List<StageData> stageDataList;
 }

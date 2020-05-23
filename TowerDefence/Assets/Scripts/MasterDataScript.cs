@@ -8,8 +8,8 @@ public class MasterDataScript : MonoBehaviour
     public List<UnitData> pngnDataList;
     public List<UnitData> blockDataList;
     public List<ShipData> shipDataList;
-    public List<aStageData> stageDataList;
-
+    public List<StageData> stageDataList;
+    public List<MissionItemData> missionItemDataList;
     public UnitData FindUnitData(int unitID)
     {
         foreach (UnitData data in unitDataList)
@@ -84,9 +84,18 @@ public class MasterDataScript : MonoBehaviour
         return null;
     }
 
-    public aStageData FindStageData(int stageNum)
+    public StageData FindStageData(int stageNum)
     {
-        foreach (aStageData data in stageDataList)
+        foreach (StageData data in stageDataList)
+        {
+            if (data.stageNum == stageNum) return data;
+        }
+        return null;
+    }
+
+    public MissionItemData FindMissionItemData(int stageNum)
+    {
+        foreach (MissionItemData data in missionItemDataList)
         {
             if (data.stageNum == stageNum) return data;
         }
