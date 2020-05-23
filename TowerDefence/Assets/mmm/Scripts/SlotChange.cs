@@ -8,15 +8,26 @@ public class SlotChange : MonoBehaviour
     public int ownFormationNum = 1;
     public GameObject[] slotBtns;
 
-    public void A(GameObject test)
+    void Start()
     {
-        Debug.Log("aaaa");
+        ownFormationNum = int.Parse(PlayerPrefs.GetString("ownFormationNum", "1"));
+        if (ownFormationNum - 1 <= slotBtns.Length)
+        {
+            Debug.Log("aaa");
+            //TODO: 対応するボタンの有効化
+            slotBtns[ownFormationNum - 1].SetActive(false); //test
+        }
+    }
+
+    public void ChangeSlot(GameObject test)
+    {
         for (int i = 0; i < slotBtns.Length; i++)
         {
+            //TODO: 対応するボタンの有効化
             slotBtns[i].SetActive(true);
             if (slotBtns[i] == test)
             {
-                //TODO:
+                PlayerPrefs.SetString("ownFormationNum", (i + 1).ToString());
                 test.SetActive(false);
             }
         }
