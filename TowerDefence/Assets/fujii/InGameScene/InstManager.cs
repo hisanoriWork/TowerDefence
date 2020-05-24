@@ -26,24 +26,31 @@ public class InstManager : MonoBehaviour
     /*****monoBehaviour method*****/
     void Awake()
     {
-        //PrefsManager prefs = new PrefsManager();
-        //Formation formation = prefs.GetFormation(int.Parse(PlayerPrefs.GetString("ownFormationNum", "1")));
-        //下はデバッグ用
         Formation formation = new Formation();
+        //PrefsManager prefs = new PrefsManager();
+        //if (m_instData.playerNum == PlayerNum.Player1)
+        //{
+        //    formation = prefs.GetFormation(int.Parse(PlayerPrefs.GetString("ownFormationNum", "1")));
+        //}
+        //else
+        //{
+        //    formation = m_masterData.GetFormationFromStageNum(int.Parse(PlayerPrefs.GetString("stageNum", "1")));
+        //}
+        //下はデバッグ用
         formation.formationDataExists = true;
         if (m_instData.playerNum == PlayerNum.Player1)
         {
             formation.gridinfo = new int[10, 10]
                 {
             {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
-            {  0,  0,  0,  0,  0,  0, 12, 11, 10,110},
-            {  0,  0,  0,140,  0,  0,  0,  0,  0,110},
-            { 17,  0, 16,  0,  0,  0,  0,  0,  0,110},
-            {  0,  0,  0,  0,  0,  0,  0,  0,  0,110},
-            {  0,  0,  0,  0,  0,  0,  0,  0,  0,100},
-            {  0,  0,  0,  0,  0,  0,  0,  0,  0,100},
-            {  0,  0,  0,  0,  0,  0,  0,  0,  0,100},
-            {  0,  0,  0,  0,  0,  0,  0,  0,  0,100},
+            {  0,  0,  0,  0,  0,  0, 12, 11, 13,  0},
+            {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+            {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+            {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+            {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+            {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+            {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+            {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
             {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
                 };
 
@@ -55,13 +62,13 @@ public class InstManager : MonoBehaviour
                 {
             {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
             {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
-            {  0,  0,  0,  0,  0,  0,  0, 12,110,110},
-            {  0,  0,  0,  0, 15, 14, 13,  0,110,110},
-            {  0, 17,  0, 16,  0,  0,  0,  0,110,110},
-            {  0,  0,  0,  0,  0,  0,  0,  0,  0,110},
-            {  0,  0,  0,  0,  0,  0,  0,  0,  0,100},
-            {  0,  0,  0,  0,  0,  0,  0,  0,  0,100},
-            {  0,  0,  0,  0,  0,  0,  0,  0,  0,100},
+            {  0,  0,  0,  0,  0,  0,  0, 12,  0,  0},
+            {  0,  0,  0,  0, 15, 14, 13,  0,  0,  0},
+            {  0, 17,  0, 16,  0,  0,  0,  0,  0,  0},
+            {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+            {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+            {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+            {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
             {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
                 };
             formation.shiptype = 10020;

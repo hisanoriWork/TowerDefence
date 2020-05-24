@@ -93,6 +93,26 @@ public class MasterDataScript : MonoBehaviour
         return null;
     }
 
+    public Formation GetFormationFromStageNum(int stageNum)
+    {
+        Formation formation = new Formation();
+        StageData data = FindStageData(stageNum);
+        if (!data)
+        {
+            formation.formationDataExists = false;
+            return formation;
+        }
+
+        //マジックナンバーすみません
+        for (int i = 0; i < 10; i++)for(int j = 0;j<10;j++)
+        {
+                formation.gridinfo[i, j] = data.gridInfo[10 * i + j];
+        }
+        formation.shiptype = data.shipType;
+        formation.formationDataExists = true;
+        return formation;
+    }
+
     public MissionItemData FindMissionItemData(int stageNum)
     {
         foreach (MissionItemData data in missionItemDataList)
