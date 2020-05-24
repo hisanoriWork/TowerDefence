@@ -165,6 +165,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 22100000, guid: 2cee14ea56cee2349b4c9875bbdd85ee,
         type: 2}
+    - target: {fileID: 3346364614985789839, guid: b38e3d62b2ed1cc4e966418e11eda93b,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 1fcfe50e8fe0b984eb809eaa4f043fee,
+        type: 3}
     - target: {fileID: 4386238940931212529, guid: b38e3d62b2ed1cc4e966418e11eda93b,
         type: 3}
       propertyPath: deadEvent.m_PersistentCalls.m_Calls.Array.size
@@ -209,22 +215,7 @@ PrefabInstance:
     - target: {fileID: 4995037995604748823, guid: b38e3d62b2ed1cc4e966418e11eda93b,
         type: 3}
       propertyPath: m_Offset.x
-      value: -0.43
-      objectReference: {fileID: 0}
-    - target: {fileID: 4995037995604748823, guid: b38e3d62b2ed1cc4e966418e11eda93b,
-        type: 3}
-      propertyPath: m_Offset.y
-      value: 0.005453825
-      objectReference: {fileID: 0}
-    - target: {fileID: 4995037995604748823, guid: b38e3d62b2ed1cc4e966418e11eda93b,
-        type: 3}
-      propertyPath: m_Size.x
-      value: 0.51026565
-      objectReference: {fileID: 0}
-    - target: {fileID: 4995037995604748823, guid: b38e3d62b2ed1cc4e966418e11eda93b,
-        type: 3}
-      propertyPath: m_Size.y
-      value: 0.7116526
+      value: -0.4
       objectReference: {fileID: 0}
     - target: {fileID: 6635415149230036256, guid: b38e3d62b2ed1cc4e966418e11eda93b,
         type: 3}

@@ -27,7 +27,7 @@ public class BGMManager : MonoBehaviour
     /**********/
     [SerializeField] protected AudioSource m_audioSource;
     [SerializeField] protected List<AudioClipInfo> m_clipList;
-    protected Dictionary<string, AudioClip> m_clipDictionary;
+    protected Dictionary<string, AudioClip> m_clipDictionary = new Dictionary<string, AudioClip>();
     void Awake()
     {
         if (instance != this)
@@ -37,9 +37,9 @@ public class BGMManager : MonoBehaviour
         }
         DontDestroyOnLoad(gameObject);
 
-        //foreach (var i in m_clipList)
-        //    m_clipDictionary[i.name] = i.clip;
-        //m_clipList.Clear();
+        foreach (var i in m_clipList)
+            m_clipDictionary[i.name] = i.clip;
+        m_clipList.Clear();
 
     }
     public void SetVolume(float value)
