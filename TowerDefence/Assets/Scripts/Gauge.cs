@@ -14,7 +14,8 @@ public class Gauge : MonoBehaviour
 
     void Awake()
     {
-        fillImage.fillOrigin = (int)origin;
+        if(fillMethodIsHorizontal)
+            fillImage.fillOrigin = (int)origin;
         fillImage.rectTransform.sizeDelta = GaugeSize;
         backImage.rectTransform.sizeDelta = GaugeSize;
         m_pos = backImage.rectTransform.anchoredPosition;

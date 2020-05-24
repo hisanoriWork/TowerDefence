@@ -1726,6 +1726,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 350
       objectReference: {fileID: 0}
+    - target: {fileID: 1672314197, guid: 0ab38f78f9f3f7c44814842b34d6ccdf, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 1287798847420529278, guid: 0ab38f78f9f3f7c44814842b34d6ccdf,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1750,6 +1754,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.x
       value: 350
+      objectReference: {fileID: 0}
+    - target: {fileID: 2341665332498684106, guid: 0ab38f78f9f3f7c44814842b34d6ccdf,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 2714607322191992933, guid: 0ab38f78f9f3f7c44814842b34d6ccdf,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 4069523658289396691, guid: 0ab38f78f9f3f7c44814842b34d6ccdf,
         type: 3}
@@ -1780,6 +1794,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4069523658289396691, guid: 0ab38f78f9f3f7c44814842b34d6ccdf,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 5083751135535922636, guid: 0ab38f78f9f3f7c44814842b34d6ccdf,
         type: 3}
@@ -1962,6 +1981,10 @@ PrefabInstance:
       propertyPath: fillMethodIsHorizontal
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1919511840, guid: a6f3f15d3bebca0479c9e68e91688e97, type: 3}
+      propertyPath: origin
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 140803167797734449, guid: a6f3f15d3bebca0479c9e68e91688e97,
         type: 3}
       propertyPath: image
@@ -1985,7 +2008,7 @@ PrefabInstance:
     - target: {fileID: 140803167797734449, guid: a6f3f15d3bebca0479c9e68e91688e97,
         type: 3}
       propertyPath: GaugeSize.y
-      value: 50
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 352801787441289027, guid: a6f3f15d3bebca0479c9e68e91688e97,
         type: 3}
@@ -2095,7 +2118,7 @@ PrefabInstance:
     - target: {fileID: 4831081717652252424, guid: a6f3f15d3bebca0479c9e68e91688e97,
         type: 3}
       propertyPath: GaugeSize.y
-      value: 50
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 9007063644747197921, guid: a6f3f15d3bebca0479c9e68e91688e97,
         type: 3}

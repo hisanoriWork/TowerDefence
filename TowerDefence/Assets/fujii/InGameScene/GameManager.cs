@@ -50,7 +50,6 @@ public class GameManager : MonoBehaviour
                 m_player2HP.value = m_player2.shipHP;
 
             int victoryNum = CheckVictory(m_player1.shipHP, m_player2.shipHP);
-            Debug.Log(m_player1HP.value + ":" + m_player2HP.value);
             if (victoryNum > 0)
             {
                 switch (victoryNum)
