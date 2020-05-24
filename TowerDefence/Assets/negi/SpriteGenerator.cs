@@ -21,7 +21,7 @@ public class SpriteGenerator : MonoBehaviour
 
     public void GenerateSprite(Image baseImage, Formation formation)
     {
-
+        baseImage.color = new Color(123, 12, 43);
 
 
         return;
