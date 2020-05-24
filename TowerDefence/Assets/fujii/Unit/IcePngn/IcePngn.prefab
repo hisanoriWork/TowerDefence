@@ -163,6 +163,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 22100000, guid: b9594b3ed17b0ac47bb8019c1bad0b22,
         type: 2}
+    - target: {fileID: 3346364614985789839, guid: b38e3d62b2ed1cc4e966418e11eda93b,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 51e8d1a6943a7e2479f341d529cb4e38,
+        type: 3}
     - target: {fileID: 4386238940931212529, guid: b38e3d62b2ed1cc4e966418e11eda93b,
         type: 3}
       propertyPath: deadEvent.m_PersistentCalls.m_Calls.Array.size
