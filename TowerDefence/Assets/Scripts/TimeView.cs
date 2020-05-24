@@ -8,14 +8,16 @@ public class TimeView : MonoBehaviour
 {
     /*****public field*****/
     public Timer timer;
-    public Text timeText;
+    public Gauge timeGauge;
     public bool isFinished {get;set;} = false;
     /*****monoBehaviour*****/
     void Awake()
     {
+        timeGauge.maxValue = (int)timer.time;
+        timeGauge.value = 0;
         timer.onDigitalTimeChanged.Subscribe(time =>
         {
-            timeText.text = time.ToString();
+            timeGauge.value = (int)timer.time - timer.digitalTime;
         });
         timer.whenTimeIsUp.Subscribe(_=>
         {

@@ -35,8 +35,9 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
+        m_player1HP.gaugeMaxValue = m_player2HP.gaugeMaxValue = 500;
         m_player1HP.maxValue = m_player1HP.value = m_player1.shipHP;
-        m_player2HP.maxValue = m_player2HP.value = m_player1.shipHP;
+        m_player2HP.maxValue = m_player2HP.value = m_player2.shipHP;
         Play(1.0f);
     }
     void Update()
@@ -48,7 +49,8 @@ public class GameManager : MonoBehaviour
             if (m_player2HP.value != m_player2.shipHP)
                 m_player2HP.value = m_player2.shipHP;
 
-            int victoryNum = CheckVictory(m_player1.shipHP, m_player2.shipHP, m_player1.pngnNum, m_player2.pngnNum);
+            int victoryNum = CheckVictory(m_player1.shipHP, m_player2.shipHP);
+            Debug.Log(m_player1HP.value + ":" + m_player2HP.value);
             if (victoryNum > 0)
             {
                 switch (victoryNum)
@@ -92,20 +94,16 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(sceneName);
     }
     /*****private method*****/
-    private int CheckVictory(int shipHP1 ,int shipHP2,int pngnNum1,int pngnNum2)
+    private int CheckVictory(int shipHP1 ,int shipHP2)
     {
         /*決まってない：0
          * プレイヤー1の勝利：1
          * プレイヤー2の勝利：2
          * ドロー：3
          */
-        if (pngnNum1 == 0 && pngnNum2 == 0) return 3;
-        else if (pngnNum1 == 0) return 2;
-        else if (pngnNum1 == 0) return 1;
-
-        if (shipHP1 == 0 && shipHP2 == 0) return 3;
-        else if (shipHP1 == 0) return 2;
-        else if (shipHP2 == 0) return 1;
+        if (shipHP1 < 0 && shipHP2 < 0) return 3;
+        else if (shipHP1 < 0) return 2;
+        else if (shipHP2 < 0) return 1;
 
         if (m_timeView.isFinished)
         {
