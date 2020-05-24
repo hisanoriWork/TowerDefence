@@ -84,7 +84,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7048052805395260860}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.6, y: 0.09, z: 0}
+  m_LocalPosition: {x: 0.81, y: 0.09, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1143180996646596876}
@@ -167,6 +167,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2889623824238408929, guid: b38e3d62b2ed1cc4e966418e11eda93b,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 22100000, guid: aeb37a389c10c9b4786831788bff039c,
+        type: 2}
     - target: {fileID: 4386238940931212529, guid: b38e3d62b2ed1cc4e966418e11eda93b,
         type: 3}
       propertyPath: deadEvent.m_PersistentCalls.m_Calls.Array.size
@@ -211,7 +217,7 @@ PrefabInstance:
     - target: {fileID: 4995037995604748823, guid: b38e3d62b2ed1cc4e966418e11eda93b,
         type: 3}
       propertyPath: m_Offset.x
-      value: -0.3725058
+      value: -0.41
       objectReference: {fileID: 0}
     - target: {fileID: 4995037995604748823, guid: b38e3d62b2ed1cc4e966418e11eda93b,
         type: 3}
@@ -237,7 +243,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 37ef701cf295e8e499fd987ff114a092,
+      objectReference: {fileID: 21300000, guid: 5732e6daeb405f64d93798aae9db28d9,
         type: 3}
     - target: {fileID: 7440544843861990913, guid: b38e3d62b2ed1cc4e966418e11eda93b,
         type: 3}
