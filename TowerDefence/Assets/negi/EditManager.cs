@@ -124,6 +124,7 @@ public class EditManager : MonoBehaviour
             sel.selectableUnitID = data.ID;
             sel.selectableUnitType = data.unitType;
             sel.selectableUnitForm = data.form;
+            sel.selectableUnitEmptyForm = data.emptyForm;
             sel.selectableUnitCost = data.cost;
 
             sel.selectableUnitOffset = ConvertOffsetValue(data.offset);
@@ -157,6 +158,7 @@ public class EditManager : MonoBehaviour
             sel.selectableUnitID = data.unitData.ID;
             sel.selectableUnitType = data.unitData.unitType;
             sel.selectableUnitForm = data.unitData.form;
+            sel.selectableUnitEmptyForm = data.unitData.emptyForm;
             sel.selectableUnitCost = data.unitData.cost;
 
             sel.selectableUnitOffset = ConvertOffsetValue(data.unitData.offset);
@@ -233,6 +235,7 @@ public class EditManager : MonoBehaviour
                 movingUnit.movingUnitID = sel.selectableUnitID;
                 movingUnit.movingUnitType = sel.selectableUnitType;
                 movingUnit.movingUnitForm = sel.selectableUnitForm;
+                movingUnit.movingUnitEmptyForm = sel.selectableUnitEmptyForm;
                 movingUnit.movingUnitOffset = sel.selectableUnitOffset;
                 movingUnit.movingUnitCost = sel.selectableUnitCost;
                 movingUnit.beforeAttachingUnitPosition = null;
@@ -242,7 +245,7 @@ public class EditManager : MonoBehaviour
 
                 movingUnitObject.transform.position = (Vector2)Input.mousePosition + sel.selectableUnitOffset;
 
-                formationGridManager.DisplayEnableGrid(movingUnit.movingUnitID, movingUnit.movingUnitType, movingUnit.movingUnitForm, movingUnit.movingUnitOffset);
+                formationGridManager.DisplayEnableGrid(movingUnit.movingUnitID, movingUnit.movingUnitType, movingUnit.movingUnitForm,movingUnit.movingUnitEmptyForm, movingUnit.movingUnitOffset);
 
 
             }
@@ -280,7 +283,7 @@ public class EditManager : MonoBehaviour
             {
 
                 //そのユニットを外すことが禁則であるとき、外させない
-                if (formationGridManager.CheckingCutVertex(att.selectableUnitForm, att.beforeAttachingPosition))
+                if (formationGridManager.CheckingCutVertex(att.selectableUnitForm, att.selectableUnitEmptyForm, att.beforeAttachingPosition))
                 //↑非常に危険、見直してから使う
                 //if(true)
                 {
@@ -298,6 +301,7 @@ public class EditManager : MonoBehaviour
                     movingUnit.movingUnitID = att.selectableUnitID;
                     movingUnit.movingUnitType = att.selectableUnitType;
                     movingUnit.movingUnitForm = att.selectableUnitForm;
+                    movingUnit.movingUnitEmptyForm = att.selectableUnitEmptyForm;
                     movingUnit.movingUnitOffset = att.selectableUnitOffset;
                     movingUnit.movingUnitCost = att.selectableUnitCost;
                     movingUnit.beforeAttachingUnitPosition = att.beforeAttachingPosition;
@@ -332,10 +336,11 @@ public class EditManager : MonoBehaviour
                     att.selectableUnitID = 0;
 
                     att.selectableUnitForm = null;
+                    att.selectableUnitEmptyForm = null;
                     att.selectableUnitOffset = new Vector2();
                     att.selectableUnitCost = 0;
 
-                    formationGridManager.DisplayEnableGrid(movingUnit.movingUnitID, movingUnit.movingUnitType, movingUnit.movingUnitForm, movingUnit.movingUnitOffset);
+                    formationGridManager.DisplayEnableGrid(movingUnit.movingUnitID, movingUnit.movingUnitType, movingUnit.movingUnitForm, movingUnit.movingUnitEmptyForm, movingUnit.movingUnitOffset);
                 }
 
 

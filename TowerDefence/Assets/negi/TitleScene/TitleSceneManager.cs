@@ -14,6 +14,8 @@ public class TitleSceneManager : MonoBehaviour
     void Start()
     {
         CheckFormationPrefIsSet();
+        //BGMManager.instance.SetVolume(1);
+        //BGMManager.instance.Play("タイトル");
     }
 
     // Update is called once per frame
