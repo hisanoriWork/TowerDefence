@@ -78,6 +78,14 @@ public class FormationChanger
                     eachGridsTiling[unitY + form.y, unitX + form.x] = unitTilingType;
                 }
             }
+
+            if(gridEmptyForms != null)
+            {
+                foreach (GridForm emptyForm in gridEmptyForms)
+                {
+                    eachGridsTiling[unitY + emptyForm.y, unitX + emptyForm.x] = TilingType.Barrier;
+                }
+            }
         }
 
         return;
@@ -316,7 +324,8 @@ public class FormationChanger
                 //見ること
                 //それぞれのフォームごとに
                 //マスからはみ出ていない
-                //そのブロックにオブジェクトが重なっていない(1度でも満たしたらアウト)
+                //そのブロックがempty以外のtilingtypeと重なっていない(1度でも満たしたらアウト)
+                //つまりBarrierTileと重なっていない(1度でも満たしたらアウト)
                 //タイプごとにその下または4方にブロックオブジェクトが隣接している(1度でも満たせばよい)
 
                 //すべてクリアしているならば、その範囲をenableToAttachingに埋め込める
@@ -913,7 +922,7 @@ public class FormationGridManager : MonoBehaviour
             {
                 if(fc.eachGridsTiling[y,x] == TilingType.Pngn && fc.eachGrids[y,x].sel.selectableUnitID != 0)
                 {
-
+                    //浮いてたらfalse、接地してたらtrue
                     judPngnGround = checkPngnGround(y, x, fc.eachGrids[y, x].sel.selectableUnitForm, fc.eachGrids[y, x].sel.selectableUnitEmptyForm);
                     if (!judPngnGround)
                     {
@@ -982,6 +991,10 @@ public class FormationGridManager : MonoBehaviour
 
         //bool jud_pngn;
 
+
+        //eachGridsTilingTmpはattachingPositionの物体がnullになったと仮定したときのeachGridsTiling
+
+
         for (int y = 0; y < 10; y++)
         {
             for (int x = 0; x < 10; x++)
@@ -992,15 +1005,30 @@ public class FormationGridManager : MonoBehaviour
         }
 
         eachGridsTilingTmp[attachingPosition[0], attachingPosition[1]] = TilingType.Empty;
-        foreach(GridForm form in unitForm)
+        if (unitForm != null) 
         {
-            eachGridsTilingTmp[attachingPosition[0] + form.y, attachingPosition[1] + form.x] = TilingType.Empty;
+            foreach (GridForm form in unitForm)
+            {
+                eachGridsTilingTmp[attachingPosition[0] + form.y, attachingPosition[1] + form.x] = TilingType.Empty;
+            }
         }
+
+        if (unitEmptyForm != null)
+        {
+            foreach (GridForm emptyForm in unitEmptyForm)
+            {
+                eachGridsTilingTmp[attachingPosition[0] + emptyForm.y, attachingPosition[1] + emptyForm.x] = TilingType.Empty;
+            }
+        }
+
+
+        
 
         for (int y = 0; y < 10; y++)
         {
             for (int x = 0; x < 10; x++)
             {
+                //それぞれのグリッドごとにemptyでないなら判定を開始する
                 if (eachGridsTilingTmp[y, x] != TilingType.Empty)
                 {
                     /*if (eachGridsTilingTmp[y, x] == TilingType.Pngn && fc.eachGrids[y, x].sel.selectableUnitType == UnitType.Pngn)
@@ -1016,7 +1044,8 @@ public class FormationGridManager : MonoBehaviour
                         }
                     }*/
 
-                    if (checkedObjectTiledGrids[y, x] == false && alreadyFirstCheckingIsFinish == true && eachGridsTilingTmp[y, x] != TilingType.Pngn)
+                    //1回目のブロック探索が終わっているにも関わらずemptyでないはずのグリッドが探索されていない、かつそれはオブジェクトである
+                    if (checkedObjectTiledGrids[y, x] == false && alreadyFirstCheckingIsFinish == true && eachGridsTilingTmp[y, x] == TilingType.Object)
                     {
                         /*if (pngnCheckedGuard[y, x] != false)
                         {
@@ -1025,13 +1054,14 @@ public class FormationGridManager : MonoBehaviour
                         }*/
 
                         //Blockが置けない
-
+                        //Debug.Log("ブロックが宙に浮きます:(" + y + "," + x + ")");
                         dialogManager.ShowDialog("ブロックが宙に浮きます！");
 
                         return false;
 
                     }
-                    else if(checkedObjectTiledGrids[y, x] == false)
+                    //ブロック探索は終わっておらず、emptyでないはずのグリッドが探索されていない、かつオブジェクトである
+                    else if(checkedObjectTiledGrids[y, x] == false && eachGridsTilingTmp[y, x] == TilingType.Object)
                     {
                         //Debug.Log("notchecked"+y + "," + x + ":" + eachGridsTilingTmp[y, x]);
                         checking(y,x);
@@ -1080,9 +1110,11 @@ public class FormationGridManager : MonoBehaviour
 
         void checking(int y,int x)
         {
+            //もう見てるなら終わり
             if (checkedObjectTiledGrids[y, x] == true) return;
 
-            if (eachGridsTilingTmp[y, x] == TilingType.Empty) return;
+            //emptyなら終わり、barrierでも終わり
+            if (eachGridsTilingTmp[y, x] == TilingType.Empty||eachGridsTilingTmp[y,x] == TilingType.Barrier) return;
             else checkedObjectTiledGrids[y, x] = true;
 
             //Debug.Log(y + "," + x);
