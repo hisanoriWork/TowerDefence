@@ -34,8 +34,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -110, y: 0.000010014}
-  m_SizeDelta: {x: 50, y: 50}
+  m_AnchoredPosition: {x: -112.3, y: -0.0000038147}
+  m_SizeDelta: {x: 64.556885, y: 61.10919}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3055170946863629978
 CanvasRenderer:
@@ -193,7 +193,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stageNum: 1
-  stageSelectManager: {fileID: 0}
 --- !u!1 &3055170948177505440
 GameObject:
   m_ObjectHideFlags: 0
