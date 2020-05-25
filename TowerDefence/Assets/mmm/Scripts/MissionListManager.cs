@@ -9,7 +9,7 @@ public class MissionListManager : MonoBehaviour
     //public List<MissionItemData> missionItemList;
     public GameObject missionContainer;
 
-    private int playableStageNum = 5;
+    private int playableStageNum = 1;
     private int stageIndex = 1;
     private GameObject content;
 
@@ -21,9 +21,10 @@ public class MissionListManager : MonoBehaviour
     void Start()
     {
         List<MissionItemData> missionItemList = masterData.missionItemDataList;
-        // TODO: playableStageNumを変更
-        // stage番号を持たせないと.
-        if (missionItemList.Count <= playableStageNum )
+      
+        playableStageNum = PlayerPrefs.GetInt("playableStageNum", 1);
+
+        if (missionItemList.Count <= playableStageNum)
         {
             playableStageNum = missionItemList.Count;
         }
