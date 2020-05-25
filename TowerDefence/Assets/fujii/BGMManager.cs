@@ -46,6 +46,11 @@ public class BGMManager : MonoBehaviour
     {
         m_audioSource.volume = value;
     }
+
+    public float GetVolume()
+    {
+        return m_audioSource.volume;
+    }
     public void Play(AudioClip clip)
     {
         if (clip)

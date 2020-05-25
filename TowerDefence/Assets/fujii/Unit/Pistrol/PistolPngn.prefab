@@ -313,7 +313,7 @@ PrefabInstance:
     - target: {fileID: 4386238940931212529, guid: b38e3d62b2ed1cc4e966418e11eda93b,
         type: 3}
       propertyPath: hurtEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: AttackVoice
+      value: HurtVoice
       objectReference: {fileID: 0}
     - target: {fileID: 4386238940931212529, guid: b38e3d62b2ed1cc4e966418e11eda93b,
         type: 3}

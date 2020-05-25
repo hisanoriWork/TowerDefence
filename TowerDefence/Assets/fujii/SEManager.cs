@@ -46,7 +46,12 @@ public class SEManager : MonoBehaviour
     public void SetVolume(float value)
     {
         m_audioSource.volume = value;
-    } 
+    }
+
+    public float GetVolume()
+    {
+        return m_audioSource.volume;
+    }
     //オーディオクリップから再生
     public void Play(AudioClip clip)
     {

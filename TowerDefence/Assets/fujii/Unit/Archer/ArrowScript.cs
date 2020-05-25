@@ -41,7 +41,7 @@ public class ArrowScript : MonoBehaviour
     /*****public method*****/
     public void Init(Vector3 pos, UnitScript unitScript = null)
     {
-        baseWeapon.Init(pos, null, false);
+        baseWeapon.Init(pos, unitScript, false);
         m_speed = data.speed;
         m_gravity = data.gravity;
         m_move = Vector3.zero;

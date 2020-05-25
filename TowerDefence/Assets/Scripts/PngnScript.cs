@@ -49,6 +49,6 @@ public class PngnScript : MonoBehaviour
     /*****public method*****/
     public void HurtVoice()
     {
-        SEManager.instance.Play("ダメージ");
+        SEManager.instance.Play("衝突");
     }
 }
