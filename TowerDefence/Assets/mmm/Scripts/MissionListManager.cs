@@ -21,9 +21,10 @@ public class MissionListManager : MonoBehaviour
     void Start()
     {
         List<MissionItemData> missionItemList = masterData.missionItemDataList;
-        // TODO: playableStageNumを変更
-        // stage番号を持たせないと.
-        if (missionItemList.Count <= playableStageNum )
+      
+        //playableStageNum = PlayerPrefs.GetInt("playableStageNum", 1);
+
+        if (missionItemList.Count <= playableStageNum)
         {
             playableStageNum = missionItemList.Count;
         }
