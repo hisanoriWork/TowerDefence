@@ -12,6 +12,7 @@ public class EditSelectSceneManager : MonoBehaviour
     void Start()
     {
         m_ownFormationNum = 1;
+        //BGMManager.instance.Play("エディット");
     }
 
     // Update is called once per frame
@@ -22,17 +23,20 @@ public class EditSelectSceneManager : MonoBehaviour
 
     public void LoadTitleScene()
     {
+        SEManager.instance.Play("シーン遷移");
         SceneManager.LoadScene("TitleScene");
     }
 
     public void SwitchFormation(int import_ownFormationNum)
     {
+        SEManager.instance.Play("セレクト");
         m_ownFormationNum = import_ownFormationNum;
         return;
     }
 
     public void LoadEditScene()
     {
+        SEManager.instance.Play("決定");
         PlayerPrefs.SetString("ownFormationNum", m_ownFormationNum.ToString());
         SceneManager.LoadScene("EditScene");
     }

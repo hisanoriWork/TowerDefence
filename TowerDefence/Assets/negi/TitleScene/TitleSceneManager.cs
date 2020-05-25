@@ -26,10 +26,12 @@ public class TitleSceneManager : MonoBehaviour
 
     public void LoadStageSelectScene()
     {
+        SEManager.instance.Play("シーン遷移");
         SceneManager.LoadScene("StageSelectScene");
     }
     public void LoadEditSelectScene()
     {
+        SEManager.instance.Play("シーン遷移");
         SceneManager.LoadScene("EditSelectScene");
     }
 

@@ -117,8 +117,10 @@ public class EditManager : MonoBehaviour
             SetSpriteAndResizeImgSize(transform, editParam.selectableUnitImgSize, data.sprite);
 
             obj.transform.Find("UnitName").GetComponent<Text>().text = data.name;
-            obj.transform.Find("UnitDetails").GetComponent<Text>().text 
-                = "Power:" + data.power + "   HP:" + data.HP + "\nCT:" + data.CT + "   cost:" + data.cost;
+            /*obj.transform.Find("UnitDetails").GetComponent<Text>().text 
+                = "Power:" + data.power + "   HP:" + data.HP + "\nCT:" + data.CT + "   cost:" + data.cost;*/
+            obj.transform.Find("UnitDetails").GetComponent<Text>().text
+                = "HP:" + data.HP + "   Cost:" + data.cost;
 
             sel = obj.GetComponent<SelectableUnit>();
             sel.selectableUnitID = data.ID;
@@ -151,8 +153,8 @@ public class EditManager : MonoBehaviour
             SetSpriteAndResizeImgSize(transform, editParam.selesctableShipImgSize, data.unitData.sprite);
 
             obj.transform.Find("UnitName").GetComponent<Text>().text = data.name;
-            obj.transform.Find("UnitDetails").GetComponent<Text>().text 
-                = "Power:" + data.unitData.power + "   HP:" + data.unitData.HP + "\nCT:" + data.unitData.CT + "   cost:" + data.unitData.cost;
+            obj.transform.Find("UnitDetails").GetComponent<Text>().text
+                = "HP:" + data.unitData.HP + "   Cost:" + data.unitData.cost;
 
             sel = obj.GetComponent<SelectableUnit>();
             sel.selectableUnitID = data.unitData.ID;
@@ -182,16 +184,19 @@ public class EditManager : MonoBehaviour
 
     public void SwitchPngnType()
     {
+        SEManager.instance.Play("セレクト");
         SwitchUnitType(UnitType.Pngn);
     }
 
     public void SwitchShipType()
     {
+        SEManager.instance.Play("セレクト");
         SwitchUnitType(UnitType.Ship);
     }
 
     public void SwitchBlockType()
     {
+        SEManager.instance.Play("セレクト");
         SwitchUnitType(UnitType.Block);
     }
 
@@ -214,7 +219,7 @@ public class EditManager : MonoBehaviour
 
     public void ClickEachSelectableUnit(GameObject selectableUnit)
     {
-
+        SEManager.instance.Play("セレクト");
         SelectableUnit sel = selectableUnit.GetComponent<SelectableUnit>();
 
         //Debug.Log(sel.selectableUnitType);
@@ -267,6 +272,7 @@ public class EditManager : MonoBehaviour
 
     public void ClickEachAttachingUnit(GameObject attachingUnit)
     {
+        
         SelectableUnit att = attachingUnit.GetComponent<SelectableUnit>();
 
         //Debug.Log(sel.selectableUnitID);
@@ -287,10 +293,13 @@ public class EditManager : MonoBehaviour
                 //↑非常に危険、見直してから使う
                 //if(true)
                 {
+
                     //Debug.Log("aho");
                     //Debug.Log(att.beforeAttachingPosition[0] + ":" + att.beforeAttachingPosition[1]);
 
                     //ここらへん追加しすぎて乱雑なのでリファクタリング必要
+
+                    SEManager.instance.Play("セレクト");
 
                     editParam.deleteButton.SetActive(true);
 
