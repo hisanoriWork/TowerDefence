@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class MissionListManager : MonoBehaviour
 {
     public MasterDataScript masterData;
-    //public List<MissionItemData> missionItemList;
     public GameObject missionContainer;
 
     private int playableStageNum = 5;
@@ -22,7 +21,7 @@ public class MissionListManager : MonoBehaviour
     {
         List<MissionItemData> missionItemList = masterData.missionItemDataList;
       
-        //playableStageNum = PlayerPrefs.GetInt("playableStageNum", 1);
+        playableStageNum = PlayerPrefs.GetInt("playableStageNum", 1);
 
         if (missionItemList.Count <= playableStageNum)
         {
