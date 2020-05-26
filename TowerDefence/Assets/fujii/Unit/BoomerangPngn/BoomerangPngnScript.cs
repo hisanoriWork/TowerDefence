@@ -7,8 +7,9 @@ public class BoomerangPngnScript : MonoBehaviour
     public Transform attackTransform;
     /*****Menobehaviour method*****/
     /*****public method*****/
-    public void Attack(int power)
+    public void AttackEvent(int power)
     {
         pool.Pop(attackTransform.position);
+        SEManager.instance.Play("投げる");
     }
 }

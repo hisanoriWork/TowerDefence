@@ -65,6 +65,10 @@ MonoBehaviour:
     x: 4
   - y: 2
     x: 5
+  - y: 2
+    x: 6
+  - y: 2
+    x: 7
   emptyForm:
   - y: 0
     x: 0

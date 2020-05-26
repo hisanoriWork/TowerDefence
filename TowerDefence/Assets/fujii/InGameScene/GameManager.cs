@@ -19,15 +19,26 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Gauge m_player1HP = default, m_player2HP = default;
     [SerializeField] private Text m_victoryCanvas = default;
     private int[,] gird;
+    private bool m_isFinished = false;
     /*****Mobehabiour method*****/
     void Awake()
     {
         //オプションを開いたときゲームを停止
-        m_option.whenDisplayed.Subscribe(_ => Stop(false));
+        m_option.whenDisplayed.Subscribe(_ => {
+            Stop(false);
+            SEManager.instance.Pause();
+            BGMManager.instance.Pause();
+            SEManager.instance.Play("設定");
+        }); 
+        m_option.whenHidden.Subscribe(_ =>
+        {
+            SEManager.instance.Resume();
+            BGMManager.instance.Resume();
+        });
         //オプションを閉じたとき，もともとゲームを再生していたら再生する
         m_option.whenHidden.Where(_ => isPlaying).Subscribe(_ => Play(timeScale));
         //オプションを閉じたとき，もともとゲームを停止していたら停止する
-        m_option.whenHidden.Where(_ => !isPlaying).Subscribe(_ => Stop(true));
+        m_option.whenHidden.Where(_ => !isPlaying).Subscribe(_ =>Stop(true));
         m_stop.whenHidden.Subscribe(_ => { m_play.Display(); Play(1.0f); });
         m_play.whenHidden.Subscribe(_ => { m_X2Play.Display(); Play(2.0f); });
         m_X2Play.whenHidden.Subscribe(_ => { m_X4Play.Display(); Play(4.0f); });
@@ -35,12 +46,15 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
+        m_player1HP.gaugeMaxValue = m_player2HP.gaugeMaxValue = 500;
         m_player1HP.maxValue = m_player1HP.value = m_player1.shipHP;
-        m_player2HP.maxValue = m_player2HP.value = m_player1.shipHP;
+        m_player2HP.maxValue = m_player2HP.value = m_player2.shipHP;
         Play(1.0f);
+        BGMManager.instance.Play("対戦");
     }
     void Update()
     {
+        
         if (isPlaying)
         {
             if (m_player1HP.value != m_player1.shipHP)
@@ -48,19 +62,26 @@ public class GameManager : MonoBehaviour
             if (m_player2HP.value != m_player2.shipHP)
                 m_player2HP.value = m_player2.shipHP;
 
-            int victoryNum = CheckVictory(m_player1.shipHP, m_player2.shipHP, m_player1.pngnNum, m_player2.pngnNum);
-            if (victoryNum > 0)
+            int victoryNum = CheckVictory(m_player1.shipHP, m_player2.shipHP);
+            if (!m_isFinished &&victoryNum > 0)
             {
+                m_isFinished = true;
                 switch (victoryNum)
                 {
                     case 3:
                         m_victoryCanvas.text = "引き分け";
+                        BGMManager.instance.Stop();
+                        SEManager.instance.Play("引き分け");
                         break;
                     case 2:
                         m_victoryCanvas.text = "負けた";
+                        BGMManager.instance.Stop();
+                        SEManager.instance.Play("敗北");
                         break;
                     case 1:
                         m_victoryCanvas.text = "勝った";
+                        BGMManager.instance.Stop();
+                        SEManager.instance.Play("勝利");
                         break;
                 }
                 Stop(true);
@@ -89,23 +110,23 @@ public class GameManager : MonoBehaviour
     public void TransitionScene(String sceneName)
     {
         Play(1.0f);
+        SEManager.instance.Resume();
+        BGMManager.instance.Resume();
+        SEManager.instance.Stop();
+        BGMManager.instance.Stop();
         SceneManager.LoadScene(sceneName);
     }
     /*****private method*****/
-    private int CheckVictory(int shipHP1 ,int shipHP2,int pngnNum1,int pngnNum2)
+    private int CheckVictory(int shipHP1 ,int shipHP2)
     {
         /*決まってない：0
          * プレイヤー1の勝利：1
          * プレイヤー2の勝利：2
          * ドロー：3
          */
-        if (pngnNum1 == 0 && pngnNum2 == 0) return 3;
-        else if (pngnNum1 == 0) return 2;
-        else if (pngnNum1 == 0) return 1;
-
-        if (shipHP1 == 0 && shipHP2 == 0) return 3;
-        else if (shipHP1 == 0) return 2;
-        else if (shipHP2 == 0) return 1;
+        if (shipHP1 < 0 && shipHP2 < 0) return 3;
+        else if (shipHP1 < 0) return 2;
+        else if (shipHP2 < 0) return 1;
 
         if (m_timeView.isFinished)
         {

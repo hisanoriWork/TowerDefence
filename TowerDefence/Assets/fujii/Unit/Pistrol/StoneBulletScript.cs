@@ -15,7 +15,10 @@ public class StoneBulletScript : MonoBehaviour
     void Awake()
     {
         Init(Vector3.zero);
-        baseWeapon.onHit.Subscribe(_ => baseWeapon.Despawn());
+        baseWeapon.onHit.Subscribe(_ =>{
+            baseWeapon.Despawn();
+            SEManager.instance.Play("衝突");
+        });
         baseWeapon.onHitUnit.Subscribe(other => other.Hurt(baseWeapon.power));
         baseWeapon.onHitWeapon.Subscribe(other => other.Hit());
     }

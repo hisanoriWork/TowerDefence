@@ -47,8 +47,8 @@ public class PngnScript : MonoBehaviour
         }
     }
     /*****public method*****/
-    public void HurtVoice()
+    public void DeadVoice()
     {
-        SEManager.instance.Play("ダメージ");
+        SEManager.instance.Play("死んだ");
     }
 }

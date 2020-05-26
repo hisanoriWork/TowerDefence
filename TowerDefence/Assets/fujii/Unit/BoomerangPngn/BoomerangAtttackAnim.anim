@@ -80,7 +80,7 @@ AnimationClip:
       value: {fileID: -5532502568152638755, guid: a55af5100f3c1eb468a6f7e366b3e4b6,
         type: 3}
     attribute: m_Sprite
-    path: Body
+    path: Body/Sprite
     classID: 212
     script: {fileID: 0}
   m_SampleRate: 60
@@ -91,7 +91,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 2073732236
+      path: 3445192274
       attribute: 0
       script: {fileID: 0}
       typeID: 212
@@ -142,4 +142,11 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 0.28333333
+    functionName: AttackEvent
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0

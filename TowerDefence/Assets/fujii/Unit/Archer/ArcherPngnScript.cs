@@ -9,8 +9,13 @@ public class ArcherPngnScript : MonoBehaviour
     public Transform attackTransform;
     /*****Menobehaviour method*****/
     /*****public method*****/
-    public void Attack(int power)
+    public void AttackEvent(int power)
     {
         pool.Pop(attackTransform.position);
+    }
+
+    public void ShotVoice()
+    {
+        SEManager.instance.Play("矢");
     }
 }
