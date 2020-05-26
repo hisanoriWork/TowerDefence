@@ -27,52 +27,52 @@ public class InstManager : MonoBehaviour
     void Awake()
     {
         Formation formation = new Formation();
-        //PrefsManager prefs = new PrefsManager();
-        //if (m_instData.playerNum == PlayerNum.Player1)
-        //{
-        //    formation = prefs.GetFormation(int.Parse(PlayerPrefs.GetString("ownFormationNum", "1")));
-        //}
-        //else
-        //{
-        //    formation = m_masterData.GetFormationFromStageNum(int.Parse(PlayerPrefs.GetString("stageNum", "1")));
-        //}
-        //下はデバッグ用
-        formation.formationDataExists = true;
+        PrefsManager prefs = new PrefsManager();
         if (m_instData.playerNum == PlayerNum.Player1)
         {
-            formation.gridinfo = new int[10, 10]
-                {
-            {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
-            {  0,  0,  0,  0,  0, 11, 11, 11, 11, 11},
-            {  0,  0,  0, 11, 11,  0,  0,  0,  0,  0},
-            { 13, 13, 13,  0,  0,  0,  0,  0,  0,  0},
-            {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
-            {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
-            {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
-            {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
-            {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
-            {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
-                };
-
-            formation.shiptype = 10010;
+            formation = prefs.GetFormation(int.Parse(PlayerPrefs.GetString("ownFormationNum", "1")));
         }
         else
         {
-            formation.gridinfo = new int[10, 10]
-                {
-            {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
-            {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
-            {  0,  0,  0,  0,  0,  0,  0, 12,  0,  0},
-            {  0,  0,  0,  0, 15, 14, 13,  0,  0,  0},
-            {  0, 17,  0, 16,  0,  0,  0,  0,  0,  0},
-            {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
-            {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
-            {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
-            {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
-            {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
-                };
-            formation.shiptype = 10020;
+            formation = m_masterData.GetFormationFromStageNum(int.Parse(PlayerPrefs.GetString("stageNum", "1")));
         }
+        //下はデバッグ用
+        //formation.formationDataExists = true;
+        //if (m_instData.playerNum == PlayerNum.Player1)
+        //{
+        //    formation.gridinfo = new int[10, 10]
+        //        {
+        //    {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+        //    {  0,  0,  0,  0,  0, 11, 11, 11, 11, 11},
+        //    {  0,  0,  0, 11, 11,  0,  0,  0,  0,  0},
+        //    { 13, 13, 13,  0,  0,  0,  0,  0,  0,  0},
+        //    {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+        //    {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+        //    {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+        //    {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+        //    {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+        //    {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+        //        };
+
+        //    formation.shiptype = 10010;
+        //}
+        //else
+        //{
+        //    formation.gridinfo = new int[10, 10]
+        //        {
+        //    {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+        //    {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+        //    {  0,  0,  0,  0,  0,  0,  0, 12,  0,  0},
+        //    {  0,  0,  0,  0, 15, 14, 13,  0,  0,  0},
+        //    {  0, 17,  0, 16,  0,  0,  0,  0,  0,  0},
+        //    {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+        //    {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+        //    {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+        //    {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+        //    {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+        //        };
+        //    formation.shiptype = 10020;
+        //}
 
         if (!formation.formationDataExists)
         {
