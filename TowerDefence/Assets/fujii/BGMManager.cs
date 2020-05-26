@@ -52,10 +52,13 @@ public class BGMManager : MonoBehaviour
     }
     public void Play(AudioClip clip)
     {
-        if (clip)
+        if (clip && clip != m_audioSource.clip)
         {
-            Stop();
-            m_audioSource.PlayOneShot(clip);
+            if (m_audioSource.clip != clip)
+            {
+                m_audioSource.clip = clip;
+                m_audioSource.Play();
+            }
         }
     }
     public void Play(string clipName)
