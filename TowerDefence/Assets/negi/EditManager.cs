@@ -112,7 +112,7 @@ public class EditManager : MonoBehaviour
         return;
     }
 
-    /*private void SetSpriteAndResizeImgSizeSel(Transform transform, float imgSize, Sprite sprite)
+    private void SetSpriteAndResizeImgSizeSel(Transform transform, float imgSize, Sprite sprite)
     {
 
         var img = transform.GetComponent<Image>();
@@ -123,16 +123,42 @@ public class EditManager : MonoBehaviour
 
         m_unitImgSize = m_width * selUnitSize;
 
+        var t_sizeDeltaX = t.sizeDelta.x;
+        var t_sizeDeltaY = t.sizeDelta.x;
+        float t_sizeDeltaScale = 1;
+
         img.sprite = sprite;
+
         img.SetNativeSize();
 
-        var width = t.sizeDelta.x * imgSize * m_unitImgSize;
-        var height = t.sizeDelta.y * imgSize* m_unitImgSize;
 
-        t.sizeDelta = new Vector2(width, height);
+        
+        if (t.sizeDelta.x >= t.sizeDelta.y)
+        {
+            //横長の時は横の幅をもとの幅に合うよう縮小
+
+            t_sizeDeltaScale = t_sizeDeltaX / t.sizeDelta.x;
+            var width = t.sizeDelta.x * t_sizeDeltaScale * imgSize * m_unitImgSize;
+            var height = t.sizeDelta.y * t_sizeDeltaScale * imgSize * m_unitImgSize;
+            t.sizeDelta = new Vector2(width, height);
+        }else
+        {
+            //縦長の時は縦の幅をもとの幅に合うよう縮小
+
+            t_sizeDeltaScale = t_sizeDeltaY / t.sizeDelta.y;
+            var width = t.sizeDelta.x * t_sizeDeltaScale * imgSize * m_unitImgSize;
+            var height = t.sizeDelta.y * t_sizeDeltaScale * imgSize * m_unitImgSize;
+            t.sizeDelta = new Vector2(width, height);
+
+
+        }
+
+        
+
+        
 
         return;
-    }*/
+    }
 
     private Vector2 ConvertOffsetValue(Vector2 dataOffset)
     {
@@ -151,7 +177,7 @@ public class EditManager : MonoBehaviour
             obj.name = data.ID.ToString();
 
             var transform = obj.transform.Find("Image");
-            SetSpriteAndResizeImgSize(transform, editParam.selectableUnitImgSize, data.sprite);
+            SetSpriteAndResizeImgSizeSel(transform, editParam.selectableUnitImgSize, data.sprite);
 
             obj.transform.Find("UnitName").GetComponent<Text>().text = data.name;
             /*obj.transform.Find("UnitDetails").GetComponent<Text>().text 
@@ -187,7 +213,7 @@ public class EditManager : MonoBehaviour
             obj.name = data.unitData.ID.ToString();
 
             var transform = obj.transform.Find("Image");
-            SetSpriteAndResizeImgSize(transform, editParam.selesctableShipImgSize, data.unitData.sprite);
+            SetSpriteAndResizeImgSizeSel(transform, editParam.selectableUnitImgSize, data.unitData.sprite);
 
             obj.transform.Find("UnitName").GetComponent<Text>().text = data.name;
             obj.transform.Find("UnitDetails").GetComponent<Text>().text
