@@ -267,7 +267,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.09, y: 0.00000047684}
+  m_AnchoredPosition: {x: 15, y: 0.00000047684}
   m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &131937492
@@ -289,7 +289,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 995988e537665464f9282c46c062fe08, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 30d7bbc6bccf4864bafc46957fb7d21c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1745,7 +1745,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 32eeb2d49e625b6438fc9d92d4b38779, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c19e2bea9b528bf4eb1506dfda08ca76, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2011,7 +2011,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 61.09, y: -0.0000082999}
+  m_AnchoredPosition: {x: 90, y: -0.0000082999}
   m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &955146005
@@ -2033,7 +2033,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a380645f72572894e9d0ed4a68115194, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 47049c6971a0438498fa6e73029a06f0, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2231,6 +2231,14 @@ MonoBehaviour:
   - {fileID: 729941291}
   - {fileID: 131937490}
   - {fileID: 955146003}
+  buttonSprites:
+  - {fileID: 21300000, guid: c19e2bea9b528bf4eb1506dfda08ca76, type: 3}
+  - {fileID: 21300000, guid: 30d7bbc6bccf4864bafc46957fb7d21c, type: 3}
+  - {fileID: 21300000, guid: 47049c6971a0438498fa6e73029a06f0, type: 3}
+  selectButtonSprites:
+  - {fileID: 21300000, guid: b96788e192a04e847985d5902c36a7bf, type: 3}
+  - {fileID: 21300000, guid: ab28e12971274fa449d6e0fe571cc6fb, type: 3}
+  - {fileID: 21300000, guid: f2cd01557617d704fa349864cbd4254f, type: 3}
 --- !u!1 &1359152614
 GameObject:
   m_ObjectHideFlags: 0
@@ -2629,7 +2637,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u7DE8\u6210 \n"
+  m_Text: "\u3078\u3093\u305B\u3044"
 --- !u!222 &1565656303
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3348,7 +3356,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -145.7, y: -0.0000014305}
-  m_SizeDelta: {x: 50, y: 30}
+  m_SizeDelta: {x: 60, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1940802679
 MonoBehaviour:
