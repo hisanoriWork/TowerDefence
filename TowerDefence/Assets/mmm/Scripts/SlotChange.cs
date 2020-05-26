@@ -7,27 +7,37 @@ public class SlotChange : MonoBehaviour
 {
     public int ownFormationNum = 1;
     public GameObject[] slotBtns;
+    public Sprite[] buttonSprites;
+    public Sprite[] selectButtonSprites;
 
     void Start()
     {
         ownFormationNum = int.Parse(PlayerPrefs.GetString("ownFormationNum", "1"));
-        if (ownFormationNum - 1 <= slotBtns.Length)
+        if (ownFormationNum <= slotBtns.Length + 1)
         {
-            //TODO: 対応するボタンの有効化
-            slotBtns[ownFormationNum - 1].SetActive(false); //test
+            for (int i = 0; i < slotBtns.Length; i++)
+            {
+                var m_Image = slotBtns[i].GetComponent<Image>();
+                m_Image.sprite = buttonSprites[i];
+                if (ownFormationNum == i + 1)
+                {
+                    m_Image.sprite = selectButtonSprites[i];
+                }
+            }
         }
     }
 
-    public void ChangeSlot(GameObject test)
+    public void ChangeSlot(GameObject button)
     {
         for (int i = 0; i < slotBtns.Length; i++)
         {
-            //TODO: 対応するボタンの有効化
-            slotBtns[i].SetActive(true);
-            if (slotBtns[i] == test)
+            var m_Image = slotBtns[i].GetComponent<Image>();
+            m_Image.sprite = buttonSprites[i];
+            if (slotBtns[i] == button)
             {
+                SEManager.instance.Play("セレクト");
+                m_Image.sprite = selectButtonSprites[i];
                 PlayerPrefs.SetString("ownFormationNum", (i + 1).ToString());
-                test.SetActive(false);
             }
         }
     }
