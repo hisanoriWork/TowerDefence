@@ -35,6 +35,7 @@ public class SlotChange : MonoBehaviour
             m_Image.sprite = buttonSprites[i];
             if (slotBtns[i] == button)
             {
+                SEManager.instance.Play("セレクト");
                 m_Image.sprite = selectButtonSprites[i];
                 PlayerPrefs.SetString("ownFormationNum", (i + 1).ToString());
             }

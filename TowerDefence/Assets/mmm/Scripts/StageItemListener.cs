@@ -15,8 +15,8 @@ public class StageItemListener : MonoBehaviour
     {
         if (stageSelectManager != null)
         {
+            SEManager.instance.Play("セレクト");
             stageSelectManager.ChangeSelectStage(stageNum);
-            Debug.Log("ステージ番号:" + stageNum);
         }
         else
         {
