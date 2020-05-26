@@ -149,4 +149,4 @@ MonoBehaviour:
   - name: "\u30DF\u30C3\u30B7\u30E7\u30F3"
     clip: {fileID: 8300000, guid: 26204423783f2514d9d9a614f41f2eb9, type: 3}
   - name: "\u5BFE\u6226"
-    clip: {fileID: 8300000, guid: 26204423783f2514d9d9a614f41f2eb9, type: 3}
+    clip: {fileID: 8300000, guid: 16b3a726ae7419c448436584bff22bad, type: 3}
