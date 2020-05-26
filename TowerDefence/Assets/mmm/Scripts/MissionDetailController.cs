@@ -13,6 +13,8 @@ public class MissionDetailController : MonoBehaviour
     public Text DetailContentTV;
     public Text Difficulty;
 
+    public SpriteGenerator spriteGenerator;
+
     //public StageDataManager stageDataManager;
 
     /*****private field*****/
@@ -33,7 +35,11 @@ public class MissionDetailController : MonoBehaviour
 
             stageData = masterData.stageDataList[stageIndex - 1];
             selectMissionTV.text = "ステージ" + (stageIndex);
-            enemyPreViewIV.sprite = stageData.preViewSprite;
+
+            spriteGenerator.GenerateSprite(stageData.GetFormation());
+            //enemyPreViewIV.sprite = stageData.preViewSprite;
+
+
             DetailContentTV.text = stageData.detailContent;
             var difficultyStarNum = "";
             for (int i = 0; i <= stageData.difficulty; i++)
