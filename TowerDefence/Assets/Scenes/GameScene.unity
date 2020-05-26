@@ -985,7 +985,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 06457a83d038fb84f93e017309c76ea3, type: 3}
     m_FontSize: 32
     m_FontStyle: 0
     m_BestFit: 0
@@ -1503,6 +1503,12 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2522277645146064990, guid: b43bd43ec43ad1347909bef673249816,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 06457a83d038fb84f93e017309c76ea3,
+        type: 3}
     - target: {fileID: 5220381420711110152, guid: b43bd43ec43ad1347909bef673249816,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1513,6 +1519,12 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1632109474}
+    - target: {fileID: 7317771733739689784, guid: b43bd43ec43ad1347909bef673249816,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 06457a83d038fb84f93e017309c76ea3,
+        type: 3}
     - target: {fileID: 7317771733934141875, guid: b43bd43ec43ad1347909bef673249816,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1623,6 +1635,24 @@ PrefabInstance:
       propertyPath: m_Name
       value: OptionCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 7665903137595850958, guid: b43bd43ec43ad1347909bef673249816,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 06457a83d038fb84f93e017309c76ea3,
+        type: 3}
+    - target: {fileID: 7857642395975546588, guid: b43bd43ec43ad1347909bef673249816,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 06457a83d038fb84f93e017309c76ea3,
+        type: 3}
+    - target: {fileID: 9168890523580797202, guid: b43bd43ec43ad1347909bef673249816,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 06457a83d038fb84f93e017309c76ea3,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b43bd43ec43ad1347909bef673249816, type: 3}
 --- !u!1001 &2865061104623371457
@@ -1765,6 +1795,12 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 40
       objectReference: {fileID: 0}
+    - target: {fileID: 2536692024109818122, guid: 0ab38f78f9f3f7c44814842b34d6ccdf,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 06457a83d038fb84f93e017309c76ea3,
+        type: 3}
     - target: {fileID: 2714607322191992933, guid: 0ab38f78f9f3f7c44814842b34d6ccdf,
         type: 3}
       propertyPath: m_SizeDelta.y
@@ -1925,6 +1961,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainGameCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 7055871923386950722, guid: 0ab38f78f9f3f7c44814842b34d6ccdf,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 06457a83d038fb84f93e017309c76ea3,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ab38f78f9f3f7c44814842b34d6ccdf, type: 3}
 --- !u!1001 &6483795094253624383

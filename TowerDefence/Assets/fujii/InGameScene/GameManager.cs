@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
                 m_player2HP.value = m_player2.shipHP;
 
             int victoryNum = CheckVictory(m_player1.shipHP, m_player2.shipHP);
-            if (!m_isFinished &&victoryNum > 0)
+            if (!m_isFinished &&　victoryNum > 0)
             {
                 m_isFinished = true;
                 switch (victoryNum)
@@ -124,9 +124,9 @@ public class GameManager : MonoBehaviour
          * プレイヤー2の勝利：2
          * ドロー：3
          */
-        if (shipHP1 < 0 && shipHP2 < 0) return 3;
-        else if (shipHP1 < 0) return 2;
-        else if (shipHP2 < 0) return 1;
+        if (shipHP1 <= 0 && shipHP2 <= 0) return 3;
+        else if (shipHP1 <= 0) return 2;
+        else if (shipHP2 <= 0) return 1;
 
         if (m_timeView.isFinished)
         {
