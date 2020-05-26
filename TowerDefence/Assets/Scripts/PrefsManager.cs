@@ -63,6 +63,7 @@ public class PrefsManager
 
     public Formation GetFormation()
     {
+        formation = new Formation();
 
         string json = PlayerPrefs.GetString("formation","NoData");
 
@@ -118,6 +119,8 @@ public class PrefsManager
 
     public Formation GetFormation(int formationID)
     {
+        formation = new Formation();
+
 
         string json = PlayerPrefs.GetString("formation" + formationID.ToString(), "NoData");
 

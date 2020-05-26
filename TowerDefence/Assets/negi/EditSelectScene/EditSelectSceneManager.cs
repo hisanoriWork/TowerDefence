@@ -5,14 +5,36 @@ using UnityEngine.SceneManagement;
 
 public class EditSelectSceneManager : MonoBehaviour
 {
+
+    public SpriteGenerator[] spriteGenerator = new SpriteGenerator[3];
+
+
+    //編成データ読み書き用
+    PrefsManager prefs = new PrefsManager();
+    //データ
+    private Formation[] formation = new Formation[3];
+
+    private Formation formTmp;
+
+
     private int m_ownFormationNum;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        BGMManager.instance.Play("エディット");
+
         m_ownFormationNum = 1;
-        //BGMManager.instance.Play("エディット");
+
+
+        for (int i = 0; i < 3; i++)
+        {
+            formation[i] = new Formation();
+            formation[i] = prefs.GetFormation((int)i + 1);
+            spriteGenerator[i].GenerateSprite(formation[i]);
+        }
+
     }
 
     // Update is called once per frame

@@ -42,8 +42,21 @@ public class EditManager : MonoBehaviour
     private List<ShipData> shipDataList;
     private List<UnitData> blockDataList;
 
+
+
+
+    public float selUnitSize = 0.01f;
+    public float selShipSize = 0.01f;
+
+    private float m_width;
+    private float m_height;
+    private float m_unitImgSize;
+    private float m_shipImgSize;
+
+
     void Awake()
     {
+        BGMManager.instance.Play("エディット");
 
         //SelectableContentsの取得]
         pngnDataList = masterData.pngnDataList;
@@ -66,6 +79,8 @@ public class EditManager : MonoBehaviour
         movingUnitObject.SetActive(false);
 
         editParam.deleteButton.SetActive(false);
+
+        
     }
 
     // Start is called before the first frame update
@@ -96,6 +111,28 @@ public class EditManager : MonoBehaviour
 
         return;
     }
+
+    /*private void SetSpriteAndResizeImgSizeSel(Transform transform, float imgSize, Sprite sprite)
+    {
+
+        var img = transform.GetComponent<Image>();
+        var t = transform.GetComponent<RectTransform>();
+
+        m_width = img.rectTransform.sizeDelta.x;
+        m_height = img.rectTransform.sizeDelta.y;
+
+        m_unitImgSize = m_width * selUnitSize;
+
+        img.sprite = sprite;
+        img.SetNativeSize();
+
+        var width = t.sizeDelta.x * imgSize * m_unitImgSize;
+        var height = t.sizeDelta.y * imgSize* m_unitImgSize;
+
+        t.sizeDelta = new Vector2(width, height);
+
+        return;
+    }*/
 
     private Vector2 ConvertOffsetValue(Vector2 dataOffset)
     {
