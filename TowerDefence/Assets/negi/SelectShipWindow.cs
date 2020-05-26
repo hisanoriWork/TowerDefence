@@ -26,12 +26,14 @@ public class SelectShipWindow : MonoBehaviour
 
     public  void Yes()
     {
+        SEManager.instance.Play("決定");
         formationGridManager.SelectEachShip(selectableUnitID);
         selectShipWindowObject.SetActive(false);
     }
 
     public void No()
     {
+        SEManager.instance.Play("キャンセル");
         selectShipWindowObject.SetActive(false);
     }
 }
