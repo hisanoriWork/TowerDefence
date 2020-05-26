@@ -562,6 +562,8 @@ public class FormationGridManager : MonoBehaviour
 
     public void BackToSaveFormation()
     {
+        SEManager.instance.Play("決定");
+
         formation = prefs.GetFormation(editParam.ownFormationNum);
 
         //prefs.SetFormation(formation.gridinfo, formation.shiptype,editParam.ownFormationNum);
@@ -581,6 +583,7 @@ public class FormationGridManager : MonoBehaviour
 
     public void SaveFormation()
     {
+        SEManager.instance.Play("決定");
         prefs.SetFormation(formation.gridinfo, formation.shiptype, editParam.ownFormationNum);
     }
 
@@ -852,6 +855,8 @@ public class FormationGridManager : MonoBehaviour
 
         if (attachingUnitPosition != null)
         {
+            SEManager.instance.Play("決定");
+
             //Debug.Log("attach"+movingUnitID);
             fc.formation.gridinfo[attachingUnitPosition[0], attachingUnitPosition[1]] = movingUnitID;
             if (m_unitData != null)
@@ -873,6 +878,10 @@ public class FormationGridManager : MonoBehaviour
                 //GridColorSelecting();
             }
 
+        }
+        else
+        {
+            SEManager.instance.Play("キャンセル");
         }
 
         DeleteFlyingPngn();
@@ -1055,6 +1064,7 @@ public class FormationGridManager : MonoBehaviour
 
                         //Blockが置けない
                         //Debug.Log("ブロックが宙に浮きます:(" + y + "," + x + ")");
+                        SEManager.instance.Play("キャンセル");
                         dialogManager.ShowDialog("ブロックが宙に浮きます！");
 
                         return false;

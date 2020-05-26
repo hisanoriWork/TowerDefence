@@ -16,6 +16,7 @@ public class TitleSceneManager : MonoBehaviour
         CheckFormationPrefIsSet();
         //BGMManager.instance.SetVolume(1);
         //BGMManager.instance.Play("タイトル");
+        BGMManager.instance.Play("タイトル");
     }
 
     // Update is called once per frame
@@ -26,10 +27,12 @@ public class TitleSceneManager : MonoBehaviour
 
     public void LoadStageSelectScene()
     {
+        SEManager.instance.Play("シーン遷移");
         SceneManager.LoadScene("StageSelectScene");
     }
     public void LoadEditSelectScene()
     {
+        SEManager.instance.Play("シーン遷移");
         SceneManager.LoadScene("EditSelectScene");
     }
 

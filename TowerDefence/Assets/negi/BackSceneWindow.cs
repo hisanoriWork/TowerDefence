@@ -17,6 +17,7 @@ public class BackSceneWindow : MonoBehaviour
 
     public void ShowBackSceneWindow()
     {
+        SEManager.instance.Play("セレクト");
         backSceneWindowObject.SetActive(true);
         return;
     }
@@ -24,6 +25,7 @@ public class BackSceneWindow : MonoBehaviour
 
     public void Yes()
     {
+        SEManager.instance.Play("シーン遷移");
         editManager.LoadEditSelectScene();
         backSceneWindowObject.SetActive(false);
         return;
@@ -31,6 +33,7 @@ public class BackSceneWindow : MonoBehaviour
 
     public void No()
     {
+        SEManager.instance.Play("キャンセル");
         backSceneWindowObject.SetActive(false);
         return;
     }

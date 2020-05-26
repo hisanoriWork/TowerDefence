@@ -42,8 +42,21 @@ public class EditManager : MonoBehaviour
     private List<ShipData> shipDataList;
     private List<UnitData> blockDataList;
 
+
+
+
+    public float selUnitSize = 0.01f;
+    public float selShipSize = 0.01f;
+
+    private float m_width;
+    private float m_height;
+    private float m_unitImgSize;
+    private float m_shipImgSize;
+
+
     void Awake()
     {
+        BGMManager.instance.Play("エディット");
 
         //SelectableContentsの取得]
         pngnDataList = masterData.pngnDataList;
@@ -66,6 +79,8 @@ public class EditManager : MonoBehaviour
         movingUnitObject.SetActive(false);
 
         editParam.deleteButton.SetActive(false);
+
+        
     }
 
     // Start is called before the first frame update
@@ -97,6 +112,28 @@ public class EditManager : MonoBehaviour
         return;
     }
 
+    /*private void SetSpriteAndResizeImgSizeSel(Transform transform, float imgSize, Sprite sprite)
+    {
+
+        var img = transform.GetComponent<Image>();
+        var t = transform.GetComponent<RectTransform>();
+
+        m_width = img.rectTransform.sizeDelta.x;
+        m_height = img.rectTransform.sizeDelta.y;
+
+        m_unitImgSize = m_width * selUnitSize;
+
+        img.sprite = sprite;
+        img.SetNativeSize();
+
+        var width = t.sizeDelta.x * imgSize * m_unitImgSize;
+        var height = t.sizeDelta.y * imgSize* m_unitImgSize;
+
+        t.sizeDelta = new Vector2(width, height);
+
+        return;
+    }*/
+
     private Vector2 ConvertOffsetValue(Vector2 dataOffset)
     {
         return dataOffset * editParam.movingUnitOffset;
@@ -117,8 +154,10 @@ public class EditManager : MonoBehaviour
             SetSpriteAndResizeImgSize(transform, editParam.selectableUnitImgSize, data.sprite);
 
             obj.transform.Find("UnitName").GetComponent<Text>().text = data.name;
-            obj.transform.Find("UnitDetails").GetComponent<Text>().text 
-                = "Power:" + data.power + "   HP:" + data.HP + "\nCT:" + data.CT + "   cost:" + data.cost;
+            /*obj.transform.Find("UnitDetails").GetComponent<Text>().text 
+                = "Power:" + data.power + "   HP:" + data.HP + "\nCT:" + data.CT + "   cost:" + data.cost;*/
+            obj.transform.Find("UnitDetails").GetComponent<Text>().text
+                = "HP:" + data.HP + "   Cost:" + data.cost;
 
             sel = obj.GetComponent<SelectableUnit>();
             sel.selectableUnitID = data.ID;
@@ -151,8 +190,8 @@ public class EditManager : MonoBehaviour
             SetSpriteAndResizeImgSize(transform, editParam.selesctableShipImgSize, data.unitData.sprite);
 
             obj.transform.Find("UnitName").GetComponent<Text>().text = data.name;
-            obj.transform.Find("UnitDetails").GetComponent<Text>().text 
-                = "Power:" + data.unitData.power + "   HP:" + data.unitData.HP + "\nCT:" + data.unitData.CT + "   cost:" + data.unitData.cost;
+            obj.transform.Find("UnitDetails").GetComponent<Text>().text
+                = "HP:" + data.unitData.HP + "   Cost:" + data.unitData.cost;
 
             sel = obj.GetComponent<SelectableUnit>();
             sel.selectableUnitID = data.unitData.ID;
@@ -182,16 +221,19 @@ public class EditManager : MonoBehaviour
 
     public void SwitchPngnType()
     {
+        SEManager.instance.Play("セレクト");
         SwitchUnitType(UnitType.Pngn);
     }
 
     public void SwitchShipType()
     {
+        SEManager.instance.Play("セレクト");
         SwitchUnitType(UnitType.Ship);
     }
 
     public void SwitchBlockType()
     {
+        SEManager.instance.Play("セレクト");
         SwitchUnitType(UnitType.Block);
     }
 
@@ -214,7 +256,7 @@ public class EditManager : MonoBehaviour
 
     public void ClickEachSelectableUnit(GameObject selectableUnit)
     {
-
+        SEManager.instance.Play("セレクト");
         SelectableUnit sel = selectableUnit.GetComponent<SelectableUnit>();
 
         //Debug.Log(sel.selectableUnitType);
@@ -267,6 +309,7 @@ public class EditManager : MonoBehaviour
 
     public void ClickEachAttachingUnit(GameObject attachingUnit)
     {
+        
         SelectableUnit att = attachingUnit.GetComponent<SelectableUnit>();
 
         //Debug.Log(sel.selectableUnitID);
@@ -287,10 +330,13 @@ public class EditManager : MonoBehaviour
                 //↑非常に危険、見直してから使う
                 //if(true)
                 {
+
                     //Debug.Log("aho");
                     //Debug.Log(att.beforeAttachingPosition[0] + ":" + att.beforeAttachingPosition[1]);
 
                     //ここらへん追加しすぎて乱雑なのでリファクタリング必要
+
+                    SEManager.instance.Play("セレクト");
 
                     editParam.deleteButton.SetActive(true);
 
