@@ -20,8 +20,12 @@ public class IceScript : MonoBehaviour
     void Awake()
     {
         Init(Vector3.zero);
-        baseWeapon.onHit.Subscribe(_ => baseWeapon.Despawn());
-        baseWeapon.onHitUnit.Subscribe(other => other.Hurt(baseWeapon.power));
+        baseWeapon.onHitUnit.Subscribe(other =>
+        {
+            other.Hurt(baseWeapon.power);
+            SEManager.instance.Play("氷");
+            baseWeapon.Despawn();
+        });
         baseWeapon.onHitWeapon.Subscribe(other => other.Hit());
     }
 
@@ -36,7 +40,7 @@ public class IceScript : MonoBehaviour
     /*****public method*****/
     public void Init(Vector3 pos, UnitScript unitScript = null)
     {
-        baseWeapon.Init(pos, unitScript);
+        baseWeapon.Init(pos, unitScript,true);
         m_speed = data.speed;
         m_gravity = data.gravity;
         m_move = Vector3.zero;

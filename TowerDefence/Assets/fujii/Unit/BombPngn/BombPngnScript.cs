@@ -10,5 +10,6 @@ public class BombPngnScript : MonoBehaviour
     public void Attack(int power)
     {
         pool.Pop(attackTransform.position);
+        SEManager.instance.Play("投げる");
     }
 }

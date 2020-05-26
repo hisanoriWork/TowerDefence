@@ -257,6 +257,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BGMManager
       objectReference: {fileID: 0}
+    - target: {fileID: 8833416995738045846, guid: 09d9565db29b1c647b20c440f6cc5d37,
+        type: 3}
+      propertyPath: m_clipList.Array.data[3].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 925338c9886df184086cc69f5bd88ed4, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 09d9565db29b1c647b20c440f6cc5d37, type: 3}
 --- !u!1 &265636847

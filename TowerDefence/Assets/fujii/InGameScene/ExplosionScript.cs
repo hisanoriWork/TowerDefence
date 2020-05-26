@@ -14,9 +14,15 @@ public class ExplosionScript : MonoBehaviour
     protected int m_power = 0;
     protected float m_time = 0;
     protected float m_size = 0;
+    protected bool m_sound;
 
     void FixedUpdate()
     {
+        if (!m_sound)
+        {
+            m_sound = true;
+            SEManager.instance.Play("爆発");
+        }
         m_time += Time.fixedDeltaTime;
         if (m_time >= time)
         {
@@ -48,6 +54,7 @@ public class ExplosionScript : MonoBehaviour
     }
     public void Init(int power = -10, float initialSize = -10f, float finalSize = -10f, float time = -10f)
     {
+        m_sound = false;
         m_power = power < 0 ? 1 : power;
         this.initialSize = initialSize < 0f ? 0f : initialSize;
         this.finalSize = finalSize < 0f ? 1f : finalSize;

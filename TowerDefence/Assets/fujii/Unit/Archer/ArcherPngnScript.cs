@@ -13,4 +13,9 @@ public class ArcherPngnScript : MonoBehaviour
     {
         pool.Pop(attackTransform.position);
     }
+
+    public void ShotVoice()
+    {
+        SEManager.instance.Play("矢");
+    }
 }

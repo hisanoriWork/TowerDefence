@@ -20,11 +20,14 @@ public class ArrowScript : MonoBehaviour
     void Awake()
     {
         Init(Vector3.zero);
-        baseWeapon.onHit.Subscribe(_ => baseWeapon.Despawn());
+        baseWeapon.onHit.Subscribe(_ =>
+        {
+            SEManager.instance.Play("衝突");
+            baseWeapon.Despawn();
+        });
         baseWeapon.onHitUnit.Subscribe(other =>
         {
             other.Hurt(baseWeapon.power);
-            //StartCoroutine(Utility.WaitForSecond(2f, () => baseWeapon.Despawn()));
         });
         baseWeapon.onHitWeapon.Subscribe(other =>other.Hit());
     }

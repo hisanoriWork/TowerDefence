@@ -42,34 +42,40 @@ public class SEManager : MonoBehaviour
         m_clipList.Clear();
 
     }
-    //音量(0から1)をセットする
     public void SetVolume(float value)
     {
         m_audioSource.volume = value;
     }
-
     public float GetVolume()
     {
         return m_audioSource.volume;
     }
-    //オーディオクリップから再生
     public void Play(AudioClip clip)
     {
         if(clip)
             m_audioSource.PlayOneShot(clip);
     }
-    //オーディオクリップの名前から再生
     public void Play(string clipName)
     {
-        if (m_clipDictionary.ContainsKey(clipName) && m_clipDictionary[clipName])
-            m_audioSource.PlayOneShot(m_clipDictionary[clipName]);
+        if (m_clipDictionary.ContainsKey(clipName))
+            Play(m_clipDictionary[clipName]);
     }
-    //ミュート
+    public void Stop()
+    {
+        m_audioSource.Stop();
+    }
+    public void Pause()
+    {
+        m_audioSource.Pause();
+    }
+    public void Resume()
+    {
+        m_audioSource.UnPause();
+    }
     public void Mute()
     {
         m_audioSource.mute = true;
     }
-    //ミュート解除
     public void UnMute()
     {
         m_audioSource.mute = false;

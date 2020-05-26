@@ -21,6 +21,7 @@ public class BoomerangScript : MonoBehaviour
     void Awake()
     {
         Init(Vector3.zero,null,transform);
+        baseWeapon.onHit.Subscribe(other => SEManager.instance.Play("衝突"));
         baseWeapon.onHitUnit.Subscribe(other => other.Hurt(baseWeapon.power));
         baseWeapon.onHitWeapon.Subscribe(other => other.Hit());
     }

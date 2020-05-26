@@ -22,6 +22,7 @@ public class ArtilleryGunPngnScript : MonoBehaviour
         if (num > 0)
         {
             pool.Pop(attackTransform.position);
+            SEManager.instance.Play("現代砲");
             StartCoroutine(Utility.WaitForSecond(time, () =>
             {
                 Shot(--num);
