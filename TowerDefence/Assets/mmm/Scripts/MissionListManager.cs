@@ -29,9 +29,6 @@ public class MissionListManager : MonoBehaviour
         }
         for (int i = 0; i < playableStageNum; i++)
         {
-            var m_Image = missionContainer.transform.Find("EnemyIcon").GetComponent<Image>();
-            m_Image.sprite = missionItemList[i].stageIcon;
-
             var m_Text = missionContainer.transform.Find("EnemyTitle").GetComponent<Text>();
             m_Text.text = missionItemList[i].title;
 
