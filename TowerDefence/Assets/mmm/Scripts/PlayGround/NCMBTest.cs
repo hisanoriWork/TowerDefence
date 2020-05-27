@@ -6,12 +6,13 @@ using NCMB;
 public class NCMBTest : MonoBehaviour
 {
     // NCMBを利用するためのクラス
-    private NCMBQuery<NCMBObject> _query;
+    private NCMBQuery<NCMBObject> query;
 
     void Start()
     {
         //TODO: 削除
         PostStageData(1, "お試し", 1);
+        FechStageData();
     }
 
     public void PostStageData(int slotNum, string detailContent, int difficulty)
@@ -46,5 +47,24 @@ public class NCMBTest : MonoBehaviour
                 }
             });
         }
+    }
+
+    public void FechAllStageData()
+    {
+        query = new NCMBQuery<NCMBObject>("OnlineStageData");
+        query.FindAsync((List<NCMBObject> objList, NCMBException e) =>
+        {
+            if (e != null)
+            {
+                //検索失敗時の処理
+            }
+            else
+            {
+                //検索失敗時の処理
+                foreach (NCMBObject obj in objList)
+                {
+                }
+            }
+        });
     }
 }
