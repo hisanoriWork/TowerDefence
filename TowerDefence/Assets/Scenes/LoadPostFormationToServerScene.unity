@@ -1185,7 +1185,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2121640926}
-        m_MethodName: ChangeSlider
+        m_MethodName: ChangeDifficultySlider
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
