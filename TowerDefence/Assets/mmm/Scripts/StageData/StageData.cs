@@ -5,13 +5,15 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Scriptable/StageData")]
 public class StageData : ScriptableObject
 {
-    [Tooltip("ステージ番号")] public int stageNum = 1;
-    [Tooltip("対戦相手の画像")] public Sprite preViewSprite;
-    [Tooltip("詳細")] [TextArea] public string detailContent = "ステージのしょうさい";
-    [Tooltip("難易度")] public int difficulty = 1;
-    [Tooltip("編成情報")] [SmartArray] public int[] gridInfo;
-    [Tooltip("編成の舟のID")] public int shipType = 10010;
-
+    public int ID = 1;
+    public int password = 1;
+    [TextArea] public new string name;
+    [TextArea] public string detailContent = "ステージのしょうさい";
+    [SmartArray] public int[] gridInfo;
+    public int shipInfo = 10010;
+    public int difficulty = 1;
+    [System.NonSerialized] public int winCount = 0;
+    [System.NonSerialized] public int loseCount = 0;
     public Formation GetFormation()
     {
         Formation formation = new Formation();
@@ -20,7 +22,7 @@ public class StageData : ScriptableObject
             {
                 formation.gridinfo[i, j] = gridInfo[10 * i + j];
             }
-        formation.shiptype = shipType;
+        formation.shiptype = shipInfo;
         formation.formationDataExists = true;
         return formation;
     }

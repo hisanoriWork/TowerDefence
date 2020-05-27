@@ -88,7 +88,7 @@ public class MasterDataScript : MonoBehaviour
     {
         foreach (StageData data in stageDataList)
         {
-            if (data.stageNum == stageNum) return data;
+            if (data.ID == stageNum) return data;
         }
         return null;
     }
@@ -108,7 +108,7 @@ public class MasterDataScript : MonoBehaviour
         {
                 formation.gridinfo[i, j] = data.gridInfo[10 * i + j];
         }
-        formation.shiptype = data.shipType;
+        formation.shiptype = data.shipInfo;
         formation.formationDataExists = true;
         return formation;
     }
