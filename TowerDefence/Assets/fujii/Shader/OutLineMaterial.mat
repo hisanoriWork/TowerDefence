@@ -64,13 +64,13 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _Height: 75.1
+    - _Height: 1245.71
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
-    - _OutLineWidth: 0.083
+    - _OutLineWidth: 0.188
     - _Parallax: 0.02
-    - _Radius: 5.2
+    - _Radius: 74.7
     - _SmoothnessTextureChannel: 0
     - _SoftEdge: 0
     - _SpecularHighlights: 1
@@ -80,7 +80,7 @@ Material:
     - _StencilOp: 0
     - _StencilWriteMask: 255
     - _UVSec: 0
-    - _Width: 128.22
+    - _Width: 700
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
