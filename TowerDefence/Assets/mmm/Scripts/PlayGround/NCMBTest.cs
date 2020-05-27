@@ -6,53 +6,73 @@ using NCMB;
 public class NCMBTest : MonoBehaviour
 {
     // NCMBを利用するためのクラス
-    private NCMBQuery<NCMBObject> query;
+    private NCMBQuery<NCMBObject> queryPostStage;
+    private NCMBQuery<NCMBObject> queryFetchAllStage;
 
     void Start()
     {
+        NCMBObject stageData = new NCMBObject("UUID");
+        stageData["ID"] = 0;
+        stageData.SaveAsync();
         //TODO: 削除
         PostStageData(1, "お試し", 1);
-        FechStageData();
+        FetchAllStageData();
     }
 
     public void PostStageData(int slotNum, string detailContent, int difficulty)
     {
         PrefsManager prefs = new PrefsManager();
         Formation formation = prefs.GetFormation(slotNum);
+
         if (formation.formationDataExists)
         {
-            NCMBObject stageData = new NCMBObject("OnlineStageData");
+            queryPostStage = new NCMBQuery<NCMBObject>("OnlineStageData");
 
-            // オブジェクトに値を設定
-            stageData["detailContent"] = detailContent;
-
-            stageData["gridinfo"] = formation.gridinfo;
-            stageData["shipInfo"] = formation.shiptype;
-            stageData["difficulty"] = difficulty;
-
-            stageData["winCount"] = 0;
-            stageData["loseCount"] = 0;
-            //TODO: カラムの追加
-
-            // データストアへの登録
-            stageData.SaveAsync((NCMBException e) =>
+            // 保存されているデータ件数を取得
+            queryPostStage.CountAsync((int count, NCMBException e) =>
             {
                 if (e != null)
                 {
-                    //エラー処理
+                    //件数取得失敗時の処理
+                    Debug.Log("件数の取得に失敗しました");
                 }
                 else
                 {
-                    //成功時の処理
+                    NCMBObject stageData = new NCMBObject("OnlineStageData");
+
+                    // オブジェクトに値を設定
+                    stageData["ID"] = count + 1;
+                    stageData["detailContent"] = detailContent;
+
+                    stageData["gridinfo"] = formation.gridinfo;
+                    stageData["shipInfo"] = formation.shiptype;
+                    stageData["difficulty"] = difficulty;
+
+                    stageData["winCount"] = 0;
+                    stageData["loseCount"] = 0;
+                    //TODO: カラムの追加
+
+                    // データストアへの登録
+                    stageData.SaveAsync((NCMBException ee) =>
+                    {
+                        if (ee != null)
+                        {
+                            //エラー処理
+                        }
+                        else
+                        {
+                            //成功時の処理
+                        }
+                    });
                 }
             });
         }
     }
 
-    public void FechAllStageData()
+    public void FetchAllStageData()
     {
-        query = new NCMBQuery<NCMBObject>("OnlineStageData");
-        query.FindAsync((List<NCMBObject> objList, NCMBException e) =>
+        queryFetchAllStage = new NCMBQuery<NCMBObject>("OnlineStageData");
+        queryFetchAllStage.FindAsync((List<NCMBObject> objList, NCMBException e) =>
         {
             if (e != null)
             {
@@ -67,4 +87,5 @@ public class NCMBTest : MonoBehaviour
             }
         });
     }
+
 }
