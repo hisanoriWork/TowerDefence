@@ -4,6 +4,7 @@ public class Gauge : MonoBehaviour
 {
     [SerializeField]private Image fillImage = default;
     [SerializeField]private Image backImage = default;
+    [SerializeField]private Image gaugeImage = default;
     [SerializeField]private bool fillMethodIsHorizontal = true;
     [SerializeField] private Image.OriginHorizontal origin = default;
     [SerializeField] private Vector2 GaugeSize = default;
@@ -18,7 +19,7 @@ public class Gauge : MonoBehaviour
             fillImage.fillOrigin = (int)origin;
         fillImage.rectTransform.sizeDelta = GaugeSize;
         backImage.rectTransform.sizeDelta = GaugeSize;
-        m_pos = backImage.rectTransform.anchoredPosition;
+        m_pos = gaugeImage.rectTransform.anchoredPosition;
     }
     public int gaugeMaxValue
     {
@@ -45,11 +46,15 @@ public class Gauge : MonoBehaviour
             {
                 fillImage.rectTransform.sizeDelta = new Vector2(GaugeSize.x * m_maxValue / m_gaugeMaxValue, GaugeSize.y);
                 backImage.rectTransform.sizeDelta = new Vector2(GaugeSize.x * m_maxValue / m_gaugeMaxValue, GaugeSize.y);
+                gaugeImage.rectTransform.sizeDelta = new Vector2(GaugeSize.x * m_maxValue / m_gaugeMaxValue, GaugeSize.y) +new Vector2(15,10);
                 if (origin == Image.OriginHorizontal.Left)
-                    backImage.rectTransform.anchoredPosition = m_pos + Vector2.left * GaugeSize.x * (m_gaugeMaxValue-m_maxValue) / (2*m_gaugeMaxValue);
+                {
+                    gaugeImage.rectTransform.anchoredPosition = m_pos + Vector2.left * GaugeSize.x * (m_gaugeMaxValue - m_maxValue) / (2 * m_gaugeMaxValue);
+                }
                 else
-                    backImage.rectTransform.anchoredPosition = m_pos + Vector2.right * GaugeSize.x * (m_gaugeMaxValue - m_maxValue) / (2*m_gaugeMaxValue);
-
+                {
+                    gaugeImage.rectTransform.anchoredPosition = m_pos + Vector2.right * GaugeSize.x * (m_gaugeMaxValue - m_maxValue) / (2 * m_gaugeMaxValue);
+                }
             }
             fillImage.fillAmount = (float)m_value / (float)m_maxValue;
         }

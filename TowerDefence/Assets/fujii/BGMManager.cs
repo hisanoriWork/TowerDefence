@@ -52,16 +52,30 @@ public class BGMManager : MonoBehaviour
     }
     public void Play(AudioClip clip)
     {
-        if (clip)
+        if (clip && clip != m_audioSource.clip)
         {
-            Stop();
-            m_audioSource.PlayOneShot(clip);
+                m_audioSource.clip = clip;
+                m_audioSource.Play();
         }
     }
     public void Play(string clipName)
     {
         if (m_clipDictionary.ContainsKey(clipName))
             Play(m_clipDictionary[clipName]);
+    }
+    public void Replay(AudioClip clip)
+    {
+        if (clip)
+        {
+            m_audioSource.clip = clip;
+            m_audioSource.Play();
+        }
+
+    }
+    public void Replay(string clipName)
+    {
+        if (m_clipDictionary.ContainsKey(clipName))
+            Replay(m_clipDictionary[clipName]);
     }
     public void Stop()
     {
