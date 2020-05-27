@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private InstManager m_player1 = default, m_player2 = default;
     [SerializeField] private Gauge m_player1HP = default, m_player2HP = default;
     [SerializeField] private Text m_victoryCanvas = default;
+    [SerializeField] private StageNumManager m_stageNumManager = default;
     private int[,] gird;
     private bool m_isFinished = false;
     /*****Mobehabiour method*****/
@@ -72,6 +73,7 @@ public class GameManager : MonoBehaviour
                         m_victoryCanvas.text = "引き分け";
                         BGMManager.instance.Stop();
                         SEManager.instance.Play("引き分け");
+                        m_stageNumManager.SetPlayableStageNum(true);
                         break;
                     case 2:
                         m_victoryCanvas.text = "負けた";
@@ -116,6 +118,7 @@ public class GameManager : MonoBehaviour
         BGMManager.instance.Stop();
         SceneManager.LoadScene(sceneName);
     }
+
     /*****private method*****/
     private int CheckVictory(int shipHP1 ,int shipHP2)
     {

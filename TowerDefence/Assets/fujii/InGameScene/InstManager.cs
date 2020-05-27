@@ -22,6 +22,7 @@ public class InstManager : MonoBehaviour
     /*****private field*****/
     [SerializeField] private MasterDataScript m_masterData = default;
     [SerializeField] private InstDataScript m_instData = default;
+    [SerializeField] private StageNumManager m_stageNumManager = default;
     float m_dx = 0.8f, m_dy = 0.8f;
     /*****monoBehaviour method*****/
     void Awake()
@@ -34,7 +35,7 @@ public class InstManager : MonoBehaviour
         }
         else
         {
-            formation = m_masterData.GetFormationFromStageNum(int.Parse(PlayerPrefs.GetString("stageNum", "1")));
+            formation = m_masterData.GetFormationFromStageNum(m_stageNumManager.stageNum);
         }
         //下はデバッグ用
         //formation.formationDataExists = true;
