@@ -36,6 +36,12 @@ public class TitleSceneManager : MonoBehaviour
         SceneManager.LoadScene("EditSelectScene");
     }
 
+    public void LoadOnlineEntranceScene()
+    {
+        SEManager.instance.Play("シーン遷移");
+        SceneManager.LoadScene("OnlineEntranceScene");
+    }
+
     public void CheckFormationPrefIsSet()
     {
         string checkFormaionStr;
