@@ -20,4 +20,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameScene.unity
     guid: b1fd6de4eafafdc4092d2d0835d9471d
+  - enabled: 1
+    path: Assets/Scenes/OnlineEntranceScene.unity
+    guid: c1acf490ef4c6fe4bb93ec83b05f2059
+  - enabled: 1
+    path: Assets/Scenes/LoadPostFormationToServerScene.unity
+    guid: e7e10aa0d352c774eae3c627ab8edec3
   m_configObjects: {}
