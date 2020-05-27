@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
         m_player1HP.maxValue = m_player1HP.value = m_player1.shipHP;
         m_player2HP.maxValue = m_player2HP.value = m_player2.shipHP;
         Play(1.0f);
-        BGMManager.instance.Play("対戦");
+        BGMManager.instance.Replay("対戦");
     }
     void Update()
     {
