@@ -114,7 +114,6 @@ public class UnitScript : MonoBehaviour
     {
 
         if ( m_animator != null
-            && !m_animator.GetCurrentAnimatorStateInfo(0).IsName("Hurt")
             && !m_animator.IsInTransition(0))
         {
             m_HP -= damage;
