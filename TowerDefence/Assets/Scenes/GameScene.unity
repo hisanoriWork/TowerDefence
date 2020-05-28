@@ -949,7 +949,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 06457a83d038fb84f93e017309c76ea3, type: 3}
+    m_Font: {fileID: 12800000, guid: c012c48c9c6af034cb2aadaa218fe777, type: 3}
     m_FontSize: 32
     m_FontStyle: 0
     m_BestFit: 0
@@ -1458,6 +1458,12 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2522277645146064990, guid: b43bd43ec43ad1347909bef673249816,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: c012c48c9c6af034cb2aadaa218fe777,
+        type: 3}
     - target: {fileID: 3139144648998041022, guid: b43bd43ec43ad1347909bef673249816,
         type: 3}
       propertyPath: m_AnchorMin.x
@@ -1508,6 +1514,12 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1632109474}
+    - target: {fileID: 7317771733739689784, guid: b43bd43ec43ad1347909bef673249816,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: c012c48c9c6af034cb2aadaa218fe777,
+        type: 3}
     - target: {fileID: 7317771733934141875, guid: b43bd43ec43ad1347909bef673249816,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1618,6 +1630,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: OptionCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 7857642395975546588, guid: b43bd43ec43ad1347909bef673249816,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: c012c48c9c6af034cb2aadaa218fe777,
+        type: 3}
+    - target: {fileID: 9168890523580797202, guid: b43bd43ec43ad1347909bef673249816,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: c012c48c9c6af034cb2aadaa218fe777,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b43bd43ec43ad1347909bef673249816, type: 3}
 --- !u!1001 &2865061104623371457
@@ -1859,6 +1883,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainGameCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 7055871923386950722, guid: 0ab38f78f9f3f7c44814842b34d6ccdf,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: c012c48c9c6af034cb2aadaa218fe777,
+        type: 3}
     - target: {fileID: 9100220509836774537, guid: 0ab38f78f9f3f7c44814842b34d6ccdf,
         type: 3}
       propertyPath: m_RootOrder
