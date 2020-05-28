@@ -72,8 +72,7 @@ public class GameManager : MonoBehaviour
                     case 3:
                         m_victoryCanvas.text = "引き分け";
                         BGMManager.instance.Stop();
-                        SEManager.instance.Play("引き分け");
-                        m_stageNumManager.SetPlayableStageNum(true);
+                        SEManager.instance.Play("引き分け");               
                         break;
                     case 2:
                         m_victoryCanvas.text = "負けた";
@@ -81,6 +80,10 @@ public class GameManager : MonoBehaviour
                         SEManager.instance.Play("敗北");
                         break;
                     case 1:
+                        if (PlayerPrefs.GetString("DirectToStageSelect", "FromTitle").Equals("FromTitle"))
+                        {
+                            m_stageNumManager.SetPlayableStageNum(true);
+                        }                       
                         m_victoryCanvas.text = "勝った";
                         BGMManager.instance.Stop();
                         SEManager.instance.Play("勝利");
