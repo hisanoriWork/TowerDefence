@@ -13,7 +13,7 @@ public class NCMBDatabase : MonoBehaviour
 
     static readonly string ONLINE_STAGE_DATA = "OnlineStageData";
 
-    public void PostStageData(int slotNum, string detailContent, int difficulty)
+    public void PostStageData(int slotNum, string stageName, string detailContent)
     {
         PrefsManager prefs = new PrefsManager();
         Formation formation = prefs.GetFormation(slotNum);
@@ -35,11 +35,12 @@ public class NCMBDatabase : MonoBehaviour
 
                     // OnlineStageDataに値を設定
                     stageData["ID"] = count + 1;
+                    stageData["name"] = stageName;
                     stageData["detailContent"] = detailContent;
 
                     stageData["gridInfo"] = formation.gridinfo;
                     stageData["shipInfo"] = formation.shiptype;
-                    stageData["difficulty"] = difficulty;
+                    stageData["difficulty"] = 1;
 
                     stageData["winCount"] = 0;
                     stageData["loseCount"] = 0;
