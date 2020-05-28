@@ -25,7 +25,7 @@ public class MissionListManager : MonoBehaviour
     {
         if (from.Equals("FromTitle"))
         {
-            List<MissionItemData> missionItemList = MasterDataScript.instance.missionItemDataList;
+            List<StageData> missionItemList = MasterDataScript.instance.stageDataList;
 
             playableStageNum = PlayerPrefs.GetInt("playableStageNum", 1);
             Debug.Log(playableStageNum + "Playable");
@@ -36,7 +36,7 @@ public class MissionListManager : MonoBehaviour
             for (int i = 0; i < playableStageNum; i++)
             {
                 var m_Text = missionContainer.transform.Find("EnemyTitle").GetComponent<Text>();
-                m_Text.text = missionItemList[i].title;
+                m_Text.text = missionItemList[i].name;
 
                 missionContainer.GetComponent<StageItemListener>().stageNum = stageIndex;
                 stageIndex++;
