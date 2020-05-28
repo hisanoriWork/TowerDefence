@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98b403c1afce91a4287803f7fab651aa, type: 3}
   m_Name: ArtilleryGunPngn
   m_EditorClassIdentifier: 
-  name: 12.7cmA
+  name: "12.7cm\u7832"
   ID: 17
-  power: 5
+  power: 49
   HP: 300
   CT: 10
   cost: 200

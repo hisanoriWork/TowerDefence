@@ -15,12 +15,12 @@ MonoBehaviour:
   name: "\u6D77\u8CCA\u8239"
   ID: 10010
   power: 10
-  HP: 400
+  HP: 800
   CT: 101
   cost: 800
   prefab: {fileID: 7151728711608997689, guid: c8b0f23dbe91bee418e3626d18e7d57e, type: 3}
   unitType: 1
-  sprite: {fileID: 21300000, guid: fa41641c2e6eaa94a88af63e96f05708, type: 3}
+  sprite: {fileID: 21300000, guid: 9f0e467812cc00f419a883cea51f3dd1, type: 3}
   pngnCanGetOn: 1
   blockCanGetOn: 1
   indestructible: 0
@@ -61,4 +61,5 @@ MonoBehaviour:
     x: 1
   - y: 2
     x: 2
+  emptyForm: []
   offset: {x: 0.11, y: -1.6, z: 0}

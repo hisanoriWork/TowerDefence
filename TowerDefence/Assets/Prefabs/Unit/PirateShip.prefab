@@ -29,11 +29,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PirateShip
       objectReference: {fileID: 0}
-    - target: {fileID: 2175080275073575139, guid: 4754a8b44f67c33449df4e6d10e8c446,
-        type: 3}
-      propertyPath: m_TagString
-      value: Ship
-      objectReference: {fileID: 0}
     - target: {fileID: 2175080275073575141, guid: 4754a8b44f67c33449df4e6d10e8c446,
         type: 3}
       propertyPath: m_LocalPosition.x

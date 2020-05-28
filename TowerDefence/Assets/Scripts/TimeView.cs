@@ -8,7 +8,7 @@ public class TimeView : MonoBehaviour
 {
     /*****public field*****/
     public Timer timer;
-    public Gauge timeGauge;
+    public TimeGauge timeGauge;
     public bool isFinished {get;set;} = false;
     /*****monoBehaviour*****/
     void Awake()

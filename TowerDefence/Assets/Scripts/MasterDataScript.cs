@@ -4,12 +4,39 @@ using UnityEngine;
 
 public class MasterDataScript : MonoBehaviour
 {
+    /*****singleton*****/
+    public static MasterDataScript instance
+    {
+        get
+        {
+            if (m_instance != null)
+                return m_instance;
+            m_instance = FindObjectOfType<MasterDataScript>();
+            if (m_instance != null)
+                return m_instance;
+            return null;
+        }
+    }
+    protected static MasterDataScript m_instance;
+
+    /*****field*****/
     public List<UnitData> unitDataList;
     public List<UnitData> pngnDataList;
     public List<UnitData> blockDataList;
     public List<ShipData> shipDataList;
     public List<StageData> stageDataList;
+    public List<StageData> onlineStageDataList;
     public List<MissionItemData> missionItemDataList;
+    void Awake()
+    {
+        if (instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        DontDestroyOnLoad(gameObject);
+    }
+
     public UnitData FindUnitData(int unitID)
     {
         foreach (UnitData data in unitDataList)
@@ -88,7 +115,7 @@ public class MasterDataScript : MonoBehaviour
     {
         foreach (StageData data in stageDataList)
         {
-            if (data.stageNum == stageNum) return data;
+            if (data.ID == stageNum) return data;
         }
         return null;
     }
@@ -108,7 +135,7 @@ public class MasterDataScript : MonoBehaviour
         {
                 formation.gridinfo[i, j] = data.gridInfo[10 * i + j];
         }
-        formation.shiptype = data.shipType;
+        formation.shiptype = data.shipInfo;
         formation.formationDataExists = true;
         return formation;
     }

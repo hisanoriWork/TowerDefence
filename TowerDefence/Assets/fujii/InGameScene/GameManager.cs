@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private InstManager m_player1 = default, m_player2 = default;
     [SerializeField] private Gauge m_player1HP = default, m_player2HP = default;
     [SerializeField] private Text m_victoryCanvas = default;
+    [SerializeField] private StageNumManager m_stageNumManager = default;
     private int[,] gird;
     private bool m_isFinished = false;
     /*****Mobehabiour method*****/
@@ -46,11 +47,11 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-        m_player1HP.gaugeMaxValue = m_player2HP.gaugeMaxValue = 500;
+        m_player1HP.gaugeMaxValue = m_player2HP.gaugeMaxValue = 1000;
         m_player1HP.maxValue = m_player1HP.value = m_player1.shipHP;
         m_player2HP.maxValue = m_player2HP.value = m_player2.shipHP;
         Play(1.0f);
-        BGMManager.instance.Play("対戦");
+        BGMManager.instance.Replay("対戦");
     }
     void Update()
     {
@@ -71,7 +72,7 @@ public class GameManager : MonoBehaviour
                     case 3:
                         m_victoryCanvas.text = "引き分け";
                         BGMManager.instance.Stop();
-                        SEManager.instance.Play("引き分け");
+                        SEManager.instance.Play("引き分け");               
                         break;
                     case 2:
                         m_victoryCanvas.text = "負けた";
@@ -79,6 +80,10 @@ public class GameManager : MonoBehaviour
                         SEManager.instance.Play("敗北");
                         break;
                     case 1:
+                        if (PlayerPrefs.GetString("DirectToStageSelect", "FromTitle").Equals("FromTitle"))
+                        {
+                            m_stageNumManager.SetPlayableStageNum(true);
+                        }                       
                         m_victoryCanvas.text = "勝った";
                         BGMManager.instance.Stop();
                         SEManager.instance.Play("勝利");
@@ -116,6 +121,7 @@ public class GameManager : MonoBehaviour
         BGMManager.instance.Stop();
         SceneManager.LoadScene(sceneName);
     }
+
     /*****private method*****/
     private int CheckVictory(int shipHP1 ,int shipHP2)
     {

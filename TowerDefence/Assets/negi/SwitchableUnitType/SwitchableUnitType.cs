@@ -23,6 +23,8 @@ public class SwitchableUnitType : MonoBehaviour
         color.normalColor = m_defaultColors.selectedColor;
         color.highlightedColor = m_defaultColors.selectedColor;
         color.selectedColor = m_defaultColors.selectedColor;
+
+        //m_frames
         ResetButtonColor();
         selectedButton.colors = color;
 

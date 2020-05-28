@@ -28,12 +28,19 @@ public class TitleSceneManager : MonoBehaviour
     public void LoadStageSelectScene()
     {
         SEManager.instance.Play("シーン遷移");
+        PlayerPrefs.SetString("DirectToStageSelect", "FromTitle");
         SceneManager.LoadScene("StageSelectScene");
     }
     public void LoadEditSelectScene()
     {
         SEManager.instance.Play("シーン遷移");
         SceneManager.LoadScene("EditSelectScene");
+    }
+
+    public void LoadOnlineEntranceScene()
+    {
+        SEManager.instance.Play("シーン遷移");
+        SceneManager.LoadScene("OnlineEntranceScene");
     }
 
     public void CheckFormationPrefIsSet()

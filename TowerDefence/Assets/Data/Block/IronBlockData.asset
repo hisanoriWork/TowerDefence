@@ -15,7 +15,7 @@ MonoBehaviour:
   name: "\u9244\u306E\u30D6\u30ED\u30C3\u30AF"
   ID: 110
   power: 0
-  HP: 100
+  HP: 200
   CT: 101
   cost: 20
   prefab: {fileID: 1124309942392098350, guid: a31f02f9efb89a0479fa82f395bea5c7, type: 3}
@@ -25,4 +25,5 @@ MonoBehaviour:
   blockCanGetOn: 0
   indestructible: 0
   form: []
+  emptyForm: []
   offset: {x: 0, y: 0, z: 0}

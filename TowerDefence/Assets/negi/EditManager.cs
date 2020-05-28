@@ -9,7 +9,6 @@ public class EditManager : MonoBehaviour
 
 
     /*****public field*****/
-    public MasterDataScript masterData;
     public FormationGridManager formationGridManager;
     public EditParam editParam;
 
@@ -59,13 +58,13 @@ public class EditManager : MonoBehaviour
         BGMManager.instance.Play("エディット");
 
         //SelectableContentsの取得]
-        pngnDataList = masterData.pngnDataList;
-        CreateSelectableUnits(UnitType.Pngn, masterData.pngnDataList);
+        pngnDataList = MasterDataScript.instance.pngnDataList;
+        CreateSelectableUnits(UnitType.Pngn, MasterDataScript.instance.pngnDataList);
 
-        blockDataList = masterData.blockDataList;
+        blockDataList = MasterDataScript.instance.blockDataList;
         CreateSelectableUnits(UnitType.Block, blockDataList);
 
-        shipDataList = masterData.shipDataList;
+        shipDataList = MasterDataScript.instance.shipDataList;
         CreateSelectableUnits(UnitType.Ship, shipDataList);
 
 
@@ -215,7 +214,7 @@ public class EditManager : MonoBehaviour
             var transform = obj.transform.Find("Image");
             SetSpriteAndResizeImgSizeSel(transform, editParam.selectableUnitImgSize, data.unitData.sprite);
 
-            obj.transform.Find("UnitName").GetComponent<Text>().text = data.name;
+            obj.transform.Find("UnitName").GetComponent<Text>().text = data.unitData.name;
             obj.transform.Find("UnitDetails").GetComponent<Text>().text
                 = "HP:" + data.unitData.HP + "   Cost:" + data.unitData.cost;
 

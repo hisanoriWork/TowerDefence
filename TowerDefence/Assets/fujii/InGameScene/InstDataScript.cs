@@ -8,7 +8,6 @@ public class InstDataScript : MonoBehaviour
     public ShipInst ship = new ShipInst();
     public PlayerNum playerNum;
     public Transform place;
-    public Transform missilePlace;
 }
 
 public class UnitInst

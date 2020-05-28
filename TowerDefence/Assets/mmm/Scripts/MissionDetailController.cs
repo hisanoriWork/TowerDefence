@@ -6,16 +6,17 @@ using UnityEngine.UI;
 public class MissionDetailController : MonoBehaviour
 {
     /*****public field*****/
-    public MasterDataScript masterData;
     public GameObject misshionDetailWindow;
+    public GameObject DetailBox;
     public Text selectMissionTV;
     public Image enemyPreViewIV;
     public Text DetailContentTV;
     public Text Difficulty;
 
-    public SpriteGenerator spriteGenerator;
+    private string from = "FromTitle";
+    private bool isLocal = true;
 
-    //public StageDataManager stageDataManager;
+    public SpriteGenerator spriteGenerator;
 
     /*****private field*****/
     private StageData stageData;
@@ -24,25 +25,36 @@ public class MissionDetailController : MonoBehaviour
     private void Start()
     {
         PlayerPrefs.SetString("stageNum", stageIndex.ToString());
-        ChangeDetailContent();
+        if (!from.Equals(PlayerPrefs.GetString("DirectToStageSelect", "FromTitle")))
+        {
+            isLocal = false;
+        }
     }
 
     public void ChangeDetailContent()
     {
-        if (masterData.stageDataList.Count >= stageIndex)
+
+        List<StageData> stageList;
+        if (isLocal)
         {
             PlayerPrefs.SetString("stageNum", stageIndex.ToString());
+            stageList = MasterDataScript.instance.stageDataList;
+        }
+        else
+        {
+            stageList = MasterDataScript.instance.onlineStageDataList;
+        }
 
-            stageData = masterData.stageDataList[stageIndex - 1];
-            selectMissionTV.text = "ステージ" + (stageIndex);
-
+        if (stageList.Count >= stageIndex)
+        {
+            DetailBox.SetActive(true);
+            stageData = stageList[stageIndex - 1];
+            selectMissionTV.text = stageData.name.ToString(); ;
             spriteGenerator.GenerateSprite(stageData.GetFormation());
-            //enemyPreViewIV.sprite = stageData.preViewSprite;
-
-
+            PlayerPrefs.SetString("StageDataUuid", stageData.uuid);
             DetailContentTV.text = stageData.detailContent;
             var difficultyStarNum = "";
-            for (int i = 0; i <= stageData.difficulty; i++)
+            for (int i = 0; i < stageData.difficulty; i++)
             {
                 difficultyStarNum += "★";
             }
