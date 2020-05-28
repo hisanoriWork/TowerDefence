@@ -4,6 +4,22 @@ using UnityEngine;
 
 public class MasterDataScript : MonoBehaviour
 {
+    /*****singleton*****/
+    public static MasterDataScript instance
+    {
+        get
+        {
+            if (m_instance != null)
+                return m_instance;
+            m_instance = FindObjectOfType<MasterDataScript>();
+            if (m_instance != null)
+                return m_instance;
+            return null;
+        }
+    }
+    protected static MasterDataScript m_instance;
+
+    /*****field*****/
     public List<UnitData> unitDataList;
     public List<UnitData> pngnDataList;
     public List<UnitData> blockDataList;
