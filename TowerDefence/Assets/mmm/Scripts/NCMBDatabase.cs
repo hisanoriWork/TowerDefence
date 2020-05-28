@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using NCMB;
 
 public class NCMBDatabase : MonoBehaviour
@@ -55,7 +56,7 @@ public class NCMBDatabase : MonoBehaviour
                         }
                         else
                         {
-                            //成功時の処理
+                            SceneManager.LoadScene("OnlineEntranceScene");
                         }
                     });
                 }
