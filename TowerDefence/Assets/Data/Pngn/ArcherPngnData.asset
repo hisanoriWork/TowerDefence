@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: "\u30A2\u30FC\u30C1\u30E3\u30FC"
   ID: 11
-  power: 5
+  power: 10
   HP: 100
   CT: 6
   cost: 10

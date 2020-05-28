@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: "12.7cm\u7832"
   ID: 17
-  power: 5
+  power: 49
   HP: 300
   CT: 10
   cost: 200
