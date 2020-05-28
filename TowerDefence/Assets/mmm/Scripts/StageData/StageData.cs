@@ -10,7 +10,7 @@ public class StageData : ScriptableObject
     [TextArea] public new string name;
     [TextArea] public string detailContent = "ステージのしょうさい";
     [SmartArray] public int[] gridInfo;
-    public int shipInfo;
+    public int shipInfo = 10010;
     public int difficulty;
     [System.NonSerialized] public int winCount;
     [System.NonSerialized] public int loseCount;
