@@ -29,7 +29,6 @@ using UnityEngine.UI;
 public class SpriteGenerator : MonoBehaviour
 {
     
-    public MasterDataScript masterData;
     //public EditParam editParam;
 
     public EachGrid[,] eachGrids;
@@ -200,7 +199,7 @@ public class SpriteGenerator : MonoBehaviour
         {
             for (int j = 0; j < 10; j++)
             {
-                m_unitData = masterData.FindUnitData(formation.gridinfo[i, j]);
+                m_unitData = MasterDataScript.instance.FindUnitData(formation.gridinfo[i, j]);
 
                 EachGrid eachGrid = eachGrids[i, j];
 
@@ -241,7 +240,7 @@ public class SpriteGenerator : MonoBehaviour
 
 
 
-        m_unitData = masterData.FindUnitData(formation.shiptype);
+        m_unitData = MasterDataScript.instance.FindUnitData(formation.shiptype);
 
 
         
