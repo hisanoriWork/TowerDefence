@@ -14,13 +14,47 @@ public class StageData : ScriptableObject
     public int difficulty = 1;
     [System.NonSerialized] public int winCount = 0;
     [System.NonSerialized] public int loseCount = 0;
+    private int x = 10, y = 10;
+
+    /***** method*****/
+    public static StageData CreateInstance()
+    {
+        return ScriptableObject.CreateInstance<StageData>();
+    }
+    public void Init(int ID, string name, string detailContent, int[] gridInfo, int shipInfo,int password = 1)
+    {
+        this.ID = ID;
+        this.name = name;
+        this.detailContent = detailContent;
+        this.gridInfo = gridInfo;
+        this.shipInfo = shipInfo;
+        this.password = password;
+    }
+    public void Init(int ID, string name, string detailContent, Formation formation, int password = 1)
+    {
+        int[] grid = new int[100];
+        for (int i = 0; i < x; i++) for (int j = 0; j < y; j++)
+            {
+                grid[x * i + j] = formation.gridinfo[i, j];
+            }
+        Init(ID, name, detailContent,grid, formation.shiptype, password);
+    }
+    public void SetDifficulty()
+    {
+        if (winCount == 0 && loseCount == 0)
+            difficulty = 1;
+        else if (loseCount == 0)
+            difficulty = winCount;
+        else
+            difficulty = winCount / loseCount;
+        difficulty = difficulty < 10 ? difficulty : 9;
+    }
     public Formation GetFormation()
     {
         Formation formation = new Formation();
-        //マジックナンバーすみません
-        for (int i = 0; i < 10; i++) for (int j = 0; j < 10; j++)
+        for (int i = 0; i < x; i++) for (int j = 0; j < y; j++)
             {
-                formation.gridinfo[i, j] = gridInfo[10 * i + j];
+                formation.gridinfo[i, j] = gridInfo[x * i + j];
             }
         formation.shiptype = shipInfo;
         formation.formationDataExists = true;
