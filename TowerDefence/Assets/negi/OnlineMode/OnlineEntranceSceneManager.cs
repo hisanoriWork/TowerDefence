@@ -31,6 +31,12 @@ public class OnlineEntranceSceneManager : MonoBehaviour
         SceneManager.LoadScene("LoadPostFormationToServerScene");
     }
 
+    public void LoadOnlineRankingScene()
+    {
+        SEManager.instance.Play("シーン遷移");
+        SceneManager.LoadScene("OnlineRankingScene");
+    }
+
 
     public void LoadOnlineStageSelectScene()
     {
