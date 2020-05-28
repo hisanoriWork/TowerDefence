@@ -15,16 +15,12 @@ public class LoadPostFormationToServerSceneManager : MonoBehaviour
     string inputNameText;
     string inputDetailContentText;
 
-
-
     //入力された情報を読み込む用
-
     PrefsManager prefs = new PrefsManager();
     private Formation formation = new Formation();//マス目部分int[] gridinfo = new int[10,10] ,船部分 int shiptype;
 
     public Text nameText;
     public Text detailContentText;
-
 
     //編成選ぶ用(mmmからコピー)
     public int ownFormationNum = 1;
@@ -32,17 +28,15 @@ public class LoadPostFormationToServerSceneManager : MonoBehaviour
     public Sprite[] buttonSprites;
     public Sprite[] selectButtonSprites;
 
-
+    private NCMBDatabase db = new NCMBDatabase();
 
     //Dialogと意思確認用のプレハブ
     public DialogManager dialogManager;
-
 
     // Start is called before the first frame update
     void Start()
     {
         //BGMManager.instance.SetVolume(1);
-        //BGMManager.instance.Play("タイトル");
         BGMManager.instance.Play("タイトル");
 
         ownFormationNum = int.Parse(PlayerPrefs.GetString("ownFormationNum", "1"));
@@ -60,16 +54,6 @@ public class LoadPostFormationToServerSceneManager : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-
-
-
-
     public void ChangeSlot(GameObject button)
     {
         for (int i = 0; i < slotBtns.Length; i++)
@@ -81,6 +65,7 @@ public class LoadPostFormationToServerSceneManager : MonoBehaviour
                 SEManager.instance.Play("セレクト");
                 m_Image.sprite = selectButtonSprites[i];
                 inputOwnFormationNum = (i + 1);
+                PlayerPrefs.SetString("ownFormationNum", inputOwnFormationNum.ToString());
             }
         }
     }
@@ -89,31 +74,9 @@ public class LoadPostFormationToServerSceneManager : MonoBehaviour
 
     public void PostData()
     {
-
-
-
-
         SEManager.instance.Play("決定");
-
-        //選択された編成を取得
-        //もうinputOwnFormationNumに入っているはず
-
-        formation = prefs.GetFormation(inputOwnFormationNum);
-
-        for (int y = 0; y < 10; y++)
-        {
-            for (int x = 0; x < 10; x++)
-            {
-                inputGridinfo[10 * y + x] = formation.gridinfo[y, x];
-            }
-        }
-
-        inputShiptype = formation.shiptype;
-
-
-
+        inputOwnFormationNum = int.Parse(PlayerPrefs.GetString("ownFormationNum", "1"));
         //記入された編成名を取得
-
         inputNameText = nameText.text;
 
         if (inputNameText == "")
@@ -130,14 +93,7 @@ public class LoadPostFormationToServerSceneManager : MonoBehaviour
 
         }
 
-
-
-
-
         //記入された詳細を取得
-
-        //detailContentTextに格納されている
-
         inputDetailContentText = detailContentText.text;
 
 
@@ -156,24 +112,7 @@ public class LoadPostFormationToServerSceneManager : MonoBehaviour
 
         }
 
-
-
-        //IDを振り当てる？なんかしてユニークなIDを作成
-        NCMBDatabase db = new NCMBDatabase();
-
-        db.PostStageData(inputOwnFormationNum, inputNameText, inputDetailContentText);
-
-
-
-
-
-        //ここまででreturnされていなかったら投稿できる環境がそろっている
-        //以下でサーバーに投稿してもらって大丈夫です
-
-        //通信してサーバーに保存させる
-
-        //失敗したらDialog出す
-        //dialogManager.ShowDialog("投稿に失敗しました・・・");
+        db.PostStageData(inputOwnFormationNum, inputNameText, inputDetailContentText, dialogManager);
 
         return;
     }

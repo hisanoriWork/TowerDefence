@@ -14,7 +14,7 @@ public class NCMBDatabase : MonoBehaviour
 
     static readonly string ONLINE_STAGE_DATA = "OnlineStageData";
 
-    public void PostStageData(int slotNum, string stageName, string detailContent)
+    public void PostStageData(int slotNum, string stageName, string detailContent, DialogManager dialogManager)
     {
         PrefsManager prefs = new PrefsManager();
         Formation formation = prefs.GetFormation(slotNum);
@@ -28,6 +28,7 @@ public class NCMBDatabase : MonoBehaviour
             {
                 if (e != null)
                 {
+                    dialogManager.ShowDialog("送信に失敗しました..");
                     Debug.Log("OnlineStageDataの件数の取得に失敗しました");
                 }
                 else
@@ -45,14 +46,14 @@ public class NCMBDatabase : MonoBehaviour
 
                     stageData["winCount"] = 0;
                     stageData["loseCount"] = 0;
-                    //TODO: カラムの追加
 
                     // データストアへの登録
                     stageData.SaveAsync((NCMBException ee) =>
                     {
                         if (ee != null)
                         {
-                            //エラー処理
+                            Debug.Log("bug");
+                            Debug.Log(ee.ToString());
                         }
                         else
                         {
@@ -61,6 +62,9 @@ public class NCMBDatabase : MonoBehaviour
                     });
                 }
             });
+        } else
+        {
+            Debug.Log("buggg");
         }
     }
 
@@ -94,7 +98,7 @@ public class NCMBDatabase : MonoBehaviour
 
         stageData.gridInfo = new int[100];
         var l = fetchStage["gridInfo"] as ArrayList;
-        for (int i = 0; i < (fetchStage["gridInfo"] as ArrayList).Count; i++ )
+        for (int i = 0; i < (fetchStage["gridInfo"] as ArrayList).Count; i++)
         {
             stageData.gridInfo[i] = System.Convert.ToInt32(l[i]);
         }

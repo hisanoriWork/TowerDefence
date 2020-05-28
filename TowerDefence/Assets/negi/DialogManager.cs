@@ -49,7 +49,6 @@ public class DialogManager : MonoBehaviour
     {
         dialogObject.SetActive(true);
 
-
         dialogText.text = message;
 
         float alpha = fadeTime / fadeTime;
