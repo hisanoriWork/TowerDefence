@@ -63,7 +63,7 @@ public class LoadPostFormationToServerSceneManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
 
@@ -100,11 +100,11 @@ public class LoadPostFormationToServerSceneManager : MonoBehaviour
 
         formation = prefs.GetFormation(inputOwnFormationNum);
 
-        for(int y = 0; y < 10; y++)
+        for (int y = 0; y < 10; y++)
         {
-            for(int x = 0; x < 10; x++)
+            for (int x = 0; x < 10; x++)
             {
-                inputGridinfo[10 * y + x] = formation.gridinfo[y,x];
+                inputGridinfo[10 * y + x] = formation.gridinfo[y, x];
             }
         }
 
@@ -159,9 +159,9 @@ public class LoadPostFormationToServerSceneManager : MonoBehaviour
 
 
         //IDを振り当てる？なんかしてユニークなIDを作成
+        NCMBDatabase db = new NCMBDatabase();
 
-
-
+        db.PostStageData(inputOwnFormationNum, inputDetailContentText, 1);
 
 
 
