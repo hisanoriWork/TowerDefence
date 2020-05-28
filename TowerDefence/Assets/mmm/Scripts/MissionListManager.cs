@@ -56,7 +56,7 @@ public class MissionListManager : MonoBehaviour
         for (int i = 0; i < database.fetchStageDatas.Count; i++)
         {
             var m_Text = missionContainer.transform.Find("EnemyTitle").GetComponent<Text>();
-            m_Text.text = database.fetchStageDatas[i].detailContent;
+            m_Text.text = database.fetchStageDatas[i].name;
 
             missionContainer.GetComponent<StageItemListener>().stageNum = stageIndex;
             stageIndex++;
