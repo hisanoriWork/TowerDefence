@@ -6,6 +6,7 @@ using UnityEngine;
 public class StageData : ScriptableObject
 {
     public int ID;
+    public string uuid = "";
     public int password = 1;
     [TextArea] public new string name;
     [TextArea] public string detailContent = "ステージのしょうさい";
@@ -21,7 +22,7 @@ public class StageData : ScriptableObject
     {
         return ScriptableObject.CreateInstance<StageData>();
     }
-    public void Init(int ID, string name, string detailContent, int[] gridInfo, int shipInfo,int password = 1)
+    public void Init(int ID, string name, string detailContent, int[] gridInfo, int shipInfo, int password = 1)
     {
         this.ID = ID;
         this.name = name;
@@ -37,7 +38,7 @@ public class StageData : ScriptableObject
             {
                 grid[x * i + j] = formation.gridinfo[i, j];
             }
-        Init(ID, name, detailContent,grid, formation.shiptype, password);
+        Init(ID, name, detailContent, grid, formation.shiptype, password);
     }
     public void SetDifficulty()
     {

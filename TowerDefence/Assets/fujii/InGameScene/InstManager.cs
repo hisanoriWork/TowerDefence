@@ -34,7 +34,20 @@ public class InstManager : MonoBehaviour
         }
         else
         {
-            formation = MasterDataScript.instance.GetFormationFromStageNum(m_stageNumManager.stageNum);
+            string uuid = PlayerPrefs.GetString("StageDataUuid", "");
+            if (uuid.Equals(""))
+            {
+                formation = MasterDataScript.instance.GetFormationFromStageNum(m_stageNumManager.stageNum);
+            } else
+            {
+                foreach (StageData stageData in MasterDataScript.instance.onlineStageDataList)
+                {
+                    if (stageData.uuid.Equals(uuid))
+                    {
+                        formation = stageData.GetFormation();
+                    }
+                }
+            }
         }
         //下はデバッグ用
         //formation.formationDataExists = true;
