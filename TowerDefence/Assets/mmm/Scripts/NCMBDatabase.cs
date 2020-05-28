@@ -3,18 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using NCMB;
 
-public class NCMBTest : MonoBehaviour
+public class NCMBDatabase : MonoBehaviour
 {
-    // NCMBを利用するためのクラス
+
     private NCMBQuery<NCMBObject> queryPostStage;
     private NCMBQuery<NCMBObject> queryFetchAllStage;
 
-    void Start()
-    {
-        //TODO: 削除
-        PostStageData(1, "お試し", 1);
-        FetchAllStageData();
-    }
+    static readonly string ONLINE_STAGE_DATA = "OnlineStageData";
 
     public void PostStageData(int slotNum, string detailContent, int difficulty)
     {
@@ -23,21 +18,20 @@ public class NCMBTest : MonoBehaviour
 
         if (formation.formationDataExists)
         {
-            queryPostStage = new NCMBQuery<NCMBObject>("OnlineStageData");
+            queryPostStage = new NCMBQuery<NCMBObject>(ONLINE_STAGE_DATA);
 
             // 保存されているデータ件数を取得
             queryPostStage.CountAsync((int count, NCMBException e) =>
             {
                 if (e != null)
                 {
-                    //件数取得失敗時の処理
-                    Debug.Log("件数の取得に失敗しました");
+                    Debug.Log("OnlineStageDataの件数の取得に失敗しました");
                 }
                 else
                 {
-                    NCMBObject stageData = new NCMBObject("OnlineStageData");
+                    NCMBObject stageData = new NCMBObject(ONLINE_STAGE_DATA);
 
-                    // オブジェクトに値を設定
+                    // OnlineStageDataに値を設定
                     stageData["ID"] = count + 1;
                     stageData["detailContent"] = detailContent;
 
@@ -69,7 +63,7 @@ public class NCMBTest : MonoBehaviour
     public List<StageData> FetchAllStageData()
     {
         var stageDatas = new List<StageData>();
-        queryFetchAllStage = new NCMBQuery<NCMBObject>("OnlineStageData");
+        queryFetchAllStage = new NCMBQuery<NCMBObject>(ONLINE_STAGE_DATA);
         queryFetchAllStage.FindAsync((List<NCMBObject> fetchList, NCMBException e) =>
         {
             if (e != null)
@@ -78,11 +72,9 @@ public class NCMBTest : MonoBehaviour
             }
             else
             {
-                //検索成功時の処理
-                //TODO: 最大表示数を決める?
+                //TODO: 最大表示数を決める?ランダムにソートする?
                 foreach (NCMBObject fetchStage in fetchList)
                 {
-                    Debug.Log("aa");
                     stageDatas.Add(ParceStageData(fetchStage));
                 }
             }
