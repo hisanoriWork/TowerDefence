@@ -28,6 +28,7 @@ public class TitleSceneManager : MonoBehaviour
     public void LoadStageSelectScene()
     {
         SEManager.instance.Play("シーン遷移");
+        PlayerPrefs.SetString("DirectToStageSelect", "FromTitle");
         SceneManager.LoadScene("StageSelectScene");
     }
     public void LoadEditSelectScene()
