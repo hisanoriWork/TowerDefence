@@ -19,11 +19,11 @@ public class StageNumManager : MonoBehaviour
     {
         if (victoryFlag)
         {
-            int playableStageNum = int.Parse(PlayerPrefs.GetString("playableStageNum", "1"));
+            int playableStageNum = PlayerPrefs.GetInt("playableStageNum", 1);
             if (playableStageNum == stageNum)
             {
                 playableStageNum++;
-                PlayerPrefs.SetString("playableStageNum", playableStageNum.ToString());
+                PlayerPrefs.SetInt("playableStageNum", playableStageNum);
             }
         }
     }

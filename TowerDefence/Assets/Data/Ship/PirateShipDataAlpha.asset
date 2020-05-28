@@ -15,7 +15,7 @@ MonoBehaviour:
   name: "\u6D77\u8CCA\u8239"
   ID: 10010
   power: 10
-  HP: 400
+  HP: 800
   CT: 101
   cost: 800
   prefab: {fileID: 7151728711608997689, guid: c8b0f23dbe91bee418e3626d18e7d57e, type: 3}

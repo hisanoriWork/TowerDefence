@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-        m_player1HP.gaugeMaxValue = m_player2HP.gaugeMaxValue = 500;
+        m_player1HP.gaugeMaxValue = m_player2HP.gaugeMaxValue = 1000;
         m_player1HP.maxValue = m_player1HP.value = m_player1.shipHP;
         m_player2HP.maxValue = m_player2HP.value = m_player2.shipHP;
         Play(1.0f);
