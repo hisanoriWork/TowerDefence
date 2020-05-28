@@ -13,6 +13,7 @@ public class MissionDetailController : MonoBehaviour
     public Text DetailContentTV;
     public Text Difficulty;
 
+    private string from = "FromTitle";
     private bool isLocal = true;
 
     public SpriteGenerator spriteGenerator;
@@ -26,15 +27,19 @@ public class MissionDetailController : MonoBehaviour
     private void Start()
     {
         PlayerPrefs.SetString("stageNum", stageIndex.ToString());
+        if (!from.Equals(PlayerPrefs.GetString("DirectToStageSelect", "FromTitle")))
+        {
+            isLocal = false;
+        }
         //ChangeDetailContent();
-        spriteGenerator.GenerateSprite(masterData.stageDataList[1].GetFormation());
+        spriteGenerator.GenerateSprite(masterData.stageDataList[0].GetFormation());
     }
 
     public void ChangeDetailContent()
     {
 
         List<StageData> stageList;
-        if (false)
+        if (isLocal)
         {
             PlayerPrefs.SetString("stageNum", stageIndex.ToString());
             stageList = masterData.stageDataList;

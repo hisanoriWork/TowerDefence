@@ -89,14 +89,14 @@ public class NCMBDatabase : MonoBehaviour
     private StageData ParceStageData(NCMBObject fetchStage)
     {
         StageData stageData = ScriptableObject.CreateInstance<StageData>();
+
         stageData.gridInfo = new int[100];
         var l = fetchStage["gridInfo"] as ArrayList;
         for (int i = 0; i < (fetchStage["gridInfo"] as ArrayList).Count; i++ )
         {
             stageData.gridInfo[i] = System.Convert.ToInt32(l[i]);
         }
-        Debug.Log(fetchStage["gridInfo"].ToString());
-        //stageData.gridInfo = fetchStage["gridInfo"] as int[];
+
         stageData.ID = System.Convert.ToInt32(fetchStage["ID"]);
         stageData.detailContent = fetchStage["detailContent"].ToString();
         stageData.shipInfo = System.Convert.ToInt32(fetchStage["shipInfo"]);
