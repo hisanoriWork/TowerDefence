@@ -25,12 +25,13 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         //オプションを開いたときゲームを停止
-        m_option.whenDisplayed.Subscribe(_ => {
+        m_option.whenDisplayed.Subscribe(_ =>
+        {
             Stop(false);
             SEManager.instance.Pause();
             BGMManager.instance.Pause();
             SEManager.instance.Play("設定");
-        }); 
+        });
         m_option.whenHidden.Subscribe(_ =>
         {
             SEManager.instance.Resume();
@@ -39,7 +40,7 @@ public class GameManager : MonoBehaviour
         //オプションを閉じたとき，もともとゲームを再生していたら再生する
         m_option.whenHidden.Where(_ => isPlaying).Subscribe(_ => Play(timeScale));
         //オプションを閉じたとき，もともとゲームを停止していたら停止する
-        m_option.whenHidden.Where(_ => !isPlaying).Subscribe(_ =>Stop(true));
+        m_option.whenHidden.Where(_ => !isPlaying).Subscribe(_ => Stop(true));
         m_stop.whenHidden.Subscribe(_ => { m_play.Display(); Play(1.0f); });
         m_play.whenHidden.Subscribe(_ => { m_X2Play.Display(); Play(2.0f); });
         m_X2Play.whenHidden.Subscribe(_ => { m_X4Play.Display(); Play(4.0f); });
@@ -55,7 +56,7 @@ public class GameManager : MonoBehaviour
     }
     void Update()
     {
-        
+
         if (isPlaying)
         {
             if (m_player1HP.value != m_player1.shipHP)
@@ -64,15 +65,25 @@ public class GameManager : MonoBehaviour
                 m_player2HP.value = m_player2.shipHP;
 
             int victoryNum = CheckVictory(m_player1.shipHP, m_player2.shipHP);
-            if (!m_isFinished &&　victoryNum > 0)
+            if (!m_isFinished && victoryNum > 0)
             {
                 m_isFinished = true;
+
+                if (!PlayerPrefs.GetString("StageDataUuid", "").Equals(""))
+                {
+                    Debug.Log("Online Battle Result");
+                }
+                else
+                {
+                    Debug.Log("Local Battle Result");
+                }
+
                 switch (victoryNum)
                 {
                     case 3:
                         m_victoryCanvas.text = "引き分け";
                         BGMManager.instance.Stop();
-                        SEManager.instance.Play("引き分け");               
+                        SEManager.instance.Play("引き分け");
                         break;
                     case 2:
                         m_victoryCanvas.text = "負けた";
@@ -83,7 +94,7 @@ public class GameManager : MonoBehaviour
                         if (PlayerPrefs.GetString("DirectToStageSelect", "FromTitle").Equals("FromTitle"))
                         {
                             m_stageNumManager.SetPlayableStageNum(true);
-                        }                       
+                        }
                         m_victoryCanvas.text = "勝った";
                         BGMManager.instance.Stop();
                         SEManager.instance.Play("勝利");
@@ -123,7 +134,7 @@ public class GameManager : MonoBehaviour
     }
 
     /*****private method*****/
-    private int CheckVictory(int shipHP1 ,int shipHP2)
+    private int CheckVictory(int shipHP1, int shipHP2)
     {
         /*決まってない：0
          * プレイヤー1の勝利：1
