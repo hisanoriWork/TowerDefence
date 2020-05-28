@@ -11,9 +11,6 @@ public class NCMBTest : MonoBehaviour
 
     void Start()
     {
-        NCMBObject stageData = new NCMBObject("UUID");
-        stageData["ID"] = 0;
-        stageData.SaveAsync();
         //TODO: 削除
         PostStageData(1, "お試し", 1);
         FetchAllStageData();
@@ -44,7 +41,7 @@ public class NCMBTest : MonoBehaviour
                     stageData["ID"] = count + 1;
                     stageData["detailContent"] = detailContent;
 
-                    stageData["gridinfo"] = formation.gridinfo;
+                    stageData["gridInfo"] = formation.gridinfo;
                     stageData["shipInfo"] = formation.shiptype;
                     stageData["difficulty"] = difficulty;
 
@@ -69,10 +66,11 @@ public class NCMBTest : MonoBehaviour
         }
     }
 
-    public void FetchAllStageData()
+    public List<StageData> FetchAllStageData()
     {
+        var stageDatas = new List<StageData>();
         queryFetchAllStage = new NCMBQuery<NCMBObject>("OnlineStageData");
-        queryFetchAllStage.FindAsync((List<NCMBObject> objList, NCMBException e) =>
+        queryFetchAllStage.FindAsync((List<NCMBObject> fetchList, NCMBException e) =>
         {
             if (e != null)
             {
@@ -80,12 +78,30 @@ public class NCMBTest : MonoBehaviour
             }
             else
             {
-                //検索失敗時の処理
-                foreach (NCMBObject obj in objList)
+                //検索成功時の処理
+                //TODO: 最大表示数を決める?
+                foreach (NCMBObject fetchStage in fetchList)
                 {
+                    Debug.Log("aa");
+                    stageDatas.Add(ParceStageData(fetchStage));
                 }
             }
         });
+
+        return stageDatas;
     }
 
+    private StageData ParceStageData(NCMBObject fetchStage)
+    {
+        StageData stageData = ScriptableObject.CreateInstance<StageData>();
+        stageData.ID = System.Convert.ToInt32(fetchStage["ID"]);
+        stageData.detailContent = fetchStage["detailContent"].ToString();
+        stageData.gridInfo = fetchStage["gridInfo"] as int[];
+        stageData.shipInfo = System.Convert.ToInt32(fetchStage["shipInfo"]);
+        stageData.difficulty = System.Convert.ToInt32(fetchStage["difficulty"]);
+
+        stageData.winCount = System.Convert.ToInt32(fetchStage["winCount"]);
+        stageData.loseCount = System.Convert.ToInt32(fetchStage["loseCount"]);
+        return stageData;
+    }
 }
