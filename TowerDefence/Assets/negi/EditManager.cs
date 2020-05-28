@@ -214,7 +214,7 @@ public class EditManager : MonoBehaviour
             var transform = obj.transform.Find("Image");
             SetSpriteAndResizeImgSizeSel(transform, editParam.selectableUnitImgSize, data.unitData.sprite);
 
-            obj.transform.Find("UnitName").GetComponent<Text>().text = data.name;
+            obj.transform.Find("UnitName").GetComponent<Text>().text = data.unitData.name;
             obj.transform.Find("UnitDetails").GetComponent<Text>().text
                 = "HP:" + data.unitData.HP + "   Cost:" + data.unitData.cost;
 
