@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 public class MissionListManager : MonoBehaviour
 {
-    public MasterDataScript masterData;
     public GameObject missionContainer;
 
     private int playableStageNum = 5;
@@ -26,7 +25,7 @@ public class MissionListManager : MonoBehaviour
     {
         if (from.Equals("FromTitle"))
         {
-            List<MissionItemData> missionItemList = masterData.missionItemDataList;
+            List<MissionItemData> missionItemList = MasterDataScript.instance.missionItemDataList;
 
             playableStageNum = PlayerPrefs.GetInt("playableStageNum", 1);
 
@@ -53,7 +52,7 @@ public class MissionListManager : MonoBehaviour
 
     public void ヤバい(List<StageData> missionItemList)
     {
-        masterData.onlineStageDataList = missionItemList;
+        MasterDataScript.instance.onlineStageDataList = missionItemList;
         for (int i = 0; i < database.fetchStageDatas.Count; i++)
         {
             var m_Text = missionContainer.transform.Find("EnemyTitle").GetComponent<Text>();

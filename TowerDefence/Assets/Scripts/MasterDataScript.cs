@@ -37,7 +37,7 @@ public class MasterDataScript : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-        public UnitData FindUnitData(int unitID)
+    public UnitData FindUnitData(int unitID)
     {
         foreach (UnitData data in unitDataList)
         {
