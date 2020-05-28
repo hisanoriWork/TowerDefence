@@ -99,6 +99,7 @@ public class NCMBDatabase : MonoBehaviour
 
         stageData.ID = System.Convert.ToInt32(fetchStage["ID"]);
         stageData.uuid = fetchStage.ObjectId;
+        stageData.name = fetchStage["name"].ToString();
         stageData.detailContent = fetchStage["detailContent"].ToString();
         stageData.shipInfo = System.Convert.ToInt32(fetchStage["shipInfo"]);
         stageData.difficulty = System.Convert.ToInt32(fetchStage["difficulty"]);
