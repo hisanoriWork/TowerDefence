@@ -27,7 +27,17 @@ public class MasterDataScript : MonoBehaviour
     public List<StageData> stageDataList;
     public List<StageData> onlineStageDataList;
     public List<MissionItemData> missionItemDataList;
-    public UnitData FindUnitData(int unitID)
+    void Awake()
+    {
+        if (instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        DontDestroyOnLoad(gameObject);
+    }
+
+        public UnitData FindUnitData(int unitID)
     {
         foreach (UnitData data in unitDataList)
         {
