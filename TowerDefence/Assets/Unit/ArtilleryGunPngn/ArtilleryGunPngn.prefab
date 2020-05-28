@@ -16,6 +16,26 @@ MonoBehaviour:
   attackTransform: {fileID: 2781107712120362011}
   time: 0.3
   num: 10
+--- !u!68 &7406041859150084727
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2566838189444343719}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 0
+  m_Points:
+  - {x: -0.15, y: 0.09}
+  - {x: 0.79, y: 0}
+  - {x: 0.38, y: -0.28}
+  - {x: -0.39, y: -0.28}
 --- !u!1 &5065551779397945188
 GameObject:
   m_ObjectHideFlags: 0
@@ -254,3 +274,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ca24c74ef8561a4c9ccc8f1a1037adf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2566838189444343719 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1696978227217715904, guid: b38e3d62b2ed1cc4e966418e11eda93b,
+    type: 3}
+  m_PrefabInstance: {fileID: 3752585971650983271}
+  m_PrefabAsset: {fileID: 0}
