@@ -49,7 +49,7 @@ public class MissionDetailController : MonoBehaviour
         {
             DetailBox.SetActive(true);
             stageData = stageList[stageIndex - 1];
-            selectMissionTV.text = stageIndex.ToString(); ;
+            selectMissionTV.text = stageData.name.ToString(); ;
             spriteGenerator.GenerateSprite(stageData.GetFormation());
             PlayerPrefs.SetString("StageDataUuid", stageData.uuid);
             DetailContentTV.text = stageData.detailContent;
