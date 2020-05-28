@@ -7,21 +7,23 @@ using UnityEngine.UI;
 
 public class LoadPostFormationToServerSceneManager : MonoBehaviour
 {
-
     //実際に格納する用(他に格納場所があるならここの部分のものをそれに差し替えて)
+    int[] inputGridinfo = new int[100];
+    int inputShiptype;
+
     int inputOwnFormationNum;
+    string inputNameText;
     string inputDetailContentText;
-    int inputDifficultySlider;
 
 
 
     //入力された情報を読み込む用
+
+    PrefsManager prefs = new PrefsManager();
+    private Formation formation = new Formation();//マス目部分int[] gridinfo = new int[10,10] ,船部分 int shiptype;
+
+    public Text nameText;
     public Text detailContentText;
-
-    public Slider difficultySlider;
-    public Text difficultySliderShowingText;
-
-
 
 
     //編成選ぶ用(mmmからコピー)
@@ -83,20 +85,51 @@ public class LoadPostFormationToServerSceneManager : MonoBehaviour
         }
     }
 
-    public void ChangeDifficultySlider()
-    {
-        difficultySliderShowingText.text = difficultySlider.value.ToString();
-    }
-
 
 
     public void PostData()
     {
 
+
+
+
         SEManager.instance.Play("決定");
 
         //選択された編成を取得
         //もうinputOwnFormationNumに入っているはず
+
+        formation = prefs.GetFormation(inputOwnFormationNum);
+
+        for(int y = 0; y < 10; y++)
+        {
+            for(int x = 0; x < 10; x++)
+            {
+                inputGridinfo[10 * y + x] = formation.gridinfo[y,x];
+            }
+        }
+
+        inputShiptype = formation.shiptype;
+
+
+
+        //記入された編成名を取得
+
+        inputNameText = nameText.text;
+
+        if (inputNameText == "")
+        {
+            dialogManager.ShowDialog("編成名が空です！");
+            return;
+
+        }
+
+        if (inputNameText.Length > 15)
+        {
+            dialogManager.ShowDialog("編成名が長すぎます！");
+            return;
+
+        }
+
 
 
 
@@ -108,21 +141,20 @@ public class LoadPostFormationToServerSceneManager : MonoBehaviour
         inputDetailContentText = detailContentText.text;
 
 
-        Debug.Log(inputDetailContentText);
+        //Debug.Log(inputDetailContentText);
         if (inputDetailContentText == "")
         {
-            dialogManager.ShowDialog("テキストが空です");
+            dialogManager.ShowDialog("説明文が空です");
             return;
 
         }
 
+        if (inputDetailContentText.Length > 50)
+        {
+            dialogManager.ShowDialog("説明文が長すぎます！");
+            return;
 
-
-        //選択された難易度を取得
-
-        inputDifficultySlider = (int)difficultySlider.value;
-
-
+        }
 
 
 
@@ -132,6 +164,11 @@ public class LoadPostFormationToServerSceneManager : MonoBehaviour
 
 
 
+
+
+
+        //ここまででreturnされていなかったら投稿できる環境がそろっている
+        //以下でサーバーに投稿してもらって大丈夫です
 
         //通信してサーバーに保存させる
 
