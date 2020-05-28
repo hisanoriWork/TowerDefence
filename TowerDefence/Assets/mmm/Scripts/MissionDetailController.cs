@@ -8,6 +8,7 @@ public class MissionDetailController : MonoBehaviour
     /*****public field*****/
     public MasterDataScript masterData;
     public GameObject misshionDetailWindow;
+    public GameObject DetailBox;
     public Text selectMissionTV;
     public Image enemyPreViewIV;
     public Text DetailContentTV;
@@ -17,8 +18,6 @@ public class MissionDetailController : MonoBehaviour
     private bool isLocal = true;
 
     public SpriteGenerator spriteGenerator;
-
-    //public StageDataManager stageDataManager;
 
     /*****private field*****/
     private StageData stageData;
@@ -31,8 +30,6 @@ public class MissionDetailController : MonoBehaviour
         {
             isLocal = false;
         }
-        //ChangeDetailContent();
-        spriteGenerator.GenerateSprite(masterData.stageDataList[0].GetFormation());
     }
 
     public void ChangeDetailContent()
@@ -50,11 +47,9 @@ public class MissionDetailController : MonoBehaviour
 
         if (stageList.Count >= stageIndex)
         {
-
+            DetailBox.SetActive(true);
             stageData = stageList[stageIndex - 1];
-            Debug.Log(stageData.ID);
             selectMissionTV.text = stageIndex.ToString(); ;
-
             spriteGenerator.GenerateSprite(stageData.GetFormation());
 
             DetailContentTV.text = stageData.detailContent;
