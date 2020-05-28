@@ -14,7 +14,8 @@ public class ArtilleryGunPngnScript : MonoBehaviour
     /*****public method*****/
     public void Attack(int power)
     {
-        Shot(num);
+        pool.Pop(attackTransform.position);
+        SEManager.instance.Play("現代砲");
     }
 
     public void Shot(int num)

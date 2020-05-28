@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdcc2f7eb47870b468ef04fac8bef720, type: 3}
   m_Name: BulletData
   m_EditorClassIdentifier: 
-  angle: 5
-  deviation: 5
-  speed: 1.5
-  gravity: 0.1
+  angle: 30
+  deviation: 3
+  speed: 10
+  gravity: 10
+  explosionTime: 0.2
+  explosionInitialSize: 5
+  explosionFinalSize: 10

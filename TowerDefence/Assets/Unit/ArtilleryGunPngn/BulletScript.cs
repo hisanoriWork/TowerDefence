@@ -5,6 +5,8 @@ public class BulletScript : MonoBehaviour
     /*****public field*****/
     public WeaponScript baseWeapon;
     public BulletData data;
+    public GameObject body;
+    public ExplosionScript explosion;
     /*****protected field*****/
     protected float m_angle;
     protected float m_speed;
@@ -17,14 +19,11 @@ public class BulletScript : MonoBehaviour
         Init(Vector3.zero);
         baseWeapon.onHit.Subscribe(_ =>
         {
-            baseWeapon.Despawn();
-            SEManager.instance.Play("衝突");
+            body.SetActive(false);
+            explosion.Init(baseWeapon.power, data.explosionInitialSize, data.explosionFinalSize, data.explosionTime);
+            explosion.gameObject.SetActive(true);
         });
-        baseWeapon.onHitUnit.Subscribe(other =>
-        {
-            other.Hurt(baseWeapon.power);
-        });
-        baseWeapon.onHitWeapon.Subscribe(other =>other.Hit());
+        explosion.onDespawned.Subscribe(_ => baseWeapon.Despawn());
     }
     void FixedUpdate()
     {
@@ -40,10 +39,12 @@ public class BulletScript : MonoBehaviour
     public void Init(Vector3 pos, UnitScript unitScript = null)
     {
         baseWeapon.Init(pos, unitScript, false);
+        body.SetActive(true);
         m_speed = data.speed;
         m_gravity = data.gravity;
         m_move = Vector3.zero;
         m_velocity = 0f;
         m_angle = data.angle + UnityEngine.Random.Range(-data.deviation, data.deviation);
+        transform.localEulerAngles = m_angle * Vector3.forward;
     }
 }
