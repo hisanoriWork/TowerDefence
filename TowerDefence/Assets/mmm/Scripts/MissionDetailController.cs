@@ -39,7 +39,8 @@ public class MissionDetailController : MonoBehaviour
         {
             PlayerPrefs.SetString("stageNum", stageIndex.ToString());
             stageList = MasterDataScript.instance.stageDataList;
-        } else
+        }
+        else
         {
             stageList = MasterDataScript.instance.onlineStageDataList;
         }
@@ -50,7 +51,7 @@ public class MissionDetailController : MonoBehaviour
             stageData = stageList[stageIndex - 1];
             selectMissionTV.text = stageIndex.ToString(); ;
             spriteGenerator.GenerateSprite(stageData.GetFormation());
-
+            PlayerPrefs.SetString("StageDataUuid", stageData.uuid);
             DetailContentTV.text = stageData.detailContent;
             var difficultyStarNum = "";
             for (int i = 0; i < stageData.difficulty; i++)
