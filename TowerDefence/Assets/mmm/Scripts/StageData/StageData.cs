@@ -6,6 +6,7 @@ using UnityEngine;
 public class StageData : ScriptableObject
 {
     public int ID;
+    public string uuid ="";
     public int password = 1;
     [TextArea] public new string name;
     [TextArea] public string detailContent = "ステージのしょうさい";
