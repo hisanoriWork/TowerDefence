@@ -161,7 +161,7 @@ public class LoadPostFormationToServerSceneManager : MonoBehaviour
         //IDを振り当てる？なんかしてユニークなIDを作成
         NCMBDatabase db = new NCMBDatabase();
 
-        db.PostStageData(inputOwnFormationNum, inputDetailContentText, 1);
+        db.PostStageData(inputOwnFormationNum, inputNameText, inputDetailContentText);
 
 
 
