@@ -415,7 +415,6 @@ public class FormationChanger
 public class FormationGridManager : MonoBehaviour
 {
     /*****public field*****/
-    public MasterDataScript masterData;
     public EditParam editParam;
 
 
@@ -646,7 +645,7 @@ public class FormationGridManager : MonoBehaviour
         {
             for (int j = 0; j < 10; j++)
             {
-                m_unitData = masterData.FindUnitData(formation.gridinfo[i, j]);
+                m_unitData = MasterDataScript.instance.FindUnitData(formation.gridinfo[i, j]);
 
                 EachGrid eachGrid = eachGrids[i, j];
 
@@ -686,7 +685,7 @@ public class FormationGridManager : MonoBehaviour
 
 
 
-        m_unitData = masterData.FindUnitData(formation.shiptype);
+        m_unitData = MasterDataScript.instance.FindUnitData(formation.shiptype);
 
 
         if (m_unitData != null)
@@ -851,7 +850,7 @@ public class FormationGridManager : MonoBehaviour
 
         int[] attachingUnitPosition = fc.SearchNearSquare(beforeAttachingUnitPosition, movingUnitID, movingUnitType, movingUnitForm, movingUnitEmptyForm);
 
-        m_unitData = masterData.FindUnitData(movingUnitID);
+        m_unitData = MasterDataScript.instance.FindUnitData(movingUnitID);
 
         if (attachingUnitPosition != null)
         {

@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class MissionDetailController : MonoBehaviour
 {
     /*****public field*****/
-    public MasterDataScript masterData;
     public GameObject misshionDetailWindow;
     public GameObject DetailBox;
     public Text selectMissionTV;
@@ -39,10 +38,10 @@ public class MissionDetailController : MonoBehaviour
         if (isLocal)
         {
             PlayerPrefs.SetString("stageNum", stageIndex.ToString());
-            stageList = masterData.stageDataList;
+            stageList = MasterDataScript.instance.stageDataList;
         } else
         {
-            stageList = masterData.onlineStageDataList;
+            stageList = MasterDataScript.instance.onlineStageDataList;
         }
 
         if (stageList.Count >= stageIndex)
