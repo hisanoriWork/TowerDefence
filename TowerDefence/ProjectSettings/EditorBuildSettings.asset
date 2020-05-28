@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LoadPostFormationToServerScene.unity
     guid: e7e10aa0d352c774eae3c627ab8edec3
+  - enabled: 1
+    path: Assets/Scenes/OnlineRankingScene.unity
+    guid: b1745dacf76a6fb4cb13104322e033c6
   m_configObjects: {}
