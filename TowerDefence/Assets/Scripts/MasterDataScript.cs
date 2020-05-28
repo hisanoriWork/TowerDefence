@@ -9,6 +9,7 @@ public class MasterDataScript : MonoBehaviour
     public List<UnitData> blockDataList;
     public List<ShipData> shipDataList;
     public List<StageData> stageDataList;
+    public List<StageData> onlineStageDataList;
     public List<MissionItemData> missionItemDataList;
     public UnitData FindUnitData(int unitID)
     {

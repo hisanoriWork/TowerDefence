@@ -16,7 +16,7 @@ public class OnlineEntranceSceneManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void LoadTitleScene()
@@ -37,7 +37,8 @@ public class OnlineEntranceSceneManager : MonoBehaviour
         //本当はオンラインモードでの対戦シーンに遷移する、今の遷移先は仮
 
         SEManager.instance.Play("シーン遷移");
+        PlayerPrefs.SetString("DirectToStageSelect", "FromOnline");
         SceneManager.LoadScene("StageSelectScene");
     }
-    
+
 }

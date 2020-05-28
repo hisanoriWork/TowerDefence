@@ -5,15 +5,15 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Scriptable/StageData")]
 public class StageData : ScriptableObject
 {
-    public int ID = 1;
+    public int ID;
     public int password = 1;
     [TextArea] public new string name;
     [TextArea] public string detailContent = "ステージのしょうさい";
     [SmartArray] public int[] gridInfo;
-    public int shipInfo = 10010;
-    public int difficulty = 1;
-    [System.NonSerialized] public int winCount = 0;
-    [System.NonSerialized] public int loseCount = 0;
+    public int shipInfo;
+    public int difficulty;
+    [System.NonSerialized] public int winCount;
+    [System.NonSerialized] public int loseCount;
     public Formation GetFormation()
     {
         Formation formation = new Formation();

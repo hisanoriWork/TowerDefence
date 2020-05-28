@@ -13,6 +13,8 @@ public class MissionDetailController : MonoBehaviour
     public Text DetailContentTV;
     public Text Difficulty;
 
+    private bool isLocal = true;
+
     public SpriteGenerator spriteGenerator;
 
     //public StageDataManager stageDataManager;
@@ -24,25 +26,35 @@ public class MissionDetailController : MonoBehaviour
     private void Start()
     {
         PlayerPrefs.SetString("stageNum", stageIndex.ToString());
-        ChangeDetailContent();
+        //ChangeDetailContent();
+        spriteGenerator.GenerateSprite(masterData.stageDataList[1].GetFormation());
     }
 
     public void ChangeDetailContent()
     {
-        if (masterData.stageDataList.Count >= stageIndex)
+
+        List<StageData> stageList;
+        if (false)
         {
             PlayerPrefs.SetString("stageNum", stageIndex.ToString());
+            stageList = masterData.stageDataList;
+        } else
+        {
+            stageList = masterData.onlineStageDataList;
+        }
 
-            stageData = masterData.stageDataList[stageIndex - 1];
-            selectMissionTV.text = "ステージ" + (stageIndex);
+        if (stageList.Count >= stageIndex)
+        {
+
+            stageData = stageList[stageIndex - 1];
+            Debug.Log(stageData.ID);
+            selectMissionTV.text = stageIndex.ToString(); ;
 
             spriteGenerator.GenerateSprite(stageData.GetFormation());
-            //enemyPreViewIV.sprite = stageData.preViewSprite;
-
 
             DetailContentTV.text = stageData.detailContent;
             var difficultyStarNum = "";
-            for (int i = 0; i <= stageData.difficulty; i++)
+            for (int i = 0; i < stageData.difficulty; i++)
             {
                 difficultyStarNum += "★";
             }
