@@ -6,7 +6,6 @@ using UnityEngine.Events;
 
 public class PooltestScript : MonoBehaviour
 {
-    public MasterDataScript masterData;
     public SpritePool spritePool;
     public Sprite sprite;
 

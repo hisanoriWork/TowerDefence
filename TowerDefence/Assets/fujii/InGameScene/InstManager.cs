@@ -20,7 +20,6 @@ public class InstManager : MonoBehaviour
         }
     }
     /*****private field*****/
-    [SerializeField] private MasterDataScript m_masterData = default;
     [SerializeField] private InstDataScript m_instData = default;
     [SerializeField] private StageNumManager m_stageNumManager = default;
     float m_dx = 0.8f, m_dy = 0.8f;
@@ -35,7 +34,7 @@ public class InstManager : MonoBehaviour
         }
         else
         {
-            formation = m_masterData.GetFormationFromStageNum(m_stageNumManager.stageNum);
+            formation = MasterDataScript.instance.GetFormationFromStageNum(m_stageNumManager.stageNum);
         }
         //下はデバッグ用
         //formation.formationDataExists = true;
@@ -146,7 +145,7 @@ public class InstManager : MonoBehaviour
     }
     private UnitInst CreateUnit(int unitID, Vector3 pos)
     {
-        UnitData data = m_masterData.FindUnitData(unitID);
+        UnitData data = MasterDataScript.instance.FindUnitData(unitID);
         if (data != null)
         {
             GameObject obj = Instantiate(data.prefab, pos + data.offset, Quaternion.Euler(Vector3.zero), m_instData.place.transform);
@@ -159,7 +158,7 @@ public class InstManager : MonoBehaviour
     }
     private ShipInst CreateShip(int shipID, Vector3 pos)
     {
-        ShipData data = m_masterData.FindShipData(shipID);
+        ShipData data = MasterDataScript.instance.FindShipData(shipID);
         if (data != null)
         {
             GameObject obj = Instantiate(data.unitData.prefab, pos + data.unitData.offset, Quaternion.Euler(Vector3.zero), m_instData.place.transform);

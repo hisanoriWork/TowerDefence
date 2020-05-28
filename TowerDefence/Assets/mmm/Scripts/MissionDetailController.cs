@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class MissionDetailController : MonoBehaviour
 {
     /*****public field*****/
-    public MasterDataScript masterData;
     public GameObject misshionDetailWindow;
     public Text selectMissionTV;
     public Image enemyPreViewIV;
@@ -32,7 +31,7 @@ public class MissionDetailController : MonoBehaviour
             isLocal = false;
         }
         //ChangeDetailContent();
-        spriteGenerator.GenerateSprite(masterData.stageDataList[0].GetFormation());
+        spriteGenerator.GenerateSprite(MasterDataScript.instance.stageDataList[0].GetFormation());
     }
 
     public void ChangeDetailContent()
@@ -42,10 +41,10 @@ public class MissionDetailController : MonoBehaviour
         if (isLocal)
         {
             PlayerPrefs.SetString("stageNum", stageIndex.ToString());
-            stageList = masterData.stageDataList;
+            stageList = MasterDataScript.instance.stageDataList;
         } else
         {
-            stageList = masterData.onlineStageDataList;
+            stageList = MasterDataScript.instance.onlineStageDataList;
         }
 
         if (stageList.Count >= stageIndex)
