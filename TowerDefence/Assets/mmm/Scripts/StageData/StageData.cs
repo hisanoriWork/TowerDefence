@@ -41,16 +41,48 @@ public class StageData : ScriptableObject
             }
         Init(ID, name, detailContent, grid, formation.shiptype, password);
     }
-    public void SetDifficulty()
+    public int CalDifficulty()
     {
-        if (winCount == 0 && loseCount == 0)
-            difficulty = 1;
-        else if (loseCount == 0)
-            difficulty = winCount;
-        else
-            difficulty = winCount / loseCount;
-        difficulty = difficulty < 10 ? difficulty : 9;
+        int difficulty = 1;
+
+        if ( winCount == 0)
+        {
+            return 1 ;
+        } else if ( winCount < 3)
+        {
+            if ( winCount + loseCount < 3)
+            {
+                difficulty = 2;
+            } else
+            {
+                return 2;
+            }
+        } else if ( winCount < 6)
+        {
+            difficulty = 3;
+        } else
+        {
+            difficulty = 4;
+        }
+
+        int winPercentage = 100 * (winCount) / (winCount + loseCount);
+        if ( winPercentage < 30 )
+        {
+            return difficulty;
+        } else if ( winPercentage < 50 )
+        {
+            difficulty += 1;
+        } else if ( winPercentage < 70 )
+        {
+            difficulty += 2;
+        } else
+        {
+            difficulty += 3;
+        }
+
+        return difficulty;
     }
+
     public Formation GetFormation()
     {
         Formation formation = new Formation();
