@@ -9,7 +9,7 @@ public class EachGrid
     public Text txt;
     public SelectableUnit sel;
 
-    public void UpdateEachGrid(Sprite sprite,int unitID,UnitType unitType,GridForm[]form, GridForm[] emptyForm, Vector2 offset,int cost,int[] beforeAttachingPosition)
+    public void UpdateEachGrid(Sprite sprite, int unitID, UnitType unitType, GridForm[] form, GridForm[] emptyForm, Vector2 offset, int cost, int[] beforeAttachingPosition)
     {
         this.sel = this.img.GetComponent<SelectableUnit>();
 
@@ -22,8 +22,6 @@ public class EachGrid
         this.sel.selectableUnitOffset = offset;
         this.sel.selectableUnitCost = cost;
         this.sel.beforeAttachingPosition = beforeAttachingPosition;
-
-
     }
 }
 
@@ -48,7 +46,7 @@ public class FormationChanger
 
     //左側グリッド
     public EachGrid[,] eachGrids;
-    public Vector2[,] eachGridsCoordinate;  
+    public Vector2[,] eachGridsCoordinate;
 
     //左側グリッドのタイリング状況
     public TilingType[,] eachGridsTiling;
@@ -65,7 +63,7 @@ public class FormationChanger
 
     /*****private method*****/
 
-    private void SetEachGridsTiling(TilingType unitTilingType,int unitY,int unitX,GridForm[] gridForms,GridForm[] gridEmptyForms)
+    private void SetEachGridsTiling(TilingType unitTilingType, int unitY, int unitX, GridForm[] gridForms, GridForm[] gridEmptyForms)
     {
         if (unitTilingType != TilingType.Empty)
         {
@@ -79,7 +77,7 @@ public class FormationChanger
                 }
             }
 
-            if(gridEmptyForms != null)
+            if (gridEmptyForms != null)
             {
                 foreach (GridForm emptyForm in gridEmptyForms)
                 {
@@ -98,7 +96,7 @@ public class FormationChanger
         {
             for (int j = 0; j < 10; j++)
             {
-                eachGridsTiling[i,j] = TilingType.Empty;
+                eachGridsTiling[i, j] = TilingType.Empty;
             }
         }
 
@@ -115,7 +113,7 @@ public class FormationChanger
     }
 
     /*****public method*****/
-    public FormationChanger(Formation formation, EachGrid[,] eachGrids, GameObject movingUnit,RectTransform contentRectTransform,RectTransform deleteButtonRectTransform, EachGrid shipEachGrid)
+    public FormationChanger(Formation formation, EachGrid[,] eachGrids, GameObject movingUnit, RectTransform contentRectTransform, RectTransform deleteButtonRectTransform, EachGrid shipEachGrid)
     {
         this.formation = formation;
         this.movingUnit = movingUnit;
@@ -130,8 +128,8 @@ public class FormationChanger
         this.shipEachGrid = shipEachGrid;
 
 
-        SetEachGridsTiling(ConvertTilingType(shipEachGrid.sel.selectableUnitID,shipEachGrid.sel.selectableUnitType),0,0,
-            shipEachGrid.sel.selectableUnitForm,shipEachGrid.sel.selectableUnitEmptyForm);
+        SetEachGridsTiling(ConvertTilingType(shipEachGrid.sel.selectableUnitID, shipEachGrid.sel.selectableUnitType), 0, 0,
+            shipEachGrid.sel.selectableUnitForm, shipEachGrid.sel.selectableUnitEmptyForm);
 
 
         for (int i = 0; i < 10; i++)
@@ -142,7 +140,7 @@ public class FormationChanger
                 //Debug.Log(this.eachGridsCoordinate[i, j]);
                 //Debug.Log(eachGrids[i, j].img.transform.position);
                 SetEachGridsTiling(ConvertTilingType(shipEachGrid.sel.selectableUnitID, shipEachGrid.sel.selectableUnitType), i, j,
-                    eachGrids[i,j].sel.selectableUnitForm,eachGrids[i,j].sel.selectableUnitEmptyForm);
+                    eachGrids[i, j].sel.selectableUnitForm, eachGrids[i, j].sel.selectableUnitEmptyForm);
 
             }
         }
@@ -161,7 +159,8 @@ public class FormationChanger
         this.deleteButtonRectTransform = deleteButtonRectTransform;
     }
 
-    public void UpdateCoordinates(){
+    public void UpdateCoordinates()
+    {
 
         //ResetEachGridsTiling();
 
@@ -200,7 +199,7 @@ public class FormationChanger
         }
     }
 
-    public int[] SearchNearSquare(int[] beforeAttachingUnitPosition, int unitID, UnitType unitType, GridForm[] unitForms,GridForm[] unitEmptyForms)
+    public int[] SearchNearSquare(int[] beforeAttachingUnitPosition, int unitID, UnitType unitType, GridForm[] unitForms, GridForm[] unitEmptyForms)
     {
         float minDistance = float.MaxValue;
         float tmpDistance;
@@ -218,7 +217,7 @@ public class FormationChanger
         Vector2 movingUnitCoordinateRectForDeleteButton;
 
 
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(contentRectTransform, movingUnitCoordinate, camera,out movingUnitCoordinateRect);
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(contentRectTransform, movingUnitCoordinate, camera, out movingUnitCoordinateRect);
         RectTransformUtility.ScreenPointToLocalPointInRectangle(deleteButtonRectTransform, movingUnitCoordinate, camera, out movingUnitCoordinateRectForDeleteButton);
 
 
@@ -237,7 +236,7 @@ public class FormationChanger
 
         if (contentRectTransform.rect.Contains(movingUnitCoordinateRect))
         {
-            
+
             for (int i = 0; i < 10; i++)
             {
                 for (int j = 0; j < 10; j++)
@@ -256,7 +255,7 @@ public class FormationChanger
 
 
             //置けるかの判定をする
-            if(!CheckingEnableToAttaching(unitID, unitType, unitForms,unitEmptyForms, minUnitPosition))return beforeAttachingUnitPosition;
+            if (!CheckingEnableToAttaching(unitID, unitType, unitForms, unitEmptyForms, minUnitPosition)) return beforeAttachingUnitPosition;
 
 
 
@@ -268,7 +267,7 @@ public class FormationChanger
         return beforeAttachingUnitPosition;
     }
 
-    public bool CheckingEnableToAttaching(int unitID, UnitType unitType, GridForm[] unitForms,GridForm[] unitEmptyForms ,int[] minUnitPosition)
+    public bool CheckingEnableToAttaching(int unitID, UnitType unitType, GridForm[] unitForms, GridForm[] unitEmptyForms, int[] minUnitPosition)
     {
         bool canAttaching;
         TilingType unitTylingType = ConvertTilingType(unitID, unitType);
@@ -306,7 +305,7 @@ public class FormationChanger
 
 
 
-    public void UpdateEnableToAttaching(int unitID, UnitType unitType, GridForm[] unitForms,GridForm[] unitEmptyForms, Vector2 unitOffset)
+    public void UpdateEnableToAttaching(int unitID, UnitType unitType, GridForm[] unitForms, GridForm[] unitEmptyForms, Vector2 unitOffset)
     {
         enableToAttaching = new bool[10, 10];
         bool canGetOnInEachSituation;
@@ -331,15 +330,15 @@ public class FormationChanger
                 //すべてクリアしているならば、その範囲をenableToAttachingに埋め込める
 
                 checking(y, x);
-                
 
-                foreach(GridForm attachingEachGridForm in unitForms)
+
+                foreach (GridForm attachingEachGridForm in unitForms)
                 {
                     checking(y + attachingEachGridForm.y, x + attachingEachGridForm.x);
                 }
 
 
-                if(canAttaching == true && canGetOnInEachSituation == true)
+                if (canAttaching == true && canGetOnInEachSituation == true)
                 {
                     //enableToAttachingに埋め込む
 
@@ -354,7 +353,7 @@ public class FormationChanger
             }
         }
 
-        void checking(int y,int x)
+        void checking(int y, int x)
         {
             if (y >= 0 && y < 10 && x >= 0 && x < 10)
             {
@@ -390,7 +389,7 @@ public class FormationChanger
                     }
                     if (x - 1 >= 0)
                     {
-                        if (eachGridsTiling[y, x-1] == TilingType.Object)
+                        if (eachGridsTiling[y, x - 1] == TilingType.Object)
                         {
                             canGetOnInEachSituation = true;
                         }
@@ -477,7 +476,7 @@ public class FormationGridManager : MonoBehaviour
         //GenerateGridInfo();
 
         InstanceGridInfo();
-        
+
         gridLayoutGroup.CalculateLayoutInputHorizontal();
         gridLayoutGroup.CalculateLayoutInputVertical();
         gridLayoutGroup.SetLayoutHorizontal();
@@ -501,7 +500,7 @@ public class FormationGridManager : MonoBehaviour
 
 
     private void SetUnitOffsetAndResizeImgSize(Image img, float imgSize, Vector2 selectableUnitOffset)
-    { 
+    {
 
         //var img = transform.GetComponent<Image>();
         var t = img.GetComponent<RectTransform>();
@@ -582,12 +581,16 @@ public class FormationGridManager : MonoBehaviour
 
     public void SaveFormation()
     {
+        // TODO: true
+        BackSceneWindow.isSaved = true;
         SEManager.instance.Play("決定");
         prefs.SetFormation(formation.gridinfo, formation.shiptype, editParam.ownFormationNum);
     }
 
     public void UpdateFormation()
     {
+        // TODO: false
+        BackSceneWindow.isSaved = false;
         for (int y = 0; y < 10; y++)
         {
             for (int x = 0; x < 10; x++)
@@ -649,7 +652,7 @@ public class FormationGridManager : MonoBehaviour
 
                 EachGrid eachGrid = eachGrids[i, j];
 
-                
+
                 int[] attachingPosition = new int[2];
                 attachingPosition[0] = i;
                 attachingPosition[1] = j;
@@ -672,7 +675,7 @@ public class FormationGridManager : MonoBehaviour
                     eachGrid.UpdateEachGrid(nullSprite, 0, UnitType.Pngn, null, null, Vector2.zero, 0, null);
                     SetUnitOffsetAndResizeImgSize(eachGrid.img, editParam.attachingUnitImgSize, Vector2.zero);
                 }
-                
+
 
                 eachGrid.txt.text = formation.gridinfo[i, j].ToString();
 
@@ -692,7 +695,7 @@ public class FormationGridManager : MonoBehaviour
         {
             //ResetUnitOffsetAndResizeImgSize(shipEachGrid.img, editParam.attachingShipImgSize, ConvertOffsetValue(m_unitData.offset));
 
-            shipEachGrid.UpdateEachGrid(m_unitData.sprite, m_unitData.ID, m_unitData.unitType, m_unitData.form,m_unitData.emptyForm,
+            shipEachGrid.UpdateEachGrid(m_unitData.sprite, m_unitData.ID, m_unitData.unitType, m_unitData.form, m_unitData.emptyForm,
                 ConvertOffsetValue(m_unitData.offset), m_unitData.cost, null);
 
             SetUnitOffsetAndResizeImgSize(shipEachGrid.img, editParam.attachingShipImgSize, ConvertOffsetValue(m_unitData.offset));
@@ -736,7 +739,7 @@ public class FormationGridManager : MonoBehaviour
         formation.shiptype = 10010;
 
         //GenerateGridInfo();
-        
+
         return;
     }
 
@@ -744,7 +747,9 @@ public class FormationGridManager : MonoBehaviour
 
     public void SelectEachShip(int shipID)
     {
-
+        // TODO: false
+        BackSceneWindow.isSaved = false;
+        Debug.Log("oo");
         ResetUnitOffsetAndResizeImgSize(shipEachGrid.img, editParam.attachingShipImgSize, shipEachGrid.sel.selectableUnitOffset);
 
         formation.formationDataExists = true;
@@ -757,7 +762,7 @@ public class FormationGridManager : MonoBehaviour
         return;
     }
 
-    public void DisplayEnableGrid(int unitID,UnitType unitType,GridForm[] unitForm, GridForm[] unitEmptyForm, Vector2 unitOffset)
+    public void DisplayEnableGrid(int unitID, UnitType unitType, GridForm[] unitForm, GridForm[] unitEmptyForm, Vector2 unitOffset)
     {
 
         fc.UpdateEachGridsTiling();
@@ -845,7 +850,7 @@ public class FormationGridManager : MonoBehaviour
     }
 
 
-    public void Attach(int movingUnitID, UnitType movingUnitType,GridForm[] movingUnitForm, GridForm[] movingUnitEmptyForm, Vector2 movingUnitOffset, int[] beforeAttachingUnitPosition)
+    public void Attach(int movingUnitID, UnitType movingUnitType, GridForm[] movingUnitForm, GridForm[] movingUnitEmptyForm, Vector2 movingUnitOffset, int[] beforeAttachingUnitPosition)
     {
 
         int[] attachingUnitPosition = fc.SearchNearSquare(beforeAttachingUnitPosition, movingUnitID, movingUnitType, movingUnitForm, movingUnitEmptyForm);
@@ -864,15 +869,15 @@ public class FormationGridManager : MonoBehaviour
 
                 ResetUnitOffsetAndResizeImgSize(eachGrid.img, editParam.attachingUnitImgSize, eachGrid.sel.selectableUnitOffset);
 
-                eachGrid.UpdateEachGrid(m_unitData.sprite, m_unitData.ID, m_unitData.unitType, m_unitData.form,m_unitData.emptyForm,
+                eachGrid.UpdateEachGrid(m_unitData.sprite, m_unitData.ID, m_unitData.unitType, m_unitData.form, m_unitData.emptyForm,
                     ConvertOffsetValue(m_unitData.offset), m_unitData.cost, attachingUnitPosition);
                 editParam.formationCost = editParam.formationCost - m_unitData.cost;
                 UpdateFormationCostDisplay();
 
-                SetUnitOffsetAndResizeImgSize(eachGrid.img,editParam.attachingUnitImgSize,movingUnitOffset);
+                SetUnitOffsetAndResizeImgSize(eachGrid.img, editParam.attachingUnitImgSize, movingUnitOffset);
 
                 //fc.UpdateCoordinates();
-                
+
 
                 //GridColorSelecting();
             }
@@ -928,7 +933,7 @@ public class FormationGridManager : MonoBehaviour
         {
             for (int x = 0; x < 10; x++)
             {
-                if(fc.eachGridsTiling[y,x] == TilingType.Pngn && fc.eachGrids[y,x].sel.selectableUnitID != 0)
+                if (fc.eachGridsTiling[y, x] == TilingType.Pngn && fc.eachGrids[y, x].sel.selectableUnitID != 0)
                 {
                     //浮いてたらfalse、接地してたらtrue
                     judPngnGround = checkPngnGround(y, x, fc.eachGrids[y, x].sel.selectableUnitForm, fc.eachGrids[y, x].sel.selectableUnitEmptyForm);
@@ -937,9 +942,9 @@ public class FormationGridManager : MonoBehaviour
                         ResetUnitOffsetAndResizeImgSize(fc.eachGrids[y, x].img, editParam.attachingUnitImgSize, fc.eachGrids[y, x].sel.selectableUnitOffset);
 
                         int[] pos = { y, x };
-                        
 
-                        editParam.formationCost = editParam.formationCost + fc.eachGrids[y,x].sel.selectableUnitCost;
+
+                        editParam.formationCost = editParam.formationCost + fc.eachGrids[y, x].sel.selectableUnitCost;
                         UpdateFormationCostDisplay();
 
                         fc.eachGrids[y, x].UpdateEachGrid(nullSprite, 0, UnitType.Pngn, null, null, new Vector2(0, 0), 0, pos);
@@ -955,7 +960,7 @@ public class FormationGridManager : MonoBehaviour
         }
 
 
-        bool checkPngnGround(int y,int x,GridForm[] gridForms,GridForm[] gridEmptyForms)
+        bool checkPngnGround(int y, int x, GridForm[] gridForms, GridForm[] gridEmptyForms)
         {
             bool judFlying = false;
 
@@ -964,7 +969,7 @@ public class FormationGridManager : MonoBehaviour
                 if (fc.eachGridsTiling[y - 1, x] == TilingType.Object) judFlying = true;
             }
 
-            if(gridForms != null)
+            if (gridForms != null)
             {
                 foreach (GridForm form in gridForms)
                 {
@@ -984,14 +989,14 @@ public class FormationGridManager : MonoBehaviour
         return;
     }
 
-    public bool CheckingCutVertex(GridForm[] unitForm,GridForm[] unitEmptyForm, int[] attachingPosition)
+    public bool CheckingCutVertex(GridForm[] unitForm, GridForm[] unitEmptyForm, int[] attachingPosition)
     {
         fc.UpdateEachGridsTiling();
 
         //Debug.Log(attachingPosition[0]+","+ attachingPosition[1]);
 
 
-        TilingType[,] eachGridsTilingTmp = new TilingType[10,10];
+        TilingType[,] eachGridsTilingTmp = new TilingType[10, 10];
         bool[,] checkedObjectTiledGrids = new bool[10, 10];
         bool[,] pngnGuard = new bool[10, 10];
         bool[,] pngnCheckedGuard = new bool[10, 10];
@@ -1013,7 +1018,7 @@ public class FormationGridManager : MonoBehaviour
         }
 
         eachGridsTilingTmp[attachingPosition[0], attachingPosition[1]] = TilingType.Empty;
-        if (unitForm != null) 
+        if (unitForm != null)
         {
             foreach (GridForm form in unitForm)
             {
@@ -1030,7 +1035,7 @@ public class FormationGridManager : MonoBehaviour
         }
 
 
-        
+
 
         for (int y = 0; y < 10; y++)
         {
@@ -1070,10 +1075,10 @@ public class FormationGridManager : MonoBehaviour
 
                     }
                     //ブロック探索は終わっておらず、emptyでないはずのグリッドが探索されていない、かつオブジェクトである
-                    else if(checkedObjectTiledGrids[y, x] == false && eachGridsTilingTmp[y, x] == TilingType.Object)
+                    else if (checkedObjectTiledGrids[y, x] == false && eachGridsTilingTmp[y, x] == TilingType.Object)
                     {
                         //Debug.Log("notchecked"+y + "," + x + ":" + eachGridsTilingTmp[y, x]);
-                        checking(y,x);
+                        checking(y, x);
                         alreadyFirstCheckingIsFinish = true;
                     }
 
@@ -1117,13 +1122,13 @@ public class FormationGridManager : MonoBehaviour
 
 
 
-        void checking(int y,int x)
+        void checking(int y, int x)
         {
             //もう見てるなら終わり
             if (checkedObjectTiledGrids[y, x] == true) return;
 
             //emptyなら終わり、barrierでも終わり
-            if (eachGridsTilingTmp[y, x] == TilingType.Empty||eachGridsTilingTmp[y,x] == TilingType.Barrier) return;
+            if (eachGridsTilingTmp[y, x] == TilingType.Empty || eachGridsTilingTmp[y, x] == TilingType.Barrier) return;
             else checkedObjectTiledGrids[y, x] = true;
 
             //Debug.Log(y + "," + x);
@@ -1138,12 +1143,12 @@ public class FormationGridManager : MonoBehaviour
                 //if (x - 1 >= 0) checking(y, x - 1);
                 //if (x + 1 < 10) checking(y, x + 1);
             }
-            else if(eachGridsTilingTmp[y,x] == TilingType.Object)
+            else if (eachGridsTilingTmp[y, x] == TilingType.Object)
             {
                 if (y - 1 >= 0)
                 {
                     //Debug.Log(y - 1);
-                    
+
                     checking(y - 1, x);
                 }
                 if (y + 1 < 10) checking(y + 1, x);
