@@ -11,7 +11,8 @@ public class MissionListManager : MonoBehaviour
 
     private int playableStageNum = 5;
     private int stageIndex = 1;
-    private GameObject content;[SerializeField]
+    private GameObject content;
+
     private NCMBDatabase database = new NCMBDatabase();
 
     private void Awake()
@@ -52,7 +53,7 @@ public class MissionListManager : MonoBehaviour
         database.FetchAllStageData();
         database.StageDataObservable.Subscribe(dataList =>
         {
-            if (dataList != null && dataList.Count > 0)
+            if (dataList.Count > 0)
             {
                 MasterDataScript.instance.onlineStageDataList = dataList;
                 InflateItems(dataList);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UniRx;
 
 public class OnlineRankingSceneManager : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class OnlineRankingSceneManager : MonoBehaviour
         BGMManager.instance.Play("タイトル");
 
         // TODO: 上位ランキングのデータFetch
+        FetchTopStageData();
     }
     public void LoadOnlineEntranceScene()
     {
@@ -24,12 +26,26 @@ public class OnlineRankingSceneManager : MonoBehaviour
         SceneManager.LoadScene("OnlineEntranceScene");
     }
 
+    private void FetchTopStageData()
+    {
+        database.FetchRankingData();
+
+        database.TopStageDataObservable.Subscribe(dataList =>
+        {
+            if (dataList != null && dataList.Count > 0)
+            {
+                //TODO: もしかしたらいるかも?どうするか..
+                //MasterDataScript.instance.onlineStageDataList = dataList;
+                InflateItems(dataList);
+            }
+        });
+    }
     private void InflateItems(List<StageData> topStageDataList)
     {
         // Inflate
         foreach (StageData data in topStageDataList)
         {
-            // TODO: データを反省させる
+            // TODO: データを反映させる
 
             Instantiate(rankingLayout, rankingContainer.transform);
         }
