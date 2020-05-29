@@ -18,12 +18,13 @@ public class BackSceneWindow : MonoBehaviour
 
     public void ShowBackSceneWindow()
     {
-        SEManager.instance.Play("セレクト");
+        
         if ( isSaved )
         {
-            editManager.LoadEditSelectScene();
+            Yes();
         } else
         {
+            SEManager.instance.Play("セレクト");
             backSceneWindowObject.SetActive(true);
         }
         

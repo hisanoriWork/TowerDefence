@@ -584,6 +584,7 @@ public class FormationGridManager : MonoBehaviour
         // TODO: true
         BackSceneWindow.isSaved = true;
         SEManager.instance.Play("決定");
+        dialogManager.ShowDialog("保存しました！");
         prefs.SetFormation(formation.gridinfo, formation.shiptype, editParam.ownFormationNum);
     }
 

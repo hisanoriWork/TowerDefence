@@ -119,8 +119,9 @@ public class NCMBDatabase : MonoBehaviour
         // TODO: クエリ条件の見直し
         queryStageRanking.Limit = 10;
         queryStageRanking.WhereGreaterThanOrEqualTo("winCount", 1);
-        queryStageRanking.OrderByDescending("winCount");
+        queryStageRanking.WhereGreaterThanOrEqualTo("winPercentage", 30);
         queryStageRanking.OrderByDescending("winPercentage");
+        queryStageRanking.OrderByDescending("winCount");
 
         queryStageRanking.Find((List<NCMBObject> fetchRankingList, NCMBException e) =>
         {
