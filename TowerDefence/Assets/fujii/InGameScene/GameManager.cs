@@ -38,7 +38,9 @@ public class GameManager : MonoBehaviour
             BGMManager.instance.Resume();
         });
         //オプションを閉じたとき，もともとゲームを再生していたら再生する
-        m_option.whenHidden.Where(_ => isPlaying).Subscribe(_ => Play(timeScale));
+        m_option.whenHidden.Where(_ => isPlaying).Subscribe(_ =>{
+            Play(timeScale);
+        });
         //オプションを閉じたとき，もともとゲームを停止していたら停止する
         m_option.whenHidden.Where(_ => !isPlaying).Subscribe(_ => Stop(true));
         m_stop.whenHidden.Subscribe(_ => { m_play.Display(); Play(1.0f); });
@@ -48,7 +50,6 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-        m_player1HP.gaugeMaxValue = m_player2HP.gaugeMaxValue = 1000;
         m_player1HP.maxValue = m_player1HP.value = m_player1.shipHP;
         m_player2HP.maxValue = m_player2HP.value = m_player2.shipHP;
         Play(1.0f);
@@ -64,7 +65,7 @@ public class GameManager : MonoBehaviour
             if (m_player2HP.value != m_player2.shipHP)
                 m_player2HP.value = m_player2.shipHP;
 
-            int victoryNum = CheckVictory(m_player1.shipHP, m_player2.shipHP);
+            int victoryNum = CheckVictory(m_player1HP.rate, m_player2HP.rate);
             if (!m_isFinished && victoryNum > 0)
             {
                 m_isFinished = true;
@@ -98,6 +99,11 @@ public class GameManager : MonoBehaviour
         }
     }
     /*****public method*****/
+    public void PlaySE(string clipname)
+    {
+        SEManager.instance.Play(clipname);
+    }
+
     public void Play(float timeScale = 1.0f)
     {
         Pauser.Play(timeScale);
@@ -126,7 +132,7 @@ public class GameManager : MonoBehaviour
     }
 
     /*****private method*****/
-    private int CheckVictory(int shipHP1, int shipHP2)
+    private int CheckVictory(float shipHP1, float shipHP2)
     {
         /*決まってない：0
          * プレイヤー1の勝利：1

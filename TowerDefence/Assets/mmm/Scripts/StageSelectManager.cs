@@ -8,6 +8,7 @@ public class StageSelectManager : MonoBehaviour
 
     void Awake()
     {
+        BGMManager.instance.Play("ミッション");
     }
 
     public void ChangeSelectStage(int selectStageNum)

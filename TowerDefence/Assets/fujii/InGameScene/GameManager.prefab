@@ -44,7 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0f69547c030be349bd0b5a3cd2bd933, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_masterData: {fileID: 0}
   m_instData: {fileID: 1234079521}
   m_stageNumManager: {fileID: 6483795094253624389}
 --- !u!114 &1234079521
@@ -198,7 +197,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timer: {fileID: 1647786412}
-  timeGauge: {fileID: 1593966110}
+  gauge: {fileID: 1593966110}
 --- !u!114 &1593966110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -256,7 +255,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0f69547c030be349bd0b5a3cd2bd933, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_masterData: {fileID: 0}
   m_instData: {fileID: 1757432504}
   m_stageNumManager: {fileID: 6483795094253624389}
 --- !u!114 &1757432504
@@ -370,7 +368,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1868259447504237258}
-  - component: {fileID: 4831081717652252424}
+  - component: {fileID: 6483795094253624392}
   m_Layer: 5
   m_Name: Player1HPGauge
   m_TagString: Untagged
@@ -392,7 +390,7 @@ Transform:
   m_Father: {fileID: 1998759668299861672}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4831081717652252424
+--- !u!114 &6483795094253624392
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -401,15 +399,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1326617613701237985}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c83da4f22671c346878b7956713fe4f, type: 3}
+  m_Script: {fileID: 11500000, guid: ac4c3301cbe4d3645a2b17c77e1e0391, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   fillImage: {fileID: 0}
-  backImage: {fileID: 0}
-  gaugeImage: {fileID: 0}
-  fillMethodIsHorizontal: 1
-  origin: 1
-  GaugeSize: {x: 350, y: 40}
 --- !u!1 &2282497117363872179
 GameObject:
   m_ObjectHideFlags: 0
@@ -513,8 +506,8 @@ MonoBehaviour:
   m_timeView: {fileID: 1647786413}
   m_player1: {fileID: 1234079519}
   m_player2: {fileID: 1757432503}
-  m_player1HP: {fileID: 4831081717652252424}
-  m_player2HP: {fileID: 140803167797734449}
+  m_player1HP: {fileID: 6483795094253624392}
+  m_player2HP: {fileID: 6483795094253624391}
   m_victoryCanvas: {fileID: 0}
   m_stageNumManager: {fileID: 6483795094253624389}
 --- !u!1 &4965526622028416617
@@ -613,7 +606,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7423298070415156171}
-  - component: {fileID: 140803167797734449}
+  - component: {fileID: 6483795094253624391}
   m_Layer: 5
   m_Name: Player2HPGauge
   m_TagString: Untagged
@@ -635,7 +628,7 @@ Transform:
   m_Father: {fileID: 1998759668299861672}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &140803167797734449
+--- !u!114 &6483795094253624391
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -644,12 +637,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8561242239437371657}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c83da4f22671c346878b7956713fe4f, type: 3}
+  m_Script: {fileID: 11500000, guid: ac4c3301cbe4d3645a2b17c77e1e0391, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   fillImage: {fileID: 0}
-  backImage: {fileID: 0}
-  gaugeImage: {fileID: 0}
-  fillMethodIsHorizontal: 1
-  origin: 0
-  GaugeSize: {x: 350, y: 40}
