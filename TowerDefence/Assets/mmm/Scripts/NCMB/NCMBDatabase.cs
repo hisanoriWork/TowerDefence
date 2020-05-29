@@ -107,6 +107,7 @@ public class NCMBDatabase : MonoBehaviour
                 {
                     stageDataList.Add(ParceStageData(fetchStage));
                 }
+                stageDataList.Shuffle();
                 _StageDataList.OnNext(stageDataList);
             }
         });
@@ -159,5 +160,19 @@ public class NCMBDatabase : MonoBehaviour
         stageData.winCount = System.Convert.ToInt32(fetchStage["winCount"]);
         stageData.loseCount = System.Convert.ToInt32(fetchStage["loseCount"]);
         return stageData;
+    }
+}
+
+public static class Extensions
+{
+    public static void Shuffle<T>(this IList<T> list)
+    {
+        for (int i = list.Count - 1; i > 0; i--)
+        {
+            int j = UnityEngine.Random.Range(0, i + 1);
+            var tmp = list[i];
+            list[i] = list[j];
+            list[j] = tmp;
+        }
     }
 }
