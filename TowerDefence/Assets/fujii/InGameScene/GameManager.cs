@@ -68,16 +68,6 @@ public class GameManager : MonoBehaviour
             if (!m_isFinished && victoryNum > 0)
             {
                 m_isFinished = true;
-
-                if (!PlayerPrefs.GetString("StageDataUuid", "").Equals(""))
-                {
-                    Debug.Log("Online Battle Result");
-                }
-                else
-                {
-                    Debug.Log("Local Battle Result");
-                }
-
                 switch (victoryNum)
                 {
                     case 3:

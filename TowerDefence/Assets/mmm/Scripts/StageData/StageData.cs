@@ -63,9 +63,8 @@ public class StageData : ScriptableObject
         return formation;
     }
 
-    public bool UpdateStageResult(bool isEnemyWin)
+    public void UpdateStageResult(bool isEnemyWin)
     {
-        Debug.Log(this.name);
         if (!this.uuid.Equals(""))
         {
             NCMBObject data = new NCMBObject(NCMBDatabase.ONLINE_STAGE_DATA)
@@ -91,6 +90,5 @@ public class StageData : ScriptableObject
                 }
             });
         }
-        return true;
     }
 }
