@@ -31,7 +31,6 @@ public class NCMBDatabase : MonoBehaviour
     void Start()
     {
         //FetchRankingData();
-        DeleteAllData(MasterDataScript.instance.user.ObjectId);
     }
     public void PostStageData(int slotNum, string stageName, string detailContent, DialogManager dialogManager)
     {
