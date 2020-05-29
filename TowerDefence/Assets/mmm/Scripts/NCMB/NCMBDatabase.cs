@@ -3,18 +3,37 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using NCMB;
+using UniRx;
+using System;
 
 public class NCMBDatabase : MonoBehaviour
 {
 
     private NCMBQuery<NCMBObject> queryPostStage;
     private NCMBQuery<NCMBObject> queryFetchAllStage;
+    private NCMBQuery<NCMBObject> queryStageRanking;
 
-    public List<StageData> fetchStageDataList = new List<StageData>();
+    private Subject<List<StageData>> _StageDataList = new Subject<List<StageData>>();
+    public IObservable<List<StageData>> StageDataObservable
+    {
+        get { return _StageDataList; }
+    }
+
+    // 上位ステージ
+    private Subject<List<StageData>> _TopStageDataList = new Subject<List<StageData>>();
+    public IObservable<List<StageData>> TopStageDataObservable
+    {
+        get { return _TopStageDataList; }
+    }
+
+
 
     // TODO: Constファイルを作る...
     public static string ONLINE_STAGE_DATA = "OnlineStageData";
-
+    void Start()
+    {
+        //FetchRankingData();
+    }
     public void PostStageData(int slotNum, string stageName, string detailContent, DialogManager dialogManager)
     {
         PrefsManager prefs = new PrefsManager();
@@ -69,12 +88,13 @@ public class NCMBDatabase : MonoBehaviour
             Debug.Log("buggg");
         }
     }
-
-    public void FetchAllStageData(MissionListManager missionListManager)
+    public void FetchAllStageData()
     {
-        var stageDatas = new List<StageData>();
+        var stageDataList = new List<StageData>();
         queryFetchAllStage = new NCMBQuery<NCMBObject>(ONLINE_STAGE_DATA);
-        queryFetchAllStage.Find((List<NCMBObject> fetchList, NCMBException e) =>
+        // TODO: クエリ条件の導入
+
+        queryFetchAllStage.FindAsync((List<NCMBObject> fetchList, NCMBException e) =>
         {
             if (e != null)
             {
@@ -85,10 +105,37 @@ public class NCMBDatabase : MonoBehaviour
                 //TODO: 最大表示数を決める?ランダムにソートする?
                 foreach (NCMBObject fetchStage in fetchList)
                 {
-                    stageDatas.Add(ParceStageData(fetchStage));
+                    stageDataList.Add(ParceStageData(fetchStage));
                 }
-                this.fetchStageDataList = stageDatas;
-                missionListManager.UpdateOnlineMissons(fetchStageDataList);
+                stageDataList.Shuffle();
+                _StageDataList.OnNext(stageDataList);
+            }
+        });
+    }
+    public void FetchRankingData()
+    {
+        var stageDataList = new List<StageData>();
+        queryStageRanking = new NCMBQuery<NCMBObject>(ONLINE_STAGE_DATA);
+
+        // TODO: クエリ条件の見直し
+        queryStageRanking.Limit = 10;
+        queryStageRanking.WhereGreaterThanOrEqualTo("winCount", 1);
+        queryStageRanking.OrderByDescending("winCount");
+        queryStageRanking.OrderByDescending("winPercentage");
+
+        queryStageRanking.Find((List<NCMBObject> fetchRankingList, NCMBException e) =>
+        {
+            if (e != null)
+            {
+                //検索失敗時の処理
+            }
+            else
+            {
+                foreach (NCMBObject fetchStage in fetchRankingList)
+                {
+                    stageDataList.Add(ParceStageData(fetchStage));
+                }
+                _TopStageDataList.OnNext(stageDataList);
             }
         });
     }
@@ -113,5 +160,19 @@ public class NCMBDatabase : MonoBehaviour
         stageData.winCount = System.Convert.ToInt32(fetchStage["winCount"]);
         stageData.loseCount = System.Convert.ToInt32(fetchStage["loseCount"]);
         return stageData;
+    }
+}
+
+public static class Extensions
+{
+    public static void Shuffle<T>(this IList<T> list)
+    {
+        for (int i = list.Count - 1; i > 0; i--)
+        {
+            int j = UnityEngine.Random.Range(0, i + 1);
+            var tmp = list[i];
+            list[i] = list[j];
+            list[j] = tmp;
+        }
     }
 }

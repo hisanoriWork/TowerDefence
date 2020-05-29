@@ -86,6 +86,11 @@ public class StageData : ScriptableObject
                     {
                         data.Increment("loseCount");
                     }
+
+                    int winCount = System.Convert.ToInt32(data["winCount"]);
+                    int loseCount = System.Convert.ToInt32(data["loseCount"]);
+                    data["winPercentage"] = System.Convert.ToInt32( 100 * winCount / (winCount + loseCount));
+
                     data.SaveAsync();
                 }
             });
