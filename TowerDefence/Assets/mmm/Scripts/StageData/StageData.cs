@@ -68,27 +68,28 @@ public class StageData : ScriptableObject
         Debug.Log(this.name);
         if (!this.uuid.Equals(""))
         {
-            if (isEnemyWin)
+            NCMBObject data = new NCMBObject(NCMBDatabase.ONLINE_STAGE_DATA)
             {
-                NCMBObject data = new NCMBObject(NCMBDatabase.ONLINE_STAGE_DATA)
+                ObjectId = this.uuid
+            };
+            data.FetchAsync((NCMBException e) =>
+            {
+                if (e != null)
                 {
-                    ObjectId = this.uuid
-                };
-                data.FetchAsync((NCMBException e) => {
-                    if (e != null)
+                    Debug.Log("Update Error!");
+                }
+                else
+                {
+                    if (isEnemyWin )
                     {
-                        Debug.Log("エラー!");
-                    }
-                    else
+                        data.Increment("winCount");
+                    } else
                     {
-                        Debug.Log("Fetch:" + data["name"].ToString());
+                        data.Increment("loseCount");
                     }
-                });
-            }
-            else
-            {
-
-            }
+                    data.SaveAsync();
+                }
+            });
         }
         return true;
     }
