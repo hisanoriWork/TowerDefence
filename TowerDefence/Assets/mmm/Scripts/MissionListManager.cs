@@ -10,7 +10,7 @@ public class MissionListManager : MonoBehaviour
     public GameObject missionContainer;
     public GameObject circleLoading;
 
-    private int playableStageNum = 5;
+    private int playableStageNum = 1;
     private int stageIndex = 1;
     private GameObject content;
 
