@@ -13,12 +13,17 @@ public class NCMBDatabase : MonoBehaviour
     private NCMBQuery<NCMBObject> queryFetchAllStage;
     private NCMBQuery<NCMBObject> queryStageRanking;
 
-    public List<StageData> fetchStageDataList = new List<StageData>();
-
-    private Subject<List<StageData>> _fetchStageDataList = new Subject<List<StageData>>();
+    private Subject<List<StageData>> _StageDataList = new Subject<List<StageData>>();
     public IObservable<List<StageData>> StageDataObservable
     {
-        get { return _fetchStageDataList; }
+        get { return _StageDataList; }
+    }
+
+    // 上位ステージ
+    private Subject<List<StageData>> _TopStageDataList = new Subject<List<StageData>>();
+    public IObservable<List<StageData>> TopStageDataObservable
+    {
+        get { return _TopStageDataList; }
     }
 
 
@@ -102,14 +107,16 @@ public class NCMBDatabase : MonoBehaviour
                 {
                     stageDataList.Add(ParceStageData(fetchStage));
                 }
-                _fetchStageDataList.OnNext(stageDataList);
+                _StageDataList.OnNext(stageDataList);
             }
         });
     }
     public void FetchRankingData()
     {
+        var stageDataList = new List<StageData>();
         queryStageRanking = new NCMBQuery<NCMBObject>(ONLINE_STAGE_DATA);
 
+        // TODO: クエリ条件の見直し
         queryStageRanking.Limit = 10;
         queryStageRanking.WhereGreaterThanOrEqualTo("winCount", 1);
         queryStageRanking.OrderByDescending("winCount");
@@ -125,8 +132,9 @@ public class NCMBDatabase : MonoBehaviour
             {
                 foreach (NCMBObject fetchStage in fetchRankingList)
                 {
-                    Debug.Log("Name: " + fetchStage["name"].ToString());
+                    stageDataList.Add(ParceStageData(fetchStage));
                 }
+                _TopStageDataList.OnNext(stageDataList);
             }
         });
     }
