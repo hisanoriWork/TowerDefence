@@ -71,19 +71,11 @@ public class LoadPostFormationToServerSceneManager : MonoBehaviour
                 SEManager.instance.Play("セレクト");
                 m_Image.sprite = selectButtonSprites[i];
 
-                inputOwnFormationNum = (i + 1);
-                formation = prefs.GetFormation(inputOwnFormationNum);
+                ownFormationNum = i+ 1;
+                formation = prefs.GetFormation(ownFormationNum);
                 spriteGenerator.GenerateSprite(formation);
 
-                if ( formation.shiptype == 10010 )
-                {
-                    Vector2 pos = GetComponent<RectTransform>().anchoredPosition;
-                    pos.x = 100;
-                    pos.y = 2;
-                    spriteGenerator.GetComponent<RectTransform>().anchoredPosition = pos;
-                }
-
-                PlayerPrefs.SetString("ownFormationNum", inputOwnFormationNum.ToString());
+                PlayerPrefs.SetString("ownFormationNum", ownFormationNum.ToString());
             }
         }
     }
