@@ -33,11 +33,14 @@ public class MissionListManager : MonoBehaviour
             List<StageData> missionItemList = MasterDataScript.instance.stageDataList;
 
             playableStageNum = PlayerPrefs.GetInt("playableStageNum", 1);
+            Debug.Log("Playable" + playableStageNum.ToString());
 
             if (missionItemList.Count <= playableStageNum)
             {
                 playableStageNum = missionItemList.Count;
+                Debug.Log("Playable2" + playableStageNum.ToString());
             }
+            Debug.Log("Playable3" + playableStageNum.ToString());
 
             missionItemList.Take(playableStageNum);
 
