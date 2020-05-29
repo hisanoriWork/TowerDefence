@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c51d6b148223bc4b9b55c9cc87aa052, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  battleStageData: {fileID: 0}
   unitDataList:
   - {fileID: 11400000, guid: 639416c51d8fe474f8970526ac64f474, type: 2}
   - {fileID: 11400000, guid: 8301f0363df6ae741902515765b2d48f, type: 2}
@@ -72,10 +73,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 785d63301e0832b468ae5c0636520453, type: 2}
   stageDataList:
   - {fileID: 11400000, guid: cd309ed62c7720f43a6564ce5b961787, type: 2}
-  - {fileID: 11400000, guid: a5178f4d493face458c2cdb37f374938, type: 2}
+  - {fileID: 11400000, guid: a226df1f165854845a57743bee046004, type: 2}
+  - {fileID: 11400000, guid: 5f2f27ade7eed4648b3b35389a926d63, type: 2}
+  - {fileID: 11400000, guid: 71464efc01f12ae4eac5f6419c763ea4, type: 2}
+  - {fileID: 11400000, guid: bd39de846e49b5f42a5277d4d28c905d, type: 2}
   - {fileID: 11400000, guid: bd39de846e49b5f42a5277d4d28c905d, type: 2}
   onlineStageDataList: []
-  missionItemDataList:
-  - {fileID: 11400000, guid: c652881731708e943af86ab6d4fc2762, type: 2}
-  - {fileID: 11400000, guid: bdfc9d980009a5744bb0f823ab757e20, type: 2}
-  - {fileID: 11400000, guid: b42a30e333f8a0042bb41c60fadc9d4d, type: 2}

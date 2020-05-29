@@ -1086,20 +1086,9 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3999993717568689732, guid: 014df1accac75ac4ebcd54dd1bd8ee91,
         type: 3}
-      propertyPath: missionItemDataList.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3999993717568689732, guid: 014df1accac75ac4ebcd54dd1bd8ee91,
-        type: 3}
-      propertyPath: missionItemDataList.Array.data[3]
+      propertyPath: stageDataList.Array.data[4]
       value: 
-      objectReference: {fileID: 11400000, guid: b42a30e333f8a0042bb41c60fadc9d4d,
-        type: 2}
-    - target: {fileID: 3999993717568689732, guid: 014df1accac75ac4ebcd54dd1bd8ee91,
-        type: 3}
-      propertyPath: missionItemDataList.Array.data[4]
-      value: 
-      objectReference: {fileID: 11400000, guid: b42a30e333f8a0042bb41c60fadc9d4d,
+      objectReference: {fileID: 11400000, guid: b496a8d8d0d274647b05898a8975004d,
         type: 2}
     - target: {fileID: 3999993717568689734, guid: 014df1accac75ac4ebcd54dd1bd8ee91,
         type: 3}
