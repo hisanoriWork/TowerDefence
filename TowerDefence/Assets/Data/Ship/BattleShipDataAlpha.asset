@@ -15,9 +15,9 @@ MonoBehaviour:
   name: "\u6226\u8266"
   ID: 10020
   power: 0
-  HP: 1000
+  HP: 1500
   CT: 101
-  cost: 1000
+  cost: 600
   prefab: {fileID: 784875828288635638, guid: db8cb0a354ef4924a988a4aa8c017ced, type: 3}
   unitType: 1
   sprite: {fileID: 21300000, guid: d5079354dbdae8443849ef27e931507f, type: 3}

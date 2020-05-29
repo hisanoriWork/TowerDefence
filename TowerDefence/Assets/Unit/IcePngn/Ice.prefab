@@ -69,6 +69,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseWeapon: {fileID: 1960662436149599763}
   data: {fileID: 11400000, guid: 0d7f0a3498b161d4e990528117f4d4a7, type: 2}
+  body: {fileID: 5934102187431141581}
 --- !u!114 &1960662436149599763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,6 +177,6 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0069425446, y: -0.027769001}
-  m_Size: {x: 0.36957803, y: 0.31404042}
+  m_Offset: {x: -0.010907328, y: -0.03685856}
+  m_Size: {x: 0.35817322, y: 0.2699947}
   m_Direction: 1
