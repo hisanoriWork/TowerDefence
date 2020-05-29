@@ -18,17 +18,17 @@ public class MissionListManager : MonoBehaviour
 
     void Start()
     {
-        ViewMissons(PlayerPrefs.GetString("DirectToStageSelect", "FromTitle"));
+        MakeMissonItems(PlayerPrefs.GetString("DirectToStageSelect", "FromTitle"));
     }
 
-    private void ViewMissons(string from)
+    private void MakeMissonItems(string from)
     {
         if (from.Equals("FromTitle"))
         {
             List<StageData> missionItemList = MasterDataScript.instance.stageDataList;
 
             playableStageNum = PlayerPrefs.GetInt("playableStageNum", 1);
-            Debug.Log(playableStageNum + "Playable");
+
             if (missionItemList.Count <= playableStageNum)
             {
                 playableStageNum = missionItemList.Count;
@@ -50,9 +50,9 @@ public class MissionListManager : MonoBehaviour
         }
     }
 
-    public void ヤバい(List<StageData> missionItemList)
+    public void UpdateOnlineMissons(List<StageData> fetchMissionList)
     {
-        MasterDataScript.instance.onlineStageDataList = missionItemList;
+        MasterDataScript.instance.onlineStageDataList = fetchMissionList;
         for (int i = 0; i < database.fetchStageDataList.Count; i++)
         {
             var m_Text = missionContainer.transform.Find("EnemyTitle").GetComponent<Text>();
