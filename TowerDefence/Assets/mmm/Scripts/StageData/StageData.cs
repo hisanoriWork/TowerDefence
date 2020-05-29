@@ -8,6 +8,7 @@ public class StageData : ScriptableObject
 {
     public int ID;
     public string uuid = "";
+    public string userId = "";
     public int password = 1;
     [TextArea] public new string name;
     [TextArea] public string detailContent = "";

@@ -55,10 +55,9 @@ public class MissionDetailController : MonoBehaviour
             PlayerPrefs.SetString("StageDataUuid", stageData.uuid);
             DetailContentTV.text = stageData.detailContent;
 
-            // TODO: uuidに値があるならdifficultyStarNumを計算.
             var difficultyStarNum = "";
 
-            if ( !stageData.uuid.Equals("") )
+            if (!stageData.uuid.Equals(""))
             {
                 stageData.difficulty = stageData.CalDifficulty();
             }
