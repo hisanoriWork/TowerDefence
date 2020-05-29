@@ -41,7 +41,7 @@ public class BGMManager : MonoBehaviour
             m_clipDictionary[i.name] = i.clip;
         m_clipList.Clear();
 
-        m_audioSource.volume = PlayerPrefs.GetFloat("BGMVolume", 0.6f);
+        m_audioSource.volume = PlayerPrefs.GetFloat("BGMVolume", 0.4f);
     }
     public void SetVolume(float value)
     {
