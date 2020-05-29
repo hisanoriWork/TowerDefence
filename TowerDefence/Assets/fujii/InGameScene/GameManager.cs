@@ -38,7 +38,9 @@ public class GameManager : MonoBehaviour
             BGMManager.instance.Resume();
         });
         //オプションを閉じたとき，もともとゲームを再生していたら再生する
-        m_option.whenHidden.Where(_ => isPlaying).Subscribe(_ => Play(timeScale));
+        m_option.whenHidden.Where(_ => isPlaying).Subscribe(_ =>{
+            Play(timeScale);
+        });
         //オプションを閉じたとき，もともとゲームを停止していたら停止する
         m_option.whenHidden.Where(_ => !isPlaying).Subscribe(_ => Stop(true));
         m_stop.whenHidden.Subscribe(_ => { m_play.Display(); Play(1.0f); });
@@ -98,6 +100,11 @@ public class GameManager : MonoBehaviour
         }
     }
     /*****public method*****/
+    public void PlaySE(string clipname)
+    {
+        SEManager.instance.Play(clipname);
+    }
+
     public void Play(float timeScale = 1.0f)
     {
         Pauser.Play(timeScale);
