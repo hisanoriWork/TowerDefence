@@ -2,18 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UniRx;
+using System;
 public class MissionListManager : MonoBehaviour
 {
     public GameObject missionContainer;
 
     private int playableStageNum = 5;
     private int stageIndex = 1;
-    private GameObject content;
+    private GameObject content;[SerializeField]
     private NCMBDatabase database = new NCMBDatabase();
 
     private void Awake()
     {
         content = GameObject.Find("Content");
+        aaa();
     }
 
     void Start()
@@ -64,4 +67,18 @@ public class MissionListManager : MonoBehaviour
             Instantiate(missionContainer, content.transform);
         }
     }
-}
+
+    public void aaa()
+    {
+        database.tchAllStageData();
+        database.ob.Subscribe( fetc => {
+            if (fetc != null)
+            {
+                foreach (StageData fetchStage in fetc)
+                {
+                    Debug.Log("aaaaaaaaa" + fetchStage.name.ToString());
+                }
+            }
+        });
+    }
+ }

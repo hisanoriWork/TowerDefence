@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using NCMB;
+using UniRx;
+using System;
 
 public class NCMBDatabase : MonoBehaviour
 {
@@ -12,6 +14,14 @@ public class NCMBDatabase : MonoBehaviour
     private NCMBQuery<NCMBObject> queryStageRanking;
 
     public List<StageData> fetchStageDataList = new List<StageData>();
+
+    private Subject<List<StageData>> _fetchStageDataList = new Subject<List<StageData>>();
+    public IObservable<List<StageData>> ob
+    {
+        get { return _fetchStageDataList; }
+    }
+
+
 
     // TODO: Constファイルを作る...
     public static string ONLINE_STAGE_DATA = "OnlineStageData";
@@ -76,7 +86,7 @@ public class NCMBDatabase : MonoBehaviour
 
     public void FetchAllStageData(MissionListManager missionListManager)
     {
-        var stageDatas = new List<StageData>();
+        var stageDataList = new List<StageData>();
         queryFetchAllStage = new NCMBQuery<NCMBObject>(ONLINE_STAGE_DATA);
         queryFetchAllStage.Find((List<NCMBObject> fetchList, NCMBException e) =>
         {
@@ -89,10 +99,35 @@ public class NCMBDatabase : MonoBehaviour
                 //TODO: 最大表示数を決める?ランダムにソートする?
                 foreach (NCMBObject fetchStage in fetchList)
                 {
-                    stageDatas.Add(ParceStageData(fetchStage));
+                    stageDataList.Add(ParceStageData(fetchStage));
                 }
-                this.fetchStageDataList = stageDatas;
+                this.fetchStageDataList = stageDataList;
                 missionListManager.UpdateOnlineMissons(fetchStageDataList);
+                //_fetchStageDataList.Value = stageDataList;
+                //missionListManager.UpdateOnlineMissons(fetchStageDataList);
+            }
+        });
+    }
+
+    public void tchAllStageData()
+    {
+        var stageDataList = new List<StageData>();
+        queryFetchAllStage = new NCMBQuery<NCMBObject>(ONLINE_STAGE_DATA);
+
+        queryFetchAllStage.FindAsync((List<NCMBObject> fetchList, NCMBException e) =>
+        {
+            if (e != null)
+            {
+                //検索失敗時の処理
+            }
+            else
+            {
+                //TODO: 最大表示数を決める?ランダムにソートする?
+                foreach (NCMBObject fetchStage in fetchList)
+                {
+                    stageDataList.Add(ParceStageData(fetchStage));
+                }
+                _fetchStageDataList.OnNext(stageDataList);
             }
         });
     }
