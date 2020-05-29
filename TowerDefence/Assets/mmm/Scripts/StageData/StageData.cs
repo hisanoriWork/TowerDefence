@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using NCMB;
 
 [CreateAssetMenu(menuName = "Scriptable/StageData")]
 public class StageData : ScriptableObject
@@ -60,5 +61,11 @@ public class StageData : ScriptableObject
         formation.shiptype = shipInfo;
         formation.formationDataExists = true;
         return formation;
+    }
+
+    public bool UpdateStageResult(bool isEnemyWin)
+    {
+        Debug.Log(this.name);
+        return true;
     }
 }

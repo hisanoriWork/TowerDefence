@@ -72,19 +72,13 @@ public class GameManager : MonoBehaviour
                 if (!PlayerPrefs.GetString("StageDataUuid", "").Equals(""))
                 {
                     Debug.Log("Online Battle Result");
-                    if ( MasterDataScript.instance.battleStageData != null)
-                    {
-                        Debug.Log(MasterDataScript.instance.battleStageData.uuid);
-                    }
                 }
                 else
                 {
                     Debug.Log("Local Battle Result");
-                    if (MasterDataScript.instance.battleStageData != null)
-                    {
-                        Debug.Log(MasterDataScript.instance.battleStageData.name);
-                    }
                 }
+
+                MasterDataScript.instance.battleStageData.UpdateStageResult(true);
 
                 switch (victoryNum)
                 {

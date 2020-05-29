@@ -17,11 +17,9 @@ public class StageNumManager : MonoBehaviour
 
     public void SetPlayableStageNum(bool victoryFlag)
     {
-        Debug.Log("Win");
         if (victoryFlag)
         {
             int playableStageNum = PlayerPrefs.GetInt("playableStageNum", 1);
-            Debug.Log(playableStageNum + "PlayableIn");
             if (playableStageNum == stageNum)
             {
                 playableStageNum++;

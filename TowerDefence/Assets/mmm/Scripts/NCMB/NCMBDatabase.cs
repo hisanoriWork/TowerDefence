@@ -10,7 +10,7 @@ public class NCMBDatabase : MonoBehaviour
     private NCMBQuery<NCMBObject> queryPostStage;
     private NCMBQuery<NCMBObject> queryFetchAllStage;
 
-    public List<StageData> fetchStageDatas = new List<StageData>();
+    public List<StageData> fetchStageDataList = new List<StageData>();
 
     static readonly string ONLINE_STAGE_DATA = "OnlineStageData";
 
@@ -83,11 +83,10 @@ public class NCMBDatabase : MonoBehaviour
                 //TODO: 最大表示数を決める?ランダムにソートする?
                 foreach (NCMBObject fetchStage in fetchList)
                 {
-                    Debug.Log(fetchStage["ID"]);
                     stageDatas.Add(ParceStageData(fetchStage));
                 }
-                this.fetchStageDatas = stageDatas;
-                mmm.ヤバい(fetchStageDatas);
+                this.fetchStageDataList = stageDatas;
+                mmm.ヤバい(fetchStageDataList);
             }
         });
     }
