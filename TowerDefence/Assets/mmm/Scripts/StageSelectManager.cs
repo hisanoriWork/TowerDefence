@@ -12,7 +12,6 @@ public class StageSelectManager : MonoBehaviour
 
     public void ChangeSelectStage(int selectStageNum)
     {
-        Debug.Log("ステージ" + selectStageNum + "が選ばれました");
         missionDetailController.ChangeSelectStageNum(selectStageNum);
     }
 }
