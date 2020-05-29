@@ -17,7 +17,7 @@ public class NCMBDatabase : MonoBehaviour
     public static string ONLINE_STAGE_DATA = "OnlineStageData";
     void Start()
     {
-        FetchRankingData();
+        //FetchRankingData();
     }
     public void PostStageData(int slotNum, string stageName, string detailContent, DialogManager dialogManager)
     {
@@ -103,6 +103,7 @@ public class NCMBDatabase : MonoBehaviour
         queryStageRanking.Limit = 10;
         queryStageRanking.WhereGreaterThanOrEqualTo("winCount", 1);
         queryStageRanking.OrderByDescending("winCount");
+        queryStageRanking.OrderByDescending("winPercentage");
 
         queryStageRanking.Find((List<NCMBObject> fetchRankingList, NCMBException e) =>
         {
