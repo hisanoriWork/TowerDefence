@@ -42,7 +42,6 @@ public class OnlineRankingSceneManager : MonoBehaviour
         circleLoading.SetActive(true);
         if (isWinCountPriority)
         {
-            Debug.Log("AAAA");
             if (winCountStageData.Count < 1)
             {
                 database.FetchRankingData();
@@ -58,14 +57,12 @@ public class OnlineRankingSceneManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("CCCC");
                 circleLoading.SetActive(false);
                 InflateItems(winCountStageData);
             }
         }
         else
         {
-            Debug.Log("BBBB");
             if (winPercentageData.Count < 1)
             {
                 database.FetchRankingData2();
@@ -81,7 +78,6 @@ public class OnlineRankingSceneManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("DDDD");
                 circleLoading.SetActive(false);
                 InflateItems(winPercentageData);
             }
@@ -97,7 +93,27 @@ public class OnlineRankingSceneManager : MonoBehaviour
         // Inflate
         for (int i = 0; i < topStageDataList.Count; i++)
         {
-            // TODO: SpriteGenのデータを反映させる
+            int percentage = 100 * (topStageDataList[i].winCount) / (topStageDataList[i].winCount + topStageDataList[i].loseCount);
+            if (isWinCountPriority)
+            {
+                var firstTV = rankingLayout.transform.Find("TextBox")
+                    .transform.Find("FirstTV").GetComponent<Text>();
+                firstTV.text = "勝率 : " + percentage + "%";
+
+                var secondTV = rankingLayout.transform.Find("TextBox")
+                    .transform.Find("SecondTV").GetComponent<Text>();
+                secondTV.text = "勝利数 : " + topStageDataList[i].winCount.ToString();
+            } else
+            {
+                var firstTV = rankingLayout.transform.Find("TextBox")
+                    .transform.Find("FirstTV").GetComponent<Text>();
+                firstTV.text = "勝利数 : " + topStageDataList[i].winCount.ToString();
+
+                var secondTV = rankingLayout.transform.Find("TextBox")
+                    .transform.Find("SecondTV").GetComponent<Text>();
+                firstTV.text = "勝率 : " + percentage + "%";
+            }
+
             var rankingTV = rankingLayout.transform.Find("Ranking").GetComponent<Text>();
             rankingTV.text = (i + 1).ToString();
 
