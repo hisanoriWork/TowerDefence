@@ -51,7 +51,7 @@ public class IceScript : MonoBehaviour
                 m_time = data.releaseTime;
                 return;
             }
-            body.localScale = 1.5f* Vector3.one * Mathf.Lerp(0.3f, 1, (data.releaseTime- m_time) / data.releaseTime);
+            body.localScale = 1.5f* Vector3.one * Mathf.Lerp(0.1f, 1, (data.releaseTime- m_time) / data.releaseTime);
             if(m_attackPos != null)
                 transform.position = m_attackPos.position;
         }
@@ -61,7 +61,7 @@ public class IceScript : MonoBehaviour
             {
                 baseWeapon.Despawn();
             }
-            body.localScale = 1.5f* Vector3.one * Mathf.Lerp(0.3f, 1, m_time / data.releaseTime);
+            body.localScale = 1.5f* Vector3.one * Mathf.Lerp(0.5f, 1, m_time / data.releaseTime);
             m_move.x = m_speed * Mathf.Cos(m_angle * Mathf.Deg2Rad) * Time.fixedDeltaTime;
             m_velocity += m_gravity * Time.fixedDeltaTime;
             m_move.y = m_speed * Mathf.Sin(m_angle * Mathf.Deg2Rad) * Time.fixedDeltaTime - m_velocity * Time.fixedDeltaTime;

@@ -1084,12 +1084,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3999993717568689732, guid: 014df1accac75ac4ebcd54dd1bd8ee91,
-        type: 3}
-      propertyPath: stageDataList.Array.data[4]
-      value: 
-      objectReference: {fileID: 11400000, guid: b496a8d8d0d274647b05898a8975004d,
-        type: 2}
     - target: {fileID: 3999993717568689734, guid: 014df1accac75ac4ebcd54dd1bd8ee91,
         type: 3}
       propertyPath: m_Name

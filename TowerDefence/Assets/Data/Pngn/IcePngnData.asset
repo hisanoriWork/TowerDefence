@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: "\u30A2\u30A4\u30B9\u30DA\u30F3\u30AE\u30F3"
   ID: 14
-  power: 11
+  power: 15
   HP: 60
-  CT: 7.4
+  CT: 6.4
   cost: 40
   prefab: {fileID: 5383022211340844421, guid: 42c6e84f1a656d041ae116e7cd09a638, type: 3}
   unitType: 0

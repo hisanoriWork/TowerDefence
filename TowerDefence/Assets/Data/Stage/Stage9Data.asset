@@ -9,12 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1603473a9c708c549b2ebdf863272a9a, type: 3}
-  m_Name: IceData
+  m_Script: {fileID: 11500000, guid: 8e352ec3dce030b48b4bee91b1402d7c, type: 3}
+  m_Name: Stage9Data
   m_EditorClassIdentifier: 
-  angle: 40
-  deviation: 7
-  speed: 1.5
-  gravity: 0.3
-  accumulateTime: 2
-  releaseTime: 8
+  ID: 9
+  uuid: 
+  userId: 
+  password: 1
+  name: 
+  detailContent: 
+  gridInfo: 
+  shipInfo: 10010
+  difficulty: 6
