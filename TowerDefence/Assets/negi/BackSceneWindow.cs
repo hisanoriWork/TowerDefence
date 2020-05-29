@@ -6,6 +6,7 @@ public class BackSceneWindow : MonoBehaviour
 {
     public GameObject backSceneWindowObject;
     public EditManager editManager;
+    public static bool isSaved = false;
 
 
     // Start is called before the first frame update
@@ -18,7 +19,14 @@ public class BackSceneWindow : MonoBehaviour
     public void ShowBackSceneWindow()
     {
         SEManager.instance.Play("セレクト");
-        backSceneWindowObject.SetActive(true);
+        if ( isSaved )
+        {
+            editManager.LoadEditSelectScene();
+        } else
+        {
+            backSceneWindowObject.SetActive(true);
+        }
+        
         return;
     }
 

@@ -8,6 +8,7 @@ using System.Linq;
 public class MissionListManager : MonoBehaviour
 {
     public GameObject missionContainer;
+    public GameObject circleLoading;
 
     private int playableStageNum = 5;
     private int stageIndex = 1;
@@ -44,6 +45,7 @@ public class MissionListManager : MonoBehaviour
         }
         else
         {
+            circleLoading.SetActive(true);
             FetchRemoteStageData();
         }
     }
@@ -55,6 +57,7 @@ public class MissionListManager : MonoBehaviour
         {
             if (dataList.Count > 0)
             {
+                circleLoading.SetActive(false);
                 MasterDataScript.instance.onlineStageDataList = dataList;
                 InflateItems(dataList);
             }
