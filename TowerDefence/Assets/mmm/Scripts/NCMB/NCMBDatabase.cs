@@ -9,12 +9,16 @@ public class NCMBDatabase : MonoBehaviour
 
     private NCMBQuery<NCMBObject> queryPostStage;
     private NCMBQuery<NCMBObject> queryFetchAllStage;
+    private NCMBQuery<NCMBObject> queryStageRanking;
 
     public List<StageData> fetchStageDataList = new List<StageData>();
 
     // TODO: Constファイルを作る...
     public static string ONLINE_STAGE_DATA = "OnlineStageData";
-
+    void Start()
+    {
+        FetchRankingData();
+    }
     public void PostStageData(int slotNum, string stageName, string detailContent, DialogManager dialogManager)
     {
         PrefsManager prefs = new PrefsManager();
@@ -89,6 +93,29 @@ public class NCMBDatabase : MonoBehaviour
                 }
                 this.fetchStageDataList = stageDatas;
                 missionListManager.UpdateOnlineMissons(fetchStageDataList);
+            }
+        });
+    }
+    public void FetchRankingData()
+    {
+        queryStageRanking = new NCMBQuery<NCMBObject>(ONLINE_STAGE_DATA);
+
+        queryStageRanking.Limit = 10;
+        queryStageRanking.WhereGreaterThanOrEqualTo("winCount", 1);
+        queryStageRanking.OrderByDescending("winCount");
+
+        queryStageRanking.Find((List<NCMBObject> fetchRankingList, NCMBException e) =>
+        {
+            if (e != null)
+            {
+                //検索失敗時の処理
+            }
+            else
+            {
+                foreach (NCMBObject fetchStage in fetchRankingList)
+                {
+                    Debug.Log("Name: " + fetchStage["name"].ToString());
+                }
             }
         });
     }
