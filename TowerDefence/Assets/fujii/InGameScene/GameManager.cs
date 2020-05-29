@@ -78,6 +78,8 @@ public class GameManager : MonoBehaviour
                     Debug.Log("Local Battle Result");
                 }
 
+                MasterDataScript.instance.battleStageData.UpdateStageResult(true);
+
                 switch (victoryNum)
                 {
                     case 3:

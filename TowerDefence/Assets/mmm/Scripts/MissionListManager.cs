@@ -53,10 +53,10 @@ public class MissionListManager : MonoBehaviour
     public void ヤバい(List<StageData> missionItemList)
     {
         MasterDataScript.instance.onlineStageDataList = missionItemList;
-        for (int i = 0; i < database.fetchStageDatas.Count; i++)
+        for (int i = 0; i < database.fetchStageDataList.Count; i++)
         {
             var m_Text = missionContainer.transform.Find("EnemyTitle").GetComponent<Text>();
-            m_Text.text = database.fetchStageDatas[i].name;
+            m_Text.text = database.fetchStageDataList[i].name;
 
             missionContainer.GetComponent<StageItemListener>().stageNum = stageIndex;
             stageIndex++;
