@@ -86,7 +86,6 @@ public class GameManager : MonoBehaviour
                         if (PlayerPrefs.GetString("DirectToStageSelect", "FromTitle").Equals("FromTitle") 
                             && MasterDataScript.instance.battleStageData.uuid.Equals(""))
                         {
-                            Debug.Log("Test2");
                             m_stageNumManager.SetPlayableStageNum(true);
                         }
                         MasterDataScript.instance.battleStageData.UpdateStageResult(false);
