@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using NCMB;
 
 public class MasterDataScript : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class MasterDataScript : MonoBehaviour
 
     /*****field*****/
     public StageData battleStageData;
+    public NCMBObject user;
 
     public List<UnitData> unitDataList;
     public List<UnitData> pngnDataList;

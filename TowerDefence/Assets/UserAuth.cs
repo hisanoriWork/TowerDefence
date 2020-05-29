@@ -19,6 +19,29 @@ public class UserAuth : MonoBehaviour
         {
             UserRegistration();
         }
+        else
+        {
+            AttachUserToMasterData();
+        }
+    }
+
+    private void AttachUserToMasterData()
+    {
+        if ( MasterDataScript.instance.user == null)
+        {
+            NCMBObject currentUser = new NCMBObject(USER);
+            currentUser.ObjectId = uuid;
+            currentUser.FetchAsync((NCMBException e) => {
+                if (e != null)
+                {
+                    // TODO:
+                }
+                else
+                {
+                    MasterDataScript.instance.user = currentUser;
+                }
+            });
+        }
     }
 
     private void UserRegistration()
@@ -42,6 +65,7 @@ public class UserAuth : MonoBehaviour
                 {
                     if (ee != null)
                     {
+                        // TODO:
                         Debug.Log("bug");
                         Debug.Log(ee.ToString());
                     }
@@ -49,6 +73,7 @@ public class UserAuth : MonoBehaviour
                     {
                         uuid = user.ObjectId;
                         PlayerPrefs.SetString(USER, uuid);
+                        AttachUserToMasterData();
                         Debug.Log(uuid);
                     }
                 });
