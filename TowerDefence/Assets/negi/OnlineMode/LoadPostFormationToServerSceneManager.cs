@@ -22,6 +22,8 @@ public class LoadPostFormationToServerSceneManager : MonoBehaviour
     public Text nameText;
     public Text detailContentText;
 
+    public SpriteGenerator spriteGenerator;
+
     //編成選ぶ用(mmmからコピー)
     public int ownFormationNum = 1;
     public GameObject[] slotBtns;
@@ -40,6 +42,9 @@ public class LoadPostFormationToServerSceneManager : MonoBehaviour
         BGMManager.instance.Play("タイトル");
 
         ownFormationNum = int.Parse(PlayerPrefs.GetString("ownFormationNum", "1"));
+        formation = prefs.GetFormation(ownFormationNum);
+        spriteGenerator.GenerateSprite(formation);
+
         if (ownFormationNum <= slotBtns.Length + 1)
         {
             for (int i = 0; i < slotBtns.Length; i++)
@@ -60,11 +65,24 @@ public class LoadPostFormationToServerSceneManager : MonoBehaviour
         {
             var m_Image = slotBtns[i].GetComponent<Image>();
             m_Image.sprite = buttonSprites[i];
+
             if (slotBtns[i] == button)
             {
                 SEManager.instance.Play("セレクト");
                 m_Image.sprite = selectButtonSprites[i];
+
                 inputOwnFormationNum = (i + 1);
+                formation = prefs.GetFormation(inputOwnFormationNum);
+                spriteGenerator.GenerateSprite(formation);
+
+                if ( formation.shiptype == 10010 )
+                {
+                    Vector2 pos = GetComponent<RectTransform>().anchoredPosition;
+                    pos.x = 100;
+                    pos.y = 2;
+                    spriteGenerator.GetComponent<RectTransform>().anchoredPosition = pos;
+                }
+
                 PlayerPrefs.SetString("ownFormationNum", inputOwnFormationNum.ToString());
             }
         }
@@ -116,10 +134,6 @@ public class LoadPostFormationToServerSceneManager : MonoBehaviour
 
         return;
     }
-
-
-
-
 
     public void LoadOnlineEntranceScene()
     {
