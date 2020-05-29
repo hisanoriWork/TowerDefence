@@ -9,6 +9,7 @@ public class OnlineRankingSceneManager : MonoBehaviour
 {
     public GameObject rankingContainer;
     public GameObject rankingLayout;
+    public GameObject circleLoading;
 
     private NCMBDatabase database = new NCMBDatabase();
     void Start()
@@ -28,13 +29,15 @@ public class OnlineRankingSceneManager : MonoBehaviour
 
     private void FetchTopStageData()
     {
+        circleLoading.SetActive(true);
         database.FetchRankingData();
 
         database.TopStageDataObservable.Subscribe(dataList =>
         {
-            if (dataList != null && dataList.Count > 0)
+            if (dataList.Count > 0)
             {
-                //TODO: もしかしたらいるかも?どうするか..
+                circleLoading.SetActive(false);
+                //TODO: 対戦に飛ぶなら必要.
                 //MasterDataScript.instance.onlineStageDataList = dataList;
                 InflateItems(dataList);
             }

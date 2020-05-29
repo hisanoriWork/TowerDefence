@@ -896,6 +896,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 258761624}
   m_CullTransparentMesh: 0
+--- !u!1 &305027904 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5385679018159012173, guid: 487622f39b00e8548823381961ef2262,
+    type: 3}
+  m_PrefabInstance: {fileID: 2031756755}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &327175809
 GameObject:
   m_ObjectHideFlags: 0
@@ -3582,6 +3588,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   missionContainer: {fileID: 3055170948077039150, guid: 454e8450bd36b2d458794ef51b18e647,
     type: 3}
+  circleLoading: {fileID: 305027904}
 --- !u!4 &2041604519
 Transform:
   m_ObjectHideFlags: 0
