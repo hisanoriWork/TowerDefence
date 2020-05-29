@@ -11,6 +11,7 @@ public class NCMBDatabase : MonoBehaviour
     private NCMBQuery<NCMBObject> queryPostStage;
     private NCMBQuery<NCMBObject> queryFetchAllStage;
     private NCMBQuery<NCMBObject> queryStageRanking;
+    private NCMBQuery<NCMBObject> queryDelete;
 
     private Subject<List<StageData>> _StageDataList = new Subject<List<StageData>>();
     public IObservable<List<StageData>> StageDataObservable
@@ -25,13 +26,12 @@ public class NCMBDatabase : MonoBehaviour
         get { return _TopStageDataList; }
     }
 
-
-
     // TODO: Constファイルを作る...
     public static string ONLINE_STAGE_DATA = "OnlineStageData";
     void Start()
     {
         //FetchRankingData();
+        DeleteAllData(MasterDataScript.instance.user.ObjectId);
     }
     public void PostStageData(int slotNum, string stageName, string detailContent, DialogManager dialogManager)
     {
@@ -56,6 +56,7 @@ public class NCMBDatabase : MonoBehaviour
 
                     // OnlineStageDataに値を設定
                     stageData["ID"] = count + 1;
+                    stageData["userID"] = MasterDataScript.instance.user.ObjectId;
                     stageData["name"] = stageName;
                     stageData["detailContent"] = detailContent;
 
@@ -66,12 +67,10 @@ public class NCMBDatabase : MonoBehaviour
                     stageData["winCount"] = 0;
                     stageData["loseCount"] = 0;
 
-                    // データストアへの登録
                     stageData.SaveAsync((NCMBException ee) =>
                     {
                         if (ee != null)
                         {
-                            Debug.Log("bug");
                             Debug.Log(ee.ToString());
                         }
                         else
@@ -84,7 +83,7 @@ public class NCMBDatabase : MonoBehaviour
         }
         else
         {
-            Debug.Log("buggg");
+            Debug.Log("bug");
         }
     }
     public void FetchAllStageData()
@@ -101,7 +100,6 @@ public class NCMBDatabase : MonoBehaviour
             }
             else
             {
-                //TODO: 最大表示数を決める?ランダムにソートする?
                 foreach (NCMBObject fetchStage in fetchList)
                 {
                     stageDataList.Add(ParceStageData(fetchStage));
@@ -136,6 +134,26 @@ public class NCMBDatabase : MonoBehaviour
                     stageDataList.Add(ParceStageData(fetchStage));
                 }
                 _TopStageDataList.OnNext(stageDataList);
+            }
+        });
+    }
+
+    public void DeleteAllData(string userId)
+    {
+        queryDelete = new NCMBQuery<NCMBObject>(ONLINE_STAGE_DATA);
+        queryDelete.WhereEqualTo("userID", userId);
+        queryDelete.FindAsync((List<NCMBObject> fetchDeleteList, NCMBException e) =>
+        {
+            if (e != null)
+            {
+                //検索失敗時の処理
+            }
+            else
+            {
+                foreach (NCMBObject data in fetchDeleteList)
+                {
+                    data.DeleteAsync();
+                }
             }
         });
     }
