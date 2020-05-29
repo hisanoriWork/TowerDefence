@@ -28,7 +28,7 @@ public class LoadPostFormationToServerSceneManager : MonoBehaviour
     public Sprite[] buttonSprites;
     public Sprite[] selectButtonSprites;
 
-    private NCMBDatabase db = new NCMBDatabase();
+    [SerializeField] private NCMBDatabase db = default;
 
     //Dialogと意思確認用のプレハブ
     public DialogManager dialogManager;

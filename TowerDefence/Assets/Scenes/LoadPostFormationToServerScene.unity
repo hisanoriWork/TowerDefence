@@ -2913,6 +2913,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2121640927}
   - component: {fileID: 2121640926}
+  - component: {fileID: 2121640928}
   m_Layer: 0
   m_Name: LoadPostFormationToServerSceneManager
   m_TagString: Untagged
@@ -2947,6 +2948,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: b96788e192a04e847985d5902c36a7bf, type: 3}
   - {fileID: 21300000, guid: ab28e12971274fa449d6e0fe571cc6fb, type: 3}
   - {fileID: 21300000, guid: f2cd01557617d704fa349864cbd4254f, type: 3}
+  db: {fileID: 2121640928}
   dialogManager: {fileID: 1862657755}
 --- !u!4 &2121640927
 Transform:
@@ -2962,3 +2964,15 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2121640928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2121640925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9c26245343400346ab68af776da1d74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
