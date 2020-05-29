@@ -83,8 +83,10 @@ public class GameManager : MonoBehaviour
                         SEManager.instance.Play("敗北");
                         break;
                     case 1:
-                        if (PlayerPrefs.GetString("DirectToStageSelect", "FromTitle").Equals("FromTitle"))
+                        if (PlayerPrefs.GetString("DirectToStageSelect", "FromTitle").Equals("FromTitle") 
+                            && MasterDataScript.instance.battleStageData.uuid.Equals(""))
                         {
+                            Debug.Log("Test2");
                             m_stageNumManager.SetPlayableStageNum(true);
                         }
                         MasterDataScript.instance.battleStageData.UpdateStageResult(false);
