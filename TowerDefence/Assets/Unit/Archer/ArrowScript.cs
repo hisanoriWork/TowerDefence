@@ -39,7 +39,7 @@ public class ArrowScript : MonoBehaviour
         m_velocity += m_gravity * Time.fixedDeltaTime;
         m_move.y = m_speed * Mathf.Sin(m_angle * Mathf.Deg2Rad) * Time.fixedDeltaTime - m_velocity * Time.fixedDeltaTime;
         transform.localPosition += m_move;
-        transform.localEulerAngles = 45 * Mathf.Atan(m_move.y / m_move.x) * Vector3.forward;
+        transform.localEulerAngles = Mathf.Atan2(m_move.y , m_move.x) * Mathf.Rad2Deg * Vector3.forward;
     }
     /*****public method*****/
     public void Init(Vector3 pos, UnitScript unitScript = null)
@@ -49,7 +49,13 @@ public class ArrowScript : MonoBehaviour
         m_gravity = data.gravity;
         m_move = Vector3.zero;
         m_velocity = 0f;
-        m_angle = data.angle + UnityEngine.Random.Range(-data.deviation, data.deviation);
+        if (unitScript)
+        {
+            if (unitScript.transform.lossyScale.x >= 0)
+                m_angle = unitScript.transform.eulerAngles.z + data.angle + UnityEngine.Random.Range(-data.deviation, data.deviation);
+            else
+                m_angle = -unitScript.transform.eulerAngles.z + data.angle + UnityEngine.Random.Range(-data.deviation, data.deviation);
+        }
         transform.localEulerAngles = m_angle * Vector3.forward;
     }
 }

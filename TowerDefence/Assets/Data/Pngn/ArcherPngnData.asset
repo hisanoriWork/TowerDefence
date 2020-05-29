@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: "\u30A2\u30FC\u30C1\u30E3\u30FC"
   ID: 11
-  power: 10
+  power: 13
   HP: 100
-  CT: 6
-  cost: 10
+  CT: 3.2
+  cost: 30
   prefab: {fileID: 8721749235883527789, guid: e7308dbba5433264790408c5431dec75, type: 3}
   unitType: 0
   sprite: {fileID: -6117280392048135903, guid: 3416ced9bc2106c4192db43af1541dd1, type: 3}

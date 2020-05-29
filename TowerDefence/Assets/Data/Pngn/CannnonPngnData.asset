@@ -15,9 +15,9 @@ MonoBehaviour:
   name: "\u30AD\u30E3\u30CE\u30F3"
   ID: 16
   power: 25
-  HP: 300
-  CT: 4
-  cost: 100
+  HP: 170
+  CT: 6
+  cost: 70
   prefab: {fileID: 1143180996646596874, guid: 581e6c9f6f9935b4caa4fbf29630a1fa, type: 3}
   unitType: 0
   sprite: {fileID: 21300000, guid: 5732e6daeb405f64d93798aae9db28d9, type: 3}

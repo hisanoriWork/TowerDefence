@@ -114,6 +114,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  time: 5
-  dx: 9
+  time: 4.5
+  dx: 7.5
   dy: 5
+  deviationX: 3.5
+  deviationY: 2
