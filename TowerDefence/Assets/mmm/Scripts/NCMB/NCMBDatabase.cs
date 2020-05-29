@@ -12,7 +12,7 @@ public class NCMBDatabase : MonoBehaviour
 
     public List<StageData> fetchStageDataList = new List<StageData>();
 
-    static readonly string ONLINE_STAGE_DATA = "OnlineStageData";
+    public static string ONLINE_STAGE_DATA = "OnlineStageData";
 
     public void PostStageData(int slotNum, string stageName, string detailContent, DialogManager dialogManager)
     {

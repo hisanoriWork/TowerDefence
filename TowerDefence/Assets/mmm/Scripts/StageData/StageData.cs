@@ -10,7 +10,7 @@ public class StageData : ScriptableObject
     public string uuid = "";
     public int password = 1;
     [TextArea] public new string name;
-    [TextArea] public string detailContent = "ステージのしょうさい";
+    [TextArea] public string detailContent = "";
     [SmartArray] public int[] gridInfo;
     public int shipInfo = 10010;
     public int difficulty = 1;
@@ -66,6 +66,30 @@ public class StageData : ScriptableObject
     public bool UpdateStageResult(bool isEnemyWin)
     {
         Debug.Log(this.name);
+        if (!this.uuid.Equals(""))
+        {
+            if (isEnemyWin)
+            {
+                NCMBObject data = new NCMBObject(NCMBDatabase.ONLINE_STAGE_DATA)
+                {
+                    ObjectId = this.uuid
+                };
+                data.FetchAsync((NCMBException e) => {
+                    if (e != null)
+                    {
+                        Debug.Log("エラー!");
+                    }
+                    else
+                    {
+                        Debug.Log("Fetch:" + data["name"].ToString());
+                    }
+                });
+            }
+            else
+            {
+
+            }
+        }
         return true;
     }
 }

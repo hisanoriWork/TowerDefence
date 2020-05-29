@@ -78,8 +78,6 @@ public class GameManager : MonoBehaviour
                     Debug.Log("Local Battle Result");
                 }
 
-                MasterDataScript.instance.battleStageData.UpdateStageResult(true);
-
                 switch (victoryNum)
                 {
                     case 3:
@@ -88,6 +86,7 @@ public class GameManager : MonoBehaviour
                         SEManager.instance.Play("引き分け");
                         break;
                     case 2:
+                        MasterDataScript.instance.battleStageData.UpdateStageResult(false);
                         m_victoryCanvas.text = "負けた";
                         BGMManager.instance.Stop();
                         SEManager.instance.Play("敗北");
@@ -97,6 +96,7 @@ public class GameManager : MonoBehaviour
                         {
                             m_stageNumManager.SetPlayableStageNum(true);
                         }
+                        MasterDataScript.instance.battleStageData.UpdateStageResult(true);
                         m_victoryCanvas.text = "勝った";
                         BGMManager.instance.Stop();
                         SEManager.instance.Play("勝利");
