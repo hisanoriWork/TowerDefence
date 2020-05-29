@@ -11,6 +11,7 @@ public class OnlineRankingSceneManager : MonoBehaviour
     public GameObject rankingLayout;
     public GameObject circleLoading;
     public GameObject changeButton;
+    public GameObject messeWindow;
 
     public bool isWinCountPriority = true;
 
@@ -86,6 +87,7 @@ public class OnlineRankingSceneManager : MonoBehaviour
 
     private void InflateItems(List<StageData> topStageDataList)
     {
+        MasterDataScript.instance.onlineStageDataList = topStageDataList;
         foreach (Transform n in rankingContainer.transform)
         {
             GameObject.Destroy(n.gameObject);
@@ -111,7 +113,7 @@ public class OnlineRankingSceneManager : MonoBehaviour
 
                 var secondTV = rankingLayout.transform.Find("TextBox")
                     .transform.Find("SecondTV").GetComponent<Text>();
-                firstTV.text = "　勝率 : " + percentage + "%";
+                secondTV.text = "　勝率 : " + percentage + "%";
             }
 
             var rankingTV = rankingLayout.transform.Find("Ranking").GetComponent<Text>();
@@ -122,6 +124,10 @@ public class OnlineRankingSceneManager : MonoBehaviour
 
             var stageDetailTV = rankingLayout.transform.Find("Detail").GetComponent<Text>();
             stageDetailTV.text = topStageDataList[i].detailContent;
+
+            var button = rankingLayout.transform.Find("BattleBtn").GetComponent<Button>();
+            button.GetComponent<RankingCkickListener>().messeageWindow = messeWindow;
+            button.GetComponent<RankingCkickListener>().stageIndex = i;
 
             Instantiate(rankingLayout, rankingContainer.transform);
         }

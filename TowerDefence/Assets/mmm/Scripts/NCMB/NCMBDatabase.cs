@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using NCMB;
 using UniRx;
 using System;
+using System.Linq;
 
 public class NCMBDatabase : MonoBehaviour
 {
@@ -122,9 +123,6 @@ public class NCMBDatabase : MonoBehaviour
 
         queryStageRanking.WhereGreaterThanOrEqualTo("winCount", 1);
         queryStageRanking.WhereGreaterThanOrEqualTo("winPercentage", 30);
-
-        queryStageRanking.Limit = 10;
-
         queryStageRanking.OrderByDescending("winPercentage");
         queryStageRanking.OrderByDescending("winCount");
 
@@ -136,6 +134,7 @@ public class NCMBDatabase : MonoBehaviour
             }
             else
             {
+                fetchRankingList.Take(10);
                 foreach (NCMBObject fetchStage in fetchRankingList)
                 {
                     stageDataList.Add(ParceStageData(fetchStage));
@@ -152,10 +151,11 @@ public class NCMBDatabase : MonoBehaviour
         queryStageRanking.WhereGreaterThanOrEqualTo("winCount", 1);
         queryStageRanking.WhereGreaterThanOrEqualTo("winPercentage", 30);
 
-        queryStageRanking.Limit = 10;
-
         queryStageRanking.OrderByDescending("winCount");
+        //queryStageRanking.OrderByAscending("winCount");
         queryStageRanking.OrderByDescending("winPercentage");
+        //queryStageRanking.OrderByDescending("winCount");
+        //queryStageRanking.OrderByDescending("winPercentage");
 
 
         queryStageRanking.Find((List<NCMBObject> fetchRankingList, NCMBException e) =>
@@ -166,6 +166,7 @@ public class NCMBDatabase : MonoBehaviour
             }
             else
             {
+                fetchRankingList.Take(10);
                 foreach (NCMBObject fetchStage in fetchRankingList)
                 {
                     stageDataList.Add(ParceStageData(fetchStage));
