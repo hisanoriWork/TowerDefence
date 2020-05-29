@@ -6,6 +6,7 @@ using UniRx;
 public class IcePool : ObjectPool<IcePool, IceObject, Vector3>
 {
     public UnitScript unitScript;
+    public IcePngnScript icePngn;
     void Start()
     {
         transform.parent = null;
@@ -31,7 +32,7 @@ public class IceObject : PoolObject<IcePool, IceObject, Vector3>
 
     public override void WakeUp(Vector3 pos)
     {
-        script.Init(pos, objectPool.unitScript);
+        script.Init(pos, objectPool.icePngn.attackTransform,objectPool.unitScript);
         instance.SetActive(true);
     }
 

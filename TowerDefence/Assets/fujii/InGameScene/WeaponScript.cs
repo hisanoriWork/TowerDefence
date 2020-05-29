@@ -34,12 +34,12 @@ public class WeaponScript : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collider)
     {
         if (Pauser.isPaused) return;
-        if (!canHit) return;
         if (collider.gameObject.tag == "Outside")
         {
             m_despawnSubject.OnNext(Unit.Default);
             return;
         }
+        if (!canHit) return;
         if (collider.gameObject.tag == "Pngn" | collider.gameObject.tag == "Ship" | collider.gameObject.tag == "Block")
         {
             UnitScript otherUnit = collider.transform.parent.GetComponent<UnitScript>();
