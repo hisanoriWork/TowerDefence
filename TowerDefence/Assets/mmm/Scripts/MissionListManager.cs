@@ -49,13 +49,13 @@ public class MissionListManager : MonoBehaviour
 
     private void FetchRemoteStageData()
     {
-        database.tchAllStageData();
-        database.ob.Subscribe(fetc =>
+        database.FetchAllStageData();
+        database.StageDataObservable.Subscribe(dataList =>
         {
-            if (fetc != null && fetc.Count > 0)
+            if (dataList != null && dataList.Count > 0)
             {
-                MasterDataScript.instance.onlineStageDataList = fetc;
-                InflateItems(fetc);
+                MasterDataScript.instance.onlineStageDataList = dataList;
+                InflateItems(dataList);
             }
         });
     }

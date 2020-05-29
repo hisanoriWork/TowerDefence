@@ -16,7 +16,7 @@ public class NCMBDatabase : MonoBehaviour
     public List<StageData> fetchStageDataList = new List<StageData>();
 
     private Subject<List<StageData>> _fetchStageDataList = new Subject<List<StageData>>();
-    public IObservable<List<StageData>> ob
+    public IObservable<List<StageData>> StageDataObservable
     {
         get { return _fetchStageDataList; }
     }
@@ -83,36 +83,11 @@ public class NCMBDatabase : MonoBehaviour
             Debug.Log("buggg");
         }
     }
-
-    public void FetchAllStageData(MissionListManager missionListManager)
+    public void FetchAllStageData()
     {
         var stageDataList = new List<StageData>();
         queryFetchAllStage = new NCMBQuery<NCMBObject>(ONLINE_STAGE_DATA);
-        queryFetchAllStage.Find((List<NCMBObject> fetchList, NCMBException e) =>
-        {
-            if (e != null)
-            {
-                //検索失敗時の処理
-            }
-            else
-            {
-                //TODO: 最大表示数を決める?ランダムにソートする?
-                foreach (NCMBObject fetchStage in fetchList)
-                {
-                    stageDataList.Add(ParceStageData(fetchStage));
-                }
-                this.fetchStageDataList = stageDataList;
-                //missionListManager.UpdateOnlineMissons(fetchStageDataList);
-                //_fetchStageDataList.Value = stageDataList;
-                //missionListManager.UpdateOnlineMissons(fetchStageDataList);
-            }
-        });
-    }
-
-    public void tchAllStageData()
-    {
-        var stageDataList = new List<StageData>();
-        queryFetchAllStage = new NCMBQuery<NCMBObject>(ONLINE_STAGE_DATA);
+        // TODO: クエリ条件の導入
 
         queryFetchAllStage.FindAsync((List<NCMBObject> fetchList, NCMBException e) =>
         {
