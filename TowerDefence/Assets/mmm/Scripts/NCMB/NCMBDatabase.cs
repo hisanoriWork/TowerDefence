@@ -26,6 +26,12 @@ public class NCMBDatabase : MonoBehaviour
         get { return _TopStageDataList; }
     }
 
+    private Subject<List<StageData>> _TopStageDataList2 = new Subject<List<StageData>>();
+    public IObservable<List<StageData>> TopStageDataObservable2
+    {
+        get { return _TopStageDataList2; }
+    }
+
     // TODO: Constファイルを作る...
     public static string ONLINE_STAGE_DATA = "OnlineStageData";
     void Start()
@@ -113,10 +119,11 @@ public class NCMBDatabase : MonoBehaviour
         var stageDataList = new List<StageData>();
         queryStageRanking = new NCMBQuery<NCMBObject>(ONLINE_STAGE_DATA);
 
-        // TODO: クエリ条件の見直し
-        queryStageRanking.Limit = 10;
         queryStageRanking.WhereGreaterThanOrEqualTo("winCount", 1);
         queryStageRanking.WhereGreaterThanOrEqualTo("winPercentage", 30);
+
+        queryStageRanking.Limit = 10;
+
         queryStageRanking.OrderByDescending("winPercentage");
         queryStageRanking.OrderByDescending("winCount");
 
@@ -133,6 +140,36 @@ public class NCMBDatabase : MonoBehaviour
                     stageDataList.Add(ParceStageData(fetchStage));
                 }
                 _TopStageDataList.OnNext(stageDataList);
+            }
+        });
+    }
+    public void FetchRankingData2()
+    {
+        var stageDataList = new List<StageData>();
+        queryStageRanking = new NCMBQuery<NCMBObject>(ONLINE_STAGE_DATA);
+
+        queryStageRanking.WhereGreaterThanOrEqualTo("winCount", 1);
+        queryStageRanking.WhereGreaterThanOrEqualTo("winPercentage", 30);
+
+        queryStageRanking.Limit = 10;
+
+        queryStageRanking.OrderByDescending("winCount");
+        queryStageRanking.OrderByDescending("winPercentage");
+
+
+        queryStageRanking.Find((List<NCMBObject> fetchRankingList, NCMBException e) =>
+        {
+            if (e != null)
+            {
+                //検索失敗時の処理
+            }
+            else
+            {
+                foreach (NCMBObject fetchStage in fetchRankingList)
+                {
+                    stageDataList.Add(ParceStageData(fetchStage));
+                }
+                _TopStageDataList2.OnNext(stageDataList);
             }
         });
     }
