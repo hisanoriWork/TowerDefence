@@ -102,7 +102,7 @@ public class NCMBDatabase : MonoBehaviour
                     stageDataList.Add(ParceStageData(fetchStage));
                 }
                 this.fetchStageDataList = stageDataList;
-                missionListManager.UpdateOnlineMissons(fetchStageDataList);
+                //missionListManager.UpdateOnlineMissons(fetchStageDataList);
                 //_fetchStageDataList.Value = stageDataList;
                 //missionListManager.UpdateOnlineMissons(fetchStageDataList);
             }

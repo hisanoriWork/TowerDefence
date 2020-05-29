@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UniRx;
-using System;
+using System.Linq;
+
 public class MissionListManager : MonoBehaviour
 {
     public GameObject missionContainer;
@@ -16,15 +17,14 @@ public class MissionListManager : MonoBehaviour
     private void Awake()
     {
         content = GameObject.Find("Content");
-        aaa();
     }
 
     void Start()
     {
-        MakeMissonItems(PlayerPrefs.GetString("DirectToStageSelect", "FromTitle"));
+        FindMissionItems(PlayerPrefs.GetString("DirectToStageSelect", "FromTitle"));
     }
 
-    private void MakeMissonItems(string from)
+    private void FindMissionItems(string from)
     {
         if (from.Equals("FromTitle"))
         {
@@ -36,30 +36,35 @@ public class MissionListManager : MonoBehaviour
             {
                 playableStageNum = missionItemList.Count;
             }
-            for (int i = 0; i < playableStageNum; i++)
-            {
-                var m_Text = missionContainer.transform.Find("EnemyTitle").GetComponent<Text>();
-                m_Text.text = missionItemList[i].name;
 
-                missionContainer.GetComponent<StageItemListener>().stageNum = stageIndex;
-                stageIndex++;
+            missionItemList.Take(playableStageNum);
 
-                Instantiate(missionContainer, content.transform);
-            }
+            InflateItems(missionItemList);
         }
         else
         {
-            database.FetchAllStageData(this);
+            FetchRemoteStageData();
         }
     }
 
-    public void UpdateOnlineMissons(List<StageData> fetchMissionList)
+    private void FetchRemoteStageData()
     {
-        MasterDataScript.instance.onlineStageDataList = fetchMissionList;
-        for (int i = 0; i < database.fetchStageDataList.Count; i++)
+        database.tchAllStageData();
+        database.ob.Subscribe(fetc =>
+        {
+            if (fetc != null && fetc.Count > 0)
+            {
+                MasterDataScript.instance.onlineStageDataList = fetc;
+                InflateItems(fetc);
+            }
+        });
+    }
+    private void InflateItems(List<StageData> missionItemList)
+    {
+        foreach (StageData data in missionItemList)
         {
             var m_Text = missionContainer.transform.Find("EnemyTitle").GetComponent<Text>();
-            m_Text.text = database.fetchStageDataList[i].name;
+            m_Text.text = data.name;
 
             missionContainer.GetComponent<StageItemListener>().stageNum = stageIndex;
             stageIndex++;
@@ -67,18 +72,5 @@ public class MissionListManager : MonoBehaviour
             Instantiate(missionContainer, content.transform);
         }
     }
+}
 
-    public void aaa()
-    {
-        database.tchAllStageData();
-        database.ob.Subscribe( fetc => {
-            if (fetc != null)
-            {
-                foreach (StageData fetchStage in fetc)
-                {
-                    Debug.Log("aaaaaaaaa" + fetchStage.name.ToString());
-                }
-            }
-        });
-    }
- }
