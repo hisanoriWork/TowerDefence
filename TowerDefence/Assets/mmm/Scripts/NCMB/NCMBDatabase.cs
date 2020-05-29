@@ -8,7 +8,6 @@ using System;
 
 public class NCMBDatabase : MonoBehaviour
 {
-
     private NCMBQuery<NCMBObject> queryPostStage;
     private NCMBQuery<NCMBObject> queryFetchAllStage;
     private NCMBQuery<NCMBObject> queryStageRanking;
