@@ -43,9 +43,17 @@ public class OnlineRankingSceneManager : MonoBehaviour
     private void InflateItems(List<StageData> topStageDataList)
     {
         // Inflate
-        foreach (StageData data in topStageDataList)
+        for (int i = 0; i < topStageDataList.Count; i++  )
         {
-            // TODO: データを反映させる
+            // TODO: SpriteGenのデータを反映させる
+            var rankingTV = rankingLayout.transform.Find("Ranking").GetComponent<Text>();
+            rankingTV.text = (i + 1).ToString();
+
+            var stageNameTV = rankingLayout.transform.Find("Name").GetComponent<Text>();
+            stageNameTV.text = topStageDataList[i].name;
+
+            var stageDetailTV = rankingLayout.transform.Find("Detail").GetComponent<Text>();
+            stageDetailTV.text = topStageDataList[i].detailContent;
 
             Instantiate(rankingLayout, rankingContainer.transform);
         }
