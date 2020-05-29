@@ -38,6 +38,15 @@ public class StoneBulletScript : MonoBehaviour
         m_gravity = data.gravity;
         m_move = Vector3.zero;
         m_velocity = 0f;
-        m_angle = data.angle + UnityEngine.Random.Range(-data.deviation, data.deviation);
+        if (unitScript)
+        {
+            if(unitScript.transform.lossyScale.x >=0)
+                m_angle = unitScript.transform.eulerAngles.z + data.angle + UnityEngine.Random.Range(-data.deviation, data.deviation);
+            else
+                m_angle = -unitScript.transform.eulerAngles.z + data.angle + UnityEngine.Random.Range(-data.deviation, data.deviation);
+        }
+        transform.localEulerAngles = m_angle * Vector3.forward;
+
+
     }
 }
