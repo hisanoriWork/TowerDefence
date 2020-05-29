@@ -78,8 +78,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 71464efc01f12ae4eac5f6419c763ea4, type: 2}
   - {fileID: 11400000, guid: b496a8d8d0d274647b05898a8975004d, type: 2}
   - {fileID: 11400000, guid: 12ddbd2e5225bfc40bc54e1472d74a95, type: 2}
-  - {fileID: 11400000, guid: 2f8b7c2e3aa19334aacd6a1e08d6e031, type: 2}
-  - {fileID: 11400000, guid: a5178f4d493face458c2cdb37f374938, type: 2}
   - {fileID: 11400000, guid: 089ef556d688dab4584b3b3ea3e3adca, type: 2}
-  - {fileID: 11400000, guid: 5635d781f16c3e7418213e6a5b0f89e1, type: 2}
+  - {fileID: 11400000, guid: a5178f4d493face458c2cdb37f374938, type: 2}
+  - {fileID: 11400000, guid: 2f8b7c2e3aa19334aacd6a1e08d6e031, type: 2}
   onlineStageDataList: []
