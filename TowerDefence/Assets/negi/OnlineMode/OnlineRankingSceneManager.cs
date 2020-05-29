@@ -113,7 +113,7 @@ public class OnlineRankingSceneManager : MonoBehaviour
 
                 var secondTV = rankingLayout.transform.Find("TextBox")
                     .transform.Find("SecondTV").GetComponent<Text>();
-                firstTV.text = "　勝率 : " + percentage + "%";
+                secondTV.text = "　勝率 : " + percentage + "%";
             }
 
             var rankingTV = rankingLayout.transform.Find("Ranking").GetComponent<Text>();
