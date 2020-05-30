@@ -98,14 +98,19 @@ public class StageData : ScriptableObject
 
     public void UpdateStageResult(bool isEnemyWin)
     {
+        Debug.Log("OOO:" + this.uuid);
+
         if (!this.uuid.Equals(""))
         {
             NCMBObject data = new NCMBObject(NCMBDatabase.ONLINE_STAGE_DATA)
             {
                 ObjectId = this.uuid
             };
+            Debug.Log("UUU");
+
             data.FetchAsync((NCMBException e) =>
             {
+                Debug.Log("aa");
                 if (e != null)
                 {
                     Debug.Log("Update Error!");
@@ -123,7 +128,6 @@ public class StageData : ScriptableObject
                     int winCount = System.Convert.ToInt32(data["winCount"]);
                     int loseCount = System.Convert.ToInt32(data["loseCount"]);
                     data["winPercentage"] = System.Convert.ToInt32( 100 * winCount / (winCount + loseCount));
-
                     data.SaveAsync();
                 }
             });

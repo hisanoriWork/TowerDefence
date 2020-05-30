@@ -139,7 +139,12 @@ public class NCMBDatabase : MonoBehaviour
                 {
                     stageDataList.Add(ParceStageData(fetchStage));
                 }
-                _TopStageDataList.OnNext(stageDataList);
+                List<StageData> list = new List<StageData>();
+                for (int i = 0; i < 10; i++)
+                {
+                    list.Add(stageDataList[i]);
+                }
+                _TopStageDataList.OnNext(list);
             }
         });
     }
@@ -152,11 +157,7 @@ public class NCMBDatabase : MonoBehaviour
         queryStageRanking.WhereGreaterThanOrEqualTo("winPercentage", 30);
 
         queryStageRanking.OrderByDescending("winCount");
-        //queryStageRanking.OrderByAscending("winCount");
         queryStageRanking.OrderByDescending("winPercentage");
-        //queryStageRanking.OrderByDescending("winCount");
-        //queryStageRanking.OrderByDescending("winPercentage");
-
 
         queryStageRanking.Find((List<NCMBObject> fetchRankingList, NCMBException e) =>
         {
@@ -166,12 +167,19 @@ public class NCMBDatabase : MonoBehaviour
             }
             else
             {
-                fetchRankingList.Take(10);
+               
                 foreach (NCMBObject fetchStage in fetchRankingList)
                 {
                     stageDataList.Add(ParceStageData(fetchStage));
                 }
-                _TopStageDataList2.OnNext(stageDataList);
+
+                List<StageData> list = new List<StageData>();
+                for (int i = 0; i < 10; i++)
+                {
+                    list.Add(stageDataList[i]);
+                }
+
+                _TopStageDataList2.OnNext(list);
             }
         });
     }
