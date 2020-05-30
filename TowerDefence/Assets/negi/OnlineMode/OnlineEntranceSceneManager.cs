@@ -11,6 +11,7 @@ public class OnlineEntranceSceneManager : MonoBehaviour
         //BGMManager.instance.SetVolume(1);
         //BGMManager.instance.Play("タイトル");
         BGMManager.instance.Play("タイトル");
+        //PlayerPrefs.SetInt("playableStageNum", 1);
     }
 
     // Update is called once per frame

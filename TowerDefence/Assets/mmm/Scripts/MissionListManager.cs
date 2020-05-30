@@ -14,6 +14,8 @@ public class MissionListManager : MonoBehaviour
     private int stageIndex = 1;
     private GameObject content;
 
+    private List<StageData> list = new List<StageData>();
+
     private NCMBDatabase database = new NCMBDatabase();
 
     private void Awake()
@@ -33,18 +35,19 @@ public class MissionListManager : MonoBehaviour
             List<StageData> missionItemList = MasterDataScript.instance.stageDataList;
 
             playableStageNum = PlayerPrefs.GetInt("playableStageNum", 1);
-            Debug.Log("Playable" + playableStageNum.ToString());
+            Debug.Log("playableStageNum1:" + playableStageNum.ToString());
 
             if (missionItemList.Count <= playableStageNum)
             {
                 playableStageNum = missionItemList.Count;
-                Debug.Log("Playable2" + playableStageNum.ToString());
             }
-            Debug.Log("Playable3" + playableStageNum.ToString());
 
-            missionItemList.Take(playableStageNum);
+            for (int i = 0; i < playableStageNum; i++ )
+            {
+                list.Add(missionItemList[i]);
+            }
 
-            InflateItems(missionItemList);
+            InflateItems(list);
         }
         else
         {

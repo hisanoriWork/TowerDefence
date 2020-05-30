@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PostButtonMessageWindow : MonoBehaviour
 {
@@ -34,6 +35,23 @@ public class PostButtonMessageWindow : MonoBehaviour
     }
 
     public void No()
+    {
+        SEManager.instance.Play("キャンセル");
+        postButtonMessageWindowObject.SetActive(false);
+        return;
+    }
+
+    public void BattleStart()
+    {
+        SEManager.instance.Play("決定");
+        postButtonMessageWindowObject.SetActive(false);
+        PlayerPrefs.SetString("DirectToStageSelect", "FromOnline");
+        PlayerPrefs.SetString("StageDataUuid", MasterDataScript.instance.battleStageData.uuid);
+        SceneManager.LoadScene("GameScene");
+        return;
+    }
+
+    public void BattleCancel()
     {
         SEManager.instance.Play("キャンセル");
         postButtonMessageWindowObject.SetActive(false);

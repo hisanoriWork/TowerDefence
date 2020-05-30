@@ -104,6 +104,7 @@ public class StageData : ScriptableObject
             {
                 ObjectId = this.uuid
             };
+            Debug.Log("a");
             data.FetchAsync((NCMBException e) =>
             {
                 if (e != null)
@@ -123,7 +124,6 @@ public class StageData : ScriptableObject
                     int winCount = System.Convert.ToInt32(data["winCount"]);
                     int loseCount = System.Convert.ToInt32(data["loseCount"]);
                     data["winPercentage"] = System.Convert.ToInt32( 100 * winCount / (winCount + loseCount));
-
                     data.SaveAsync();
                 }
             });
