@@ -7,7 +7,7 @@ public class AudioManagerWrapper : MonoBehaviour
     public Slider SESlider;
     public Slider BGMSlider;
 
-    void Awake()
+    void Start()
     {
         SESlider.value = SEManager.instance.GetVolume();
         BGMSlider.value = BGMManager.instance.GetVolume();
@@ -24,5 +24,20 @@ public class AudioManagerWrapper : MonoBehaviour
     {
         if(BGMSlider)
             BGMManager.instance.SetVolume(BGMSlider.value);
+    }
+
+    public void PlaySE(string clipname)
+    {
+        SEManager.instance.Play(clipname);
+    }
+
+    public void PlayBGM(string clipname)
+    {
+        BGMManager.instance.Play(clipname);
+    }
+
+    public void ReplayBGM(string clipname)
+    {
+        BGMManager.instance.Replay(clipname);
     }
 }

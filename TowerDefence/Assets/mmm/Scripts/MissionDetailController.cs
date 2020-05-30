@@ -49,11 +49,18 @@ public class MissionDetailController : MonoBehaviour
         {
             DetailBox.SetActive(true);
             stageData = stageList[stageIndex - 1];
+            MasterDataScript.instance.battleStageData = stageData;
             selectMissionTV.text = stageData.name.ToString(); ;
             spriteGenerator.GenerateSprite(stageData.GetFormation());
             PlayerPrefs.SetString("StageDataUuid", stageData.uuid);
             DetailContentTV.text = stageData.detailContent;
+
             var difficultyStarNum = "";
+
+            if (!stageData.uuid.Equals(""))
+            {
+                stageData.difficulty = stageData.CalDifficulty();
+            }
             for (int i = 0; i < stageData.difficulty; i++)
             {
                 difficultyStarNum += "★";

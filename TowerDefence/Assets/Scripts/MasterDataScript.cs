@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using NCMB;
 
 public class MasterDataScript : MonoBehaviour
 {
@@ -20,13 +21,15 @@ public class MasterDataScript : MonoBehaviour
     protected static MasterDataScript m_instance;
 
     /*****field*****/
+    public StageData battleStageData;
+    public NCMBObject user;
+
     public List<UnitData> unitDataList;
     public List<UnitData> pngnDataList;
     public List<UnitData> blockDataList;
     public List<ShipData> shipDataList;
     public List<StageData> stageDataList;
     public List<StageData> onlineStageDataList;
-    public List<MissionItemData> missionItemDataList;
     void Awake()
     {
         if (instance != this)
@@ -140,12 +143,4 @@ public class MasterDataScript : MonoBehaviour
         return formation;
     }
 
-    public MissionItemData FindMissionItemData(int stageNum)
-    {
-        foreach (MissionItemData data in missionItemDataList)
-        {
-            if (data.stageNum == stageNum) return data;
-        }
-        return null;
-    }
 }

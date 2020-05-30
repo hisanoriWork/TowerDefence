@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: "\u30DC\u30E0"
   ID: 15
-  power: 20
-  HP: 100
+  power: 16
+  HP: 80
   CT: 6
   cost: 50
   prefab: {fileID: 1563580943213496827, guid: 2ccf1ee791eb4eb45b133d9aa5e8143c, type: 3}

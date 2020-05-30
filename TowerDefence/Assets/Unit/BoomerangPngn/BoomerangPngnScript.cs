@@ -10,6 +10,10 @@ public class BoomerangPngnScript : MonoBehaviour
     public void AttackEvent(int power)
     {
         pool.Pop(attackTransform.position);
-        SEManager.instance.Play("投げる");
+    }
+
+    public void ShotSE()
+    {
+        SEManager.instance.Play("矢");
     }
 }

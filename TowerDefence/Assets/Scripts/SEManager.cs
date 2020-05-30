@@ -41,10 +41,13 @@ public class SEManager : MonoBehaviour
             m_clipDictionary[i.name] = i.clip;
         m_clipList.Clear();
 
+        m_audioSource.volume = PlayerPrefs.GetFloat("SEVolume", 0.4f);
+
     }
     public void SetVolume(float value)
     {
         m_audioSource.volume = value;
+        PlayerPrefs.SetFloat("SEVolume", value);
     }
     public float GetVolume()
     {

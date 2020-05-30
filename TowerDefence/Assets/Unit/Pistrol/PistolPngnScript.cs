@@ -11,5 +11,6 @@ public class PistolPngnScript : MonoBehaviour
     public void Attack(int power)
     {
         pool.Pop(attackTransform.position);
+        SEManager.instance.Play("ラッパ銃");
     }
 }

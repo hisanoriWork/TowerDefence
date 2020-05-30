@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1603473a9c708c549b2ebdf863272a9a, type: 3}
   m_Name: IceData
   m_EditorClassIdentifier: 
-  angle: 30
-  deviation: 10
+  angle: 40
+  deviation: 7
   speed: 1.5
   gravity: 0.3
+  accumulateTime: 2
+  releaseTime: 8

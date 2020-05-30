@@ -2,13 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UniRx;
+using System.Linq;
+
 public class MissionListManager : MonoBehaviour
 {
     public GameObject missionContainer;
+    public GameObject circleLoading;
 
-    private int playableStageNum = 5;
+    private int playableStageNum = 1;
     private int stageIndex = 1;
     private GameObject content;
+
+    private List<StageData> list = new List<StageData>();
+
     private NCMBDatabase database = new NCMBDatabase();
 
     private void Awake()
@@ -18,45 +25,56 @@ public class MissionListManager : MonoBehaviour
 
     void Start()
     {
-        ViewMissons(PlayerPrefs.GetString("DirectToStageSelect", "FromTitle"));
+        FindMissionItems(PlayerPrefs.GetString("DirectToStageSelect", "FromTitle"));
     }
 
-    private void ViewMissons(string from)
+    private void FindMissionItems(string from)
     {
         if (from.Equals("FromTitle"))
         {
             List<StageData> missionItemList = MasterDataScript.instance.stageDataList;
 
             playableStageNum = PlayerPrefs.GetInt("playableStageNum", 1);
-            Debug.Log(playableStageNum + "Playable");
+            Debug.Log("playableStageNum1:" + playableStageNum.ToString());
+
             if (missionItemList.Count <= playableStageNum)
             {
                 playableStageNum = missionItemList.Count;
             }
-            for (int i = 0; i < playableStageNum; i++)
+
+            for (int i = 0; i < playableStageNum; i++ )
             {
-                var m_Text = missionContainer.transform.Find("EnemyTitle").GetComponent<Text>();
-                m_Text.text = missionItemList[i].name;
-
-                missionContainer.GetComponent<StageItemListener>().stageNum = stageIndex;
-                stageIndex++;
-
-                Instantiate(missionContainer, content.transform);
+                list.Add(missionItemList[i]);
             }
+
+            InflateItems(list);
         }
         else
         {
-            database.FetchAllStageData(this);
+            circleLoading.SetActive(true);
+            FetchRemoteStageData();
         }
     }
 
-    public void ヤバい(List<StageData> missionItemList)
+    private void FetchRemoteStageData()
     {
-        MasterDataScript.instance.onlineStageDataList = missionItemList;
-        for (int i = 0; i < database.fetchStageDatas.Count; i++)
+        database.FetchAllStageData();
+        database.StageDataObservable.Subscribe(dataList =>
+        {
+            if (dataList.Count > 0)
+            {
+                circleLoading.SetActive(false);
+                MasterDataScript.instance.onlineStageDataList = dataList;
+                InflateItems(dataList);
+            }
+        });
+    }
+    private void InflateItems(List<StageData> missionItemList)
+    {
+        foreach (StageData data in missionItemList)
         {
             var m_Text = missionContainer.transform.Find("EnemyTitle").GetComponent<Text>();
-            m_Text.text = database.fetchStageDatas[i].name;
+            m_Text.text = data.name;
 
             missionContainer.GetComponent<StageItemListener>().stageNum = stageIndex;
             stageIndex++;
@@ -65,3 +83,4 @@ public class MissionListManager : MonoBehaviour
         }
     }
 }
+

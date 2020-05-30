@@ -11,6 +11,7 @@ public class OnlineEntranceSceneManager : MonoBehaviour
         //BGMManager.instance.SetVolume(1);
         //BGMManager.instance.Play("タイトル");
         BGMManager.instance.Play("タイトル");
+        //PlayerPrefs.SetInt("playableStageNum", 1);
     }
 
     // Update is called once per frame
@@ -29,6 +30,12 @@ public class OnlineEntranceSceneManager : MonoBehaviour
     {
         SEManager.instance.Play("シーン遷移");
         SceneManager.LoadScene("LoadPostFormationToServerScene");
+    }
+
+    public void LoadOnlineRankingScene()
+    {
+        SEManager.instance.Play("シーン遷移");
+        SceneManager.LoadScene("OnlineRankingScene");
     }
 
 

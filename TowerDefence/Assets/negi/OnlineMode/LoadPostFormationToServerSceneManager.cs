@@ -22,13 +22,15 @@ public class LoadPostFormationToServerSceneManager : MonoBehaviour
     public Text nameText;
     public Text detailContentText;
 
+    public SpriteGenerator spriteGenerator;
+
     //編成選ぶ用(mmmからコピー)
     public int ownFormationNum = 1;
     public GameObject[] slotBtns;
     public Sprite[] buttonSprites;
     public Sprite[] selectButtonSprites;
 
-    private NCMBDatabase db = new NCMBDatabase();
+    [SerializeField] private NCMBDatabase db = default;
 
     //Dialogと意思確認用のプレハブ
     public DialogManager dialogManager;
@@ -40,6 +42,9 @@ public class LoadPostFormationToServerSceneManager : MonoBehaviour
         BGMManager.instance.Play("タイトル");
 
         ownFormationNum = int.Parse(PlayerPrefs.GetString("ownFormationNum", "1"));
+        formation = prefs.GetFormation(ownFormationNum);
+        spriteGenerator.GenerateSprite(formation);
+
         if (ownFormationNum <= slotBtns.Length + 1)
         {
             for (int i = 0; i < slotBtns.Length; i++)
@@ -60,12 +65,17 @@ public class LoadPostFormationToServerSceneManager : MonoBehaviour
         {
             var m_Image = slotBtns[i].GetComponent<Image>();
             m_Image.sprite = buttonSprites[i];
+
             if (slotBtns[i] == button)
             {
                 SEManager.instance.Play("セレクト");
                 m_Image.sprite = selectButtonSprites[i];
-                inputOwnFormationNum = (i + 1);
-                PlayerPrefs.SetString("ownFormationNum", inputOwnFormationNum.ToString());
+
+                ownFormationNum = i+ 1;
+                formation = prefs.GetFormation(ownFormationNum);
+                spriteGenerator.GenerateSprite(formation);
+
+                PlayerPrefs.SetString("ownFormationNum", ownFormationNum.ToString());
             }
         }
     }
@@ -116,10 +126,6 @@ public class LoadPostFormationToServerSceneManager : MonoBehaviour
 
         return;
     }
-
-
-
-
 
     public void LoadOnlineEntranceScene()
     {

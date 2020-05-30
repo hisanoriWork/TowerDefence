@@ -257,6 +257,7 @@ GameObject:
   - component: {fileID: 2865061104635466285}
   - component: {fileID: 2865061104635466282}
   - component: {fileID: 2865061104635466284}
+  - component: {fileID: 6142448671391158522}
   m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
@@ -341,3 +342,15 @@ SortingGroup:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -100
+--- !u!114 &6142448671391158522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2865061104635466283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a376ca7c0fd5dd45a9b9c8cb28a2ca6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

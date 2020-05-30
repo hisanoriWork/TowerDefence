@@ -33,6 +33,7 @@ public class BoomerangScript : MonoBehaviour
             return;
         }
         m_time += Time.fixedDeltaTime;
+        transform.position = m_throwPos.position;
         m_pos.x = m_x * data.xCurve.Evaluate(m_time/m_maxTime);
         m_pos.y = m_y * data.yCurve.Evaluate(m_time/m_maxTime);
         transform.localPosition = m_pos;
@@ -48,7 +49,7 @@ public class BoomerangScript : MonoBehaviour
         m_pos = Vector3.zero;
         m_time = 0f;
         m_maxTime = data.time;
-        m_x = data.dx;
-        m_y = data.dy;
+        m_x = data.dx + UnityEngine.Random.Range(-data.deviationX, data.deviationX);
+        m_y = data.dy + UnityEngine.Random.Range(-data.deviationY, data.deviationY);
     }
 }
