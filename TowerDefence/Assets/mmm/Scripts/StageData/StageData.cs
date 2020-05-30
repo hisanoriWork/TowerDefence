@@ -98,15 +98,19 @@ public class StageData : ScriptableObject
 
     public void UpdateStageResult(bool isEnemyWin)
     {
+        Debug.Log("OOO:" + this.uuid);
+
         if (!this.uuid.Equals(""))
         {
             NCMBObject data = new NCMBObject(NCMBDatabase.ONLINE_STAGE_DATA)
             {
                 ObjectId = this.uuid
             };
-            Debug.Log("a");
+            Debug.Log("UUU");
+
             data.FetchAsync((NCMBException e) =>
             {
+                Debug.Log("aa");
                 if (e != null)
                 {
                     Debug.Log("Update Error!");
